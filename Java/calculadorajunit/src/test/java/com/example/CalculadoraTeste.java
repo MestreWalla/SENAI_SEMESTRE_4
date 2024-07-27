@@ -30,7 +30,9 @@ public class CalculadoraTeste {
 
     @Test (expected = IllegalArgumentException.class)
     public void testeDivisorPorZero() {
+        @SuppressWarnings("unused")
         double resultado = calc.divisao(5, 0);
+
     }
     
     @Test
@@ -45,10 +47,12 @@ public class CalculadoraTeste {
     }
     @Test (expected = IllegalArgumentException.class)
     public void testeRaizZero(){
+        @SuppressWarnings("unused")
         double resultado = calc.raiz(4,0);
     }
     @Test (expected = ArithmeticException.class)
     public void testeRaizNegativo(){
+        @SuppressWarnings("unused")
         double resultado = calc.raiz(-8, 2);
     }
 }

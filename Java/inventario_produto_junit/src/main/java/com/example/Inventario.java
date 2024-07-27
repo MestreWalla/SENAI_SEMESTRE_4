@@ -16,7 +16,7 @@ public class Inventario {
     }
 
     public List<Produto> listar() {
-        return list;
+        return new ArrayList<>(list);
     }
 
     public void remover(int id) {
