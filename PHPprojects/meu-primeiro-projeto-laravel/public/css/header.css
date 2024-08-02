@@ -1,0 +1,87 @@
+    /* Estilos básicos para o header */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+        display: flex;
+        justify-content: center;
+    }
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+    }
+
+    nav ul li {
+        margin: 0 15px;
+    }
+
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    nav ul li a:hover {
+        color: #ff6347;
+        /* Cor de destaque */
+        text-decoration: none;
+        transform: scale(1.1);
+    }
+
+    /* Animação suave ao carregar a página */
+    header,
+    nav ul li a {
+        opacity: 0;
+        animation: fadeIn 1s forwards;
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Animação para os itens do menu */
+    nav ul li {
+        opacity: 0;
+        animation: slideIn 0.5s forwards;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    nav ul li:nth-child(1) {
+        animation-delay: 0.2s;
+    }
+
+    nav ul li:nth-child(2) {
+        animation-delay: 0.4s;
+    }
+
+    nav ul li:nth-child(3) {
+        animation-delay: 0.6s;
+    }

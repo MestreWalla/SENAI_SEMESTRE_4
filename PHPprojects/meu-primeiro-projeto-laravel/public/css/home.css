@@ -1,0 +1,76 @@
+/* Estilos básicos */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+section {
+    padding: 50px;
+    text-align: center;
+}
+
+#inicio {
+    background: url('https://example.com/banner.jpg') no-repeat center center/cover;
+    color: black;
+    padding: 100px 50px;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+/* Animação suave ao carregar a página */
+section {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#inicio h1 {
+    animation-delay: 0.2s;
+}
+
+#inicio p {
+    animation-delay: 0.4s;
+}
+
+#produtos h2 {
+    animation-delay: 0.2s;
+}
+
+#produtos p {
+    animation-delay: 0.4s;
+}
+
+#contato h2 {
+    animation-delay: 0.2s;
+}
+
+#contato p {
+    animation-delay: 0.4s;
+}
