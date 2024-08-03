@@ -18,7 +18,8 @@ section {
     padding: 100px 50px;
 }
 
-h1, h2 {
+h1,
+h2 {
     margin-bottom: 20px;
     opacity: 0;
     animation: fadeIn 1s forwards;
@@ -73,4 +74,13 @@ section {
 
 #contato p {
     animation-delay: 0.4s;
+}
+
+@media print {
+    body {
+        background-color: black;
+    }
+    section {
+        background-color: red;
+    }
 }
