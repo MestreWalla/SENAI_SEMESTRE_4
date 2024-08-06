@@ -53,17 +53,27 @@ class VagaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Vaga $vaga)
     {
-        //
+        return view('vagas.edit', compact('vaga'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Vaga $vaga)
     {
-        //
+        // Validar os dados
+        $request->validate([
+            'titulo' => 'required',
+            'descricao' => 'required',
+            'remuneracao' => 'required|decimal',
+           'setor' => 'required',
+            'empresa' => 'required',
+           'status' => 'required',
+        ]);
+        $vaga->update($request->all());
+        return redirect()->route('vagas.index')->with('success', 'Vaga atualizada com sucesso!');
     }
 
     /**
