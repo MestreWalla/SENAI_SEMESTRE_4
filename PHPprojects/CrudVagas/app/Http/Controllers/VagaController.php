@@ -33,10 +33,10 @@ class VagaController extends Controller
         $request->validate([
             'titulo' => 'required',
             'descricao' => 'required',
-            'remuneracao' => 'required|decimal',
+            'remuneracao' => 'required|numeric',
             'setor' => 'required',
             'empresa' => 'required',
-            'status' => 'required',
+            'status' => 'optional',
         ]);
         Vaga::create($request->all());
         return redirect()->route('vagas.index')->with('success', 'Vaga cadastrada com sucesso!');

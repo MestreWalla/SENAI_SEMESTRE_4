@@ -7,4 +7,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('vagas', [VagaController::class]);
+Route::resource('/vagas', VagaController::class);
