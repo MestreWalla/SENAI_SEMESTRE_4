@@ -12,7 +12,7 @@ class ControllerUser extends Controller
     // Exibir o formulário de login
     public function showLoginForm()
     {
-        return view('user.login');
+        return view('users.login');
     }
 
 
@@ -32,7 +32,7 @@ class ControllerUser extends Controller
 
 
         return back()->withErrors([
-            'email' => 'As credenciais não correspondem aos nossos registers.',
+            'email' => 'As credenciais não correspondem aos nossos registro.',
         ])->onlyInput('email');
     }
 
@@ -40,7 +40,7 @@ class ControllerUser extends Controller
     // Exibir o formulário de registro
     public function showRegisterForm()
     {
-        return view('user.register');
+        return view('users.register');
     }
 
 
@@ -49,7 +49,7 @@ class ControllerUser extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:user',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
@@ -59,11 +59,8 @@ class ControllerUser extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
-
         // Auth::login($user);
-
-        return redirect('/');
+        return redirect('/login');
     }
 
 
