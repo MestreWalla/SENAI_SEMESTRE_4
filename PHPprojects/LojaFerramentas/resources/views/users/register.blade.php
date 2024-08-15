@@ -2,7 +2,7 @@
 @section('content')
     <div class="container m-4">
         <h1>Registrar-se</h1>
-        <form method="POST" action="{{ route('users.register') }}">
+        <form class="align-items-center" method="POST" action="{{ route('users.register') }}">
             @csrf
             <div class="form-group mt-3">
                 <label for="name">Nome</label>

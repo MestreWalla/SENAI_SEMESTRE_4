@@ -12,7 +12,7 @@
                     <a class="nav-link active" href="/">Início</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Produtos</a>
+                    <a class="nav-link" href="/produtos">Produtos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Sobre</a>
@@ -24,7 +24,11 @@
             @if (Auth::check())
                 <form class="d-flex search-bar" action="/logout" method="post">
                     @csrf
-                    <button class="btn btn-danger" type="submit">Logout</button>
+                    {{-- <button class="btn btn-danger" type="submit">Logout em {{Auth::user()->name}}</button> --}}
+                    <button class="btn btn-danger" type="submit" onmouseover="this.textContent = 'Logout';"
+                        onmouseout="this.textContent = '{{ Auth::user()->name }}';">
+                        {{ Auth::user()->name }}
+                    </button>
                 </form>
             @else
                 @csrf
