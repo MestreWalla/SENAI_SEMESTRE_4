@@ -20,12 +20,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contato</a>
                 </li>
+                @if (Auth::user()->user_type === 'administrador')
+                <li class="nav-item">
+                    <a href="/dashboard" class="nav-link"><p>Dashboard</p></a>
+                </li>
+                @endif
             </ul>
             @if (Auth::check())
                 <form class="d-flex search-bar" action="/logout" method="post">
                     @csrf
                     {{-- <button class="btn btn-danger" type="submit">Logout em {{Auth::user()->name}}</button> --}}
-                    <button class="btn btn-danger" type="submit" onmouseover="this.textContent = 'Logout';"
+                    <button class="btn btn-warning" type="submit" onmouseover="this.textContent = 'Logout';"
                         onmouseout="this.textContent = '{{ Auth::user()->name }}';">
                         {{ Auth::user()->name }}
                     </button>

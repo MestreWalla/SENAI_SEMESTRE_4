@@ -5,7 +5,6 @@
     <div class="container">
         <h1 class="my-4">Produtos</h1>
 
-
         @if ($message = Session::get('success'))
             <div class="alert alert-success">
                 <p>{{ $message }}</p>
@@ -33,9 +32,9 @@
                     <td>{{ $produto->quantity }}</td>
                     <td>{{ $produto->price }}</td>
                     <td>
-                        <form action="{{ route('produto.destroy', $produto->id) }}" method="POST">
+                        <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST">
                             {{-- <a class="btn btn-info" href="{{ route('produto.show', $produto->id) }}">Mostrar</a> --}}
-                            <a class="btn btn-primary" href="{{ route('produto.edit', $produto->id) }}">Editar</a>
+                            <a class="btn btn-primary" href="{{ route('produtos.edit', $produto->id) }}">Editar</a>
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Deletar</button>

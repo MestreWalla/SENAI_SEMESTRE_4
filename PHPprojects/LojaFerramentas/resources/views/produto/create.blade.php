@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form class="align-items-center" method="POST" action="{{ route('produto.store') }}">
+        <form class="align-items-center" method="POST" action="{{ route('produtos.store') }}">
             @csrf
             <div class="form-group mt-3">
                 <label for="name">Nome:</label>
