@@ -1,63 +1,94 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <!-- Menu de Navegação Lateral -->
-        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-            <div class="position-sticky pt-3">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
-                            <span data-feather="home"></span>
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="file"></span>
-                            Pedidos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="shopping-cart"></span>
-                            Produtos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="users"></span>
-                            Clientes
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="bar-chart-2"></span>
-                            Relatórios
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="layers"></span>
-                            Integrações
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Menu de Navegação Lateral -->
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">
+                                <span data-feather="home"></span>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file"></span>
+                                Pedidos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="shopping-cart"></span>
+                                Produtos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="users"></span>
+                                Clientes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="bar-chart-2"></span>
+                                Relatórios
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="layers"></span>
+                                Integrações
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
 
-        <!-- Conteúdo Principal -->
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Dashboard</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group me-2">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Compartilhar</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+            <!-- Conteúdo Principal -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dashboard</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Compartilhar</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+            @section('content')
+                <h1>Dashboard de Produtos</h1>
+
+
+                <form method="GET" action="{{ route('dashboard') }}">
+                    <input type="text" name="search" placeholder="Pesquisar produtos..."
+                        value="{{ request('search') }}">
+                    <button type="submit">Pesquisar</button>
+                </form>
+
+
+                <div class="row">
+                    @foreach ($produtos as $produto)
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="{{ asset('storage/' . $produto->imagem) }}" class="card-img-top"
+                                    alt="{{ $produto->name }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $produto->name }}</h5>
+                                    <p class="card-text">{{ $produto->description }}</p>
+                                    <p class="card-text">Preço: R$ {{ $produto->price }}</p>
+                                    {{-- <a href="{{ route('produtos.show', $produto->id) }}" class="btn btn-primary">Ver
+                                        Produto</a> --}}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endsection
 
             <!-- Estatísticas de Vendas -->
             <h4>Estatísticas de Vendas</h4>
