@@ -20,10 +20,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contato</a>
                 </li>
-                @if (Auth::user()->user_type === 'administrador')
-                <li class="nav-item">
-                    <a href="/dashboard" class="nav-link"><p>Dashboard</p></a>
-                </li>
+                @if (Auth::check())
+                    @if (Auth::user()->user_type === 'administrador')
+                        <li class="nav-item">
+                            <a href="/dashboard" class="nav-link">
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                    @endif
                 @endif
             </ul>
             @if (Auth::check())

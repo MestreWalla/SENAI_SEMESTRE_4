@@ -17,7 +17,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary mt-3">Login</button>
-            <a href="register" class="btn btn-success">Registrar</a>
+            <a href="register" class="btn btn-success mt-3">Registrar</a>
         </form>
     </div>
 @endsection

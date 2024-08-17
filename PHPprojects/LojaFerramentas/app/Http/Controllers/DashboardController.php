@@ -17,7 +17,7 @@ class DashboardController extends Controller
             return $query->where('nome', 'like', "%{$search}%")
                 ->orWhere('descricao', 'like', "%{$search}%");
         })->get();
-        return view('dashboard', compact('produtos'));
+        return view('users.dashboard', compact('produtos'));
     }
 
     /**

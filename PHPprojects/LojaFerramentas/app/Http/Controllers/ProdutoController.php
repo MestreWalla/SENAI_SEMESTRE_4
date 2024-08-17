@@ -65,26 +65,33 @@ class ProdutoController extends Controller
             'img_url' => 'max:2048|mimes:jpeg,png,jpg,gif,svg|optional',
         ]);
         $produto->update($request->all());
-        return redirect()->route('produto.index')->with('success', 'Produto atualizada com sucesso!');    }
+        return redirect()->route('produto.index')->with('success', 'Produto atualizada com sucesso!');
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Produto $produto){
+    public function destroy(Produto $produto)
+    {
         $produto->delete();
         return redirect()->route('produto.index')->with('success', 'Produto excluído com sucesso!');
     }
 
     public function messages(): array
-        {
-            return [
-                'name.required' => 'O campo Nome é obrigatório',
-                'email.required' => 'O campo E-mail é obrigatório',
-                'email.email' => 'O campo E-mail deve ser um endereço de e-mail válido',
-                'email.unique' => 'O campo E-mail já está cadastrado',
-                'img.max' => 'O campo img deve ter no máximo 2MB',
-                'img.mimes' => 'O campo img deve ser um arquivo do tipo: jpeg, png, jpg, gif, svg',
+    {
+        return [
+            'name.required' => 'O campo Nome é obrigatório',
+            'email.required' => 'O campo E-mail é obrigatório',
+            'email.email' => 'O campo E-mail deve ser um endereço de e-mail válido',
+            'email.unique' => 'O campo E-mail já está cadastrado',
+            'img.max' => 'O campo img deve ter no máximo 2MB',
+            'img.mimes' => 'O campo img deve ser um arquivo do tipo: jpeg, png, jpg, gif, svg',
 
-            ];
-        }
+        ];
+    }
+
+    public function show(Produto $produto)
+    {
+        return view('produto.show', compact('produto'));
+    }
 }

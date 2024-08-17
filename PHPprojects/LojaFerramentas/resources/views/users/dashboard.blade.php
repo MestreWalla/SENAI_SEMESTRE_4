@@ -3,49 +3,20 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <!-- Menu de Navegação Lateral -->
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
-                                <span data-feather="home"></span>
-                                Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file"></span>
-                                Pedidos
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="shopping-cart"></span>
-                                Produtos
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="users"></span>
-                                Clientes
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="bar-chart-2"></span>
-                                Relatórios
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="layers"></span>
-                                Integrações
-                            </a>
-                        </li>
-                    </ul>
+
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success">
+                    <p>{{ $message }}</p>
                 </div>
-            </nav>
+            @endif
+            @if ($message = Session::get('error'))
+            <div class="alert alert-warning">
+                <p>{{ $message }}</p>
+            </div>
+            @endif
+
+            <!-- Menu de Navegação Lateral -->
+            @include('parts.sidebar')
 
             <!-- Conteúdo Principal -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -60,7 +31,6 @@
                     </div>
                 </div>
 
-            @section('content')
                 <h1>Dashboard de Produtos</h1>
 
 
@@ -70,89 +40,59 @@
                     <button type="submit">Pesquisar</button>
                 </form>
 
-
-                <div class="row">
+                <!-- Lista de Produtos -->
+                <div class="row mt-3 mb-3">
                     @foreach ($produtos as $produto)
                         <div class="col-md-4">
                             <div class="card">
-                                <img src="{{ asset('storage/' . $produto->imagem) }}" class="card-img-top"
+                                {{-- <img src="{{ asset('storage/' . $produto->imagem) }}" class="card-img-top"
+                                    alt="{{ $produto->name }}"> --}}
+                                <img src="assets/img/AlicateBico.jpg" class="rounded card-img-top"
                                     alt="{{ $produto->name }}">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $produto->name }}</h5>
                                     <p class="card-text">{{ $produto->description }}</p>
                                     <p class="card-text">Preço: R$ {{ $produto->price }}</p>
-                                    {{-- <a href="{{ route('produtos.show', $produto->id) }}" class="btn btn-primary">Ver
-                                        Produto</a> --}}
+                                    <a href="{{ route('produto.show', $produto->id) }}" class="btn btn-primary">Ver
+                                        Produto</a>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
-            @endsection
 
-            <!-- Estatísticas de Vendas -->
-            <h4>Estatísticas de Vendas</h4>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card text-white bg-primary mb-3">
-                        <div class="card-header">Vendas Hoje</div>
-                        <div class="card-body">
-                            <h5 class="card-title">R$ 2,000</h5>
-                            <p class="card-text">Total de vendas realizadas hoje.</p>
+                <!-- Estatísticas de Vendas -->
+                <h4>Estatísticas de Vendas</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary mb-3">
+                            <div class="card-header">Vendas Hoje</div>
+                            <div class="card-body">
+                                <h5 class="card-title">R$ 2,000</h5>
+                                <p class="card-text">Total de vendas realizadas hoje.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-success mb-3">
+                            <div class="card-header">Vendas Esta Semana</div>
+                            <div class="card-body">
+                                <h5 class="card-title">R$ 15,000</h5>
+                                <p class="card-text">Total de vendas realizadas nesta semana.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-danger mb-3">
+                            <div class="card-header">Vendas Este Mês</div>
+                            <div class="card-body">
+                                <h5 class="card-title">R$ 60,000</h5>
+                                <p class="card-text">Total de vendas realizadas neste mês.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card text-white bg-success mb-3">
-                        <div class="card-header">Vendas Esta Semana</div>
-                        <div class="card-body">
-                            <h5 class="card-title">R$ 15,000</h5>
-                            <p class="card-text">Total de vendas realizadas nesta semana.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card text-white bg-danger mb-3">
-                        <div class="card-header">Vendas Este Mês</div>
-                        <div class="card-body">
-                            <h5 class="card-title">R$ 60,000</h5>
-                            <p class="card-text">Total de vendas realizadas neste mês.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Gráfico de Vendas (Simples) -->
-            <h4 class="mt-4">Gráfico de Vendas</h4>
-            <canvas id="salesChart" width="400" height="200"></canvas>
-        </main>
+            </main>
+        </div>
     </div>
-</div>
-@endsection
-
-@section('scripts')
-<!-- Scripts para gráficos (usando Chart.js por exemplo) -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var ctx = document.getElementById('salesChart').getContext('2d');
-    var salesChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
-            datasets: [{
-                label: 'Vendas 2024 (R$)',
-                data: [12000, 19000, 3000, 5000, 20000, 30000],
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
 @endsection
