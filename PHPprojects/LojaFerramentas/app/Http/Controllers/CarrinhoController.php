@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Produto;
+use App\Models\Carrinho;
 use Illuminate\Support\Facades\Auth;
 
 class CarrinhoController extends Controller
@@ -15,12 +16,25 @@ class CarrinhoController extends Controller
             'quantity' => 'required|integer|min:1'
         ]);
 
-
-        Produto::create([
-            'id_produto' => $produto->id,
+        // Verificar se o item já está no carrinho do usuário
+        $carrinhoItem = Carrinho::where([
+            'id_product' => $produto->id,
             'id_user' => Auth::id(),
-            'quantidade' => $request->quantidade
-        ]);
+        ])->first();
+
+        if ($carrinhoItem) {
+            // Se o item já existe, incrementa a quantidade
+            $carrinhoItem->quantity += $dados['quantity'];
+            $carrinhoItem->save();
+        } else {
+            // Se o item não existe, cria um novo registro
+            Carrinho::create([
+                'id_product' => $produto->id,
+                'id_user' => Auth::id(),
+                'quantity' => $dados['quantity'],
+                'status' => 'active' // Ajuste conforme necessário
+            ]);
+        }
 
         // Recuperar o carrinho atual ou inicializar um novo array
         $carrinho = $request->session()->get('carrinho', []);
