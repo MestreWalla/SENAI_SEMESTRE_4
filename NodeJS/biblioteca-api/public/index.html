@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca</title>
+</head>
+
+<body>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+    
+    <h2>Tabela de Livros</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Ano</th>
+                <th>Gênero</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="livros-tbody">
+            <!-- Os livros serão inseridos aqui dinamicamente -->
+        </tbody>
+    </table>
+
+    <h2>Adicionar Novo Livro</h2>
+    <form action="/livros" method="post">
+        <table>
+            <tr>
+                <td><input class="box" type="text" name="titulo" id="titulo" placeholder="Título" required /></td>
+                <td><input class="box" type="text" name="autor" id="autor" placeholder="Autor" required /></td>
+                <td><input class="box" type="number" name="ano" id="ano" placeholder="Ano" required /></td>
+                <td><input class="box" type="text" name="genero" id="genero" placeholder="Gênero" required /></td>
+                <td><button type="submit">Enviar</button></td>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        // Função para carregar os livros quando a página for carregada
+        async function carregarLivros() {
+            const response = await fetch('/livros');
+            const livros = await response.json();
+            const tbody = document.getElementById('livros-tbody');
+
+            livros.forEach(livro => {
+                const tr = document.createElement('tr');
+
+                tr.innerHTML = `
+                    <td>${livro.titulo}</td>
+                    <td>${livro.autor}</td>
+                    <td>${livro.ano}</td>
+                    <td>${livro.genero}</td>
+                    <td>
+                        <a href="/editar/${livro._id}">Editar</a>
+                        <a href="#" onclick="excluirLivro('${livro._id}')">Excluir</a>
+                    </td>
+                `;
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Função para excluir um livro
+        async function excluirLivro(id) {
+            if (confirm('Tem certeza que deseja excluir este livro?')) {
+                await fetch(`/livros/${id}`, { method: 'DELETE' });
+                location.reload(); // Recarrega a página para atualizar a lista de livros
+            }
+        }
+
+        // Chama a função para carregar os livros ao iniciar a página
+        carregarLivros();
+    </script>
+</body>
+
+</html>
