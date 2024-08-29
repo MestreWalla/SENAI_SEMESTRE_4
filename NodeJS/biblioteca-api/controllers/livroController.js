@@ -43,6 +43,7 @@ exports.buscarLivroPorId = async (req, res) => {
 // Atualizar um livro por ID
 exports.atualizarLivro = async (req, res) => {
   try {
+    console.log("Dados recebidos:", req.body); // Adiciona log para os dados recebidos
     const livro = await Livro.findById(req.params.id);
     if (livro == null) {
       return res.status(404).json({ message: "Livro não encontrado" });
@@ -62,8 +63,10 @@ exports.atualizarLivro = async (req, res) => {
     }
 
     const livroAtualizado = await livro.save();
+    console.log("Livro atualizado:", livroAtualizado); // Adiciona log para o livro atualizado
     res.json(livroAtualizado);
   } catch (err) {
+    console.error("Erro ao atualizar livro:", err.message); // Adiciona log para o erro
     res.status(400).json({ message: err.message });
   }
 };

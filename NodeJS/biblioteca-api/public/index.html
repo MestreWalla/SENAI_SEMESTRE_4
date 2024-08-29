@@ -3,26 +3,134 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <title>Biblioteca</title>
   </head>
 
   <body>
+    <!-- #region style -->
     <style>
+      /* Estilos gerais */
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+      }
+
+      h2 {
+        color: #444;
+        font-weight: 700;
+        margin-bottom: 15px;
+        border-left: 4px solid #3f51b5;
+        padding-left: 10px;
+      }
+
+      /* Estilos da tabela */
       table {
-        width: 50%;
+        width: 100%;
         border-collapse: collapse;
         margin: 25px 0;
         font-size: 18px;
-        text-align: left;
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
 
       th,
       td {
-        padding: 12px;
+        padding: 12px 15px;
         border-bottom: 1px solid #ddd;
+        vertical-align: middle;
+      }
+
+      th {
+        background-color: #3f51b5;
+        color: #fff;
+        text-align: left;
+      }
+
+      tr {
+        background-color: white;
+        transition: background-color 1s;
+      }
+
+      tr:hover {
+        background-color: #cbd0ff;
+        transition: background-color 0.5s;
+      }
+
+      td a {
+        color: #3f51b5;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      /* Estilos do formulário */
+      input[type="text"],
+      input[type="number"] {
+        width: calc(100% - 24px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+
+      button[type="submit"] {
+        padding: 10px 20px;
+        background-color: #3f51b5;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #303f9f;
+      }
+
+      /* Estilos dos botoes */
+      .editarButton {
+        padding: 10px 20px;
+        background-color: #b3b53f;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+
+      .excluirButton {
+        padding: 10px 20px;
+        background-color: #c54b4b;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+      .editarButton:hover {
+        background-color: #8f9132;
+        transition: background-color 0.3s;
+      }
+      .excluirButton:hover {
+        background-color: #9c3737;
+        transition: background-color 0.3s;
       }
     </style>
+    <!-- #endregion style -->
 
+    <!-- #region tabela de livros -->
     <h2>Tabela de Livros</h2>
     <table>
       <thead>
@@ -38,9 +146,11 @@
         <!-- Os livros serão inseridos aqui dinamicamente -->
       </tbody>
     </table>
+    <!-- #endregion tabela -->
 
+    <!-- #region formulario -->
     <h2>Adicionar Novo Livro</h2>
-    <form action="/livros" method="post">
+    <form id="livro-form">
       <table>
         <tr>
           <td>
@@ -82,18 +192,25 @@
               placeholder="Gênero"
             />
           </td>
-          <td><button type="submit">Enviar</button></td>
+          <td>
+            <button type="submit">Enviar</button>
+          </td>
         </tr>
       </table>
     </form>
+    <!-- #endregion formulario -->
 
+    <!-- #region Script -->
     <script>
-      // Função para carregar os livros quando a página for carregada
+      // Função para carregar os livros da API e exibir na tabela
       async function carregarLivros() {
+        // Faz uma requisição para a API para obter a lista de livros
         const response = await fetch("/livros");
+        // Converte a resposta da API para formato JSON
         const livros = await response.json();
+        // Seleciona o corpo da tabela onde os livros serão exibidos
         const tbody = document.getElementById("livros-tbody");
-
+        // Percorre a lista de livros e cria uma linha na tabela para cada livro
         livros.forEach((livro) => {
           const tr = document.createElement("tr");
 
@@ -103,8 +220,8 @@
                     <td>${livro.ano}</td>
                     <td>${livro.genero}</td>
                     <td>
-                        <a href="/editar/${livro._id}">Editar</a>
-                        <a href="#" onclick="excluirLivro('${livro._id}')">Excluir</a>
+                        <a href="/editar/${livro._id}" class="editarButton">Editar</a>
+                        <a href="#" onclick="excluirLivro('${livro._id}')" class="excluirButton">Excluir</a>
                     </td>
                 `;
 
@@ -114,14 +231,69 @@
 
       // Função para excluir um livro
       async function excluirLivro(id) {
+        // Confirma com o usuário se deseja excluir o livro
         if (confirm("Tem certeza que deseja excluir este livro?")) {
+          // Faz uma requisição DELETE para a API para excluir o livro
           await fetch(`/livros/${id}`, { method: "DELETE" });
           location.reload(); // Recarrega a página para atualizar a lista de livros
         }
       }
 
-      // Chama a função para carregar os livros ao iniciar a página
+      // Função para adicionar um livro
+      document
+        .getElementById("livro-form")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault(); // Impede o comportamento padrão do formulário
+
+          const id = new URLSearchParams(window.location.search).get("id");
+
+          // Captura os valores dos campos do formulário
+          const titulo = document.getElementById("titulo").value;
+          const autor = document.getElementById("autor").value;
+          const ano = document.getElementById("ano").value;
+          const genero = document.getElementById("genero").value;
+
+          // Monta o objeto de dados
+          const livro = { titulo, autor, ano, genero };
+
+          if (id) {
+            // Se há um 'id' na URL, isso indica que um livro existente está sendo atualizado
+            fetch(`${apiUrl}/${id}`, {
+              // Faz uma requisição PUT à API para atualizar o livro com o ID especificado
+              method: "PUT", // Método PUT é usado para atualização
+              headers: { "Content-Type": "application/json" }, // Define que os dados estão sendo enviados no formato JSON
+              body: JSON.stringify(livro), // Converte o objeto 'livro' em uma string JSON para enviar no corpo da requisição
+            })
+              .then(() => (window.location.href = "index.html")) // Redireciona para a página 'index.html' após a atualização bem-sucedida
+              .catch((error) =>
+                console.error("Erro ao atualizar livro:", error)
+              ); // Lida com erros durante o processo de atualização
+          } else {
+            // Caso não haja um 'id' na URL, isso indica que um novo livro está sendo adicionado
+            try {
+              // Envia os dados para o servidor usando fetch
+              const response = await fetch("/livros", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" }, // Define o tipo de conteúdo
+                body: JSON.stringify(livro), // Converte o objeto livro para JSON
+              });
+
+              if (response.ok) {
+                alert("Livro adicionado com sucesso!");
+                location.reload(); // Recarrega a página para atualizar a lista de livros
+              } else {
+                const errorData = await response.json();
+                alert("Erro ao adicionar livro: " + errorData.message);
+              }
+            } catch (error) {
+              alert("Erro ao adicionar livro: " + error.message);
+            }
+          }
+        });
+
+      // Recarrega a página para atualizar a lista de livros
       carregarLivros();
     </script>
+    <!-- #endregion Script -->
   </body>
 </html>

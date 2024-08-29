@@ -8,5 +8,6 @@ router.get("/", livroController.listarLivros); // Listar todos os livros
 router.get("/:id", livroController.buscarLivroPorId); // Buscar um livro por ID
 router.patch("/:id", livroController.atualizarLivro); // Atualizar um livro por ID
 router.delete("/:id", livroController.deletarLivro); // Deletar um livro por ID
+// router.put("/:id", livroController.atualizarLivro); // Atualizar um livro por ID
 
 module.exports = router;
