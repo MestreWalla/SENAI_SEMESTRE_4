@@ -1,32 +1,26 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const livroRoutes = require("./routes/livroRoutes");
-
-require("dotenv").config();
-require("./config/database"); // Conectando ao banco de dados
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const livroRoutes = require('./src/routes/livroRoutes');
+require('dotenv').config();
+require('./src/config/database'); // Conectando ao banco de dados
+const PORT = process.env.PORT || 3000; // Use a porta do ambiente ou 3000 por padrão
 
 const app = express();
-const path = require("path");
 
-// #region Middlewares
-app.use(bodyParser.json()); // Permite o parse de dados JSON nos requests
-app.use(express.static(path.join(__dirname, "public"))); // Serve arquivos estáticos da pasta 'public'
-// #endregion Middlewares
+// Middlewares
+app.use(bodyParser.json());
 
-// #region Rotas
-app.use("/livros", livroRoutes); // Define as rotas para livros, delegando para o arquivo livroRoutes.js
-app.get("/editar/:id", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "editar.html"));});
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-}); // Serve o arquivo index.html como página inicial
+// Habilitando CORS para permitir que o front-end interaja com a API
+app.use(cors());
 
+// Rotas
+app.use('/livros', livroRoutes);
 
-// #endregion Rotas
-
-// Importar e usar as rotas dos livros
-// const livrosRoutes = require("./routes/livrosRoutes");
-// app.use("/livros", livrosRoutes);
+// Configurar a aplicação para escutar na porta especificada
+app.listen(PORT, () => {
+  console.log(`API está funcionando na porta ${PORT}`);
+});
 
 // Exportando a aplicação configurada
 module.exports = app;
