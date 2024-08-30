@@ -98,7 +98,6 @@ O resultado esperado é a entrega de uma aplicação funcional de To-Do List, pr
 ---
 ### Diagramas de Classes
 
-```markdown
 ```mermaid
 classDiagram
     class Usuario {
@@ -129,7 +128,6 @@ classDiagram
 
 ### Diagrama de Casos de Uso
 
-```markdown
 ```mermaid
   graph TD
     A[Usuário] -->|Cadastra-se| B[Aplicação]
@@ -145,7 +143,6 @@ classDiagram
 
 ### Diagrama de Fluxo
 
-```markdown
 ```mermaid
 flowchart TD
     A[Usuário Acessa a Aplicação] --> B[Login ou Registro]
