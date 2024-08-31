@@ -122,6 +122,11 @@ O resultado esperado é a entrega de uma aplicação funcional de To-Do List, pr
 ### Diagramas de Classes
 
 ```mermaid
+---
+config:
+  look: handDrawn
+  theme: neutral
+---
 classDiagram
     class Usuario {
         +String id
@@ -130,6 +135,7 @@ classDiagram
         +String senha
         +criarConta()
         +login()
+        +editar credenciais e informações de usuario()
         +recuperarSenha()
     }
 
@@ -142,6 +148,7 @@ classDiagram
         +Boolean concluida
         +criarTarefa()
         +editarTarefa()
+        +definirPrioridade()
         +marcarConcluida()
         +excluirTarefa()
     }
@@ -152,6 +159,12 @@ classDiagram
 ### Diagrama de Casos de Uso
 
 ```mermaid
+---
+config:
+  layout: elk
+  look: handDrawn
+  theme: neutral
+---
   graph TD
     A[Usuário] -->|Cadastra-se| B[Aplicação]
     A -->|Faz Login| B
@@ -167,6 +180,11 @@ classDiagram
 ### Diagrama de Fluxo
 
 ```mermaid
+---
+config:
+  look: handDrawn
+  theme: neutral
+---
 flowchart TD
     A[Usuário Acessa a Aplicação] --> B[Login ou Registro]
     B -->|Login Válido| C[Dashboard de Tarefas]
