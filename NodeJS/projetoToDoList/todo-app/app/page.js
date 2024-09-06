@@ -14,7 +14,9 @@ export default function Home() {
   const fetchTodos = async () => {
     const response = await fetch("/api/todos");
     const data = await response.json();
+
     setTodos(data.data);
+
   };
 
   // Função para adicionar uma nova tarefa
