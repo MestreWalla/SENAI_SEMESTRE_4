@@ -19,13 +19,26 @@ export async function POST(request) {
     });
   } catch (error) {
     console.error("Erro ao criar usuário:", error); // Log de erro mais detalhado
+    
+  // Trata erro de duplicidade
+  if (error.code === 11000) {
     return NextResponse.json(
       {
         success: false,
-        message: "Erro ao criar usuário.",
-        error: error.message,
-      }, // Envia o erro detalhado na resposta
-      { status: 500 }
+        message: "Username já existe. Escolha outro.",
+      },
+      { status: 400 }
     );
   }
+
+  // Outros erros
+  return NextResponse.json(
+    {
+      success: false,
+      message: "Erro ao criar usuário.",
+      error: error.message,
+    },
+    { status: 500 }
+  );
+}
 }
