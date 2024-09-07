@@ -37,7 +37,7 @@ export const updateTask = async (id, data) => {
 // Função para deletar uma tarefa por ID
 export const deleteTask = async (id) => {
   await connectMongo();
-  const tarefaDeletada = await Task.deleteOne({ _id: id }); // Corrigido para usar '_id'
+  const tarefaDeletada = await Task.deleteOne({ _id: id });
   console.log("Tarefa deletada:", tarefaDeletada);
 };
 

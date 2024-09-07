@@ -8,7 +8,7 @@ export async function GET() {
   } catch (error) {
     console.error("Error fetching tasks:", error);
     return NextResponse.json(
-      { message: "Ocorreu um erro ao buscar as tarefas" },
+      { message: "Ocorreu um erro ao buscar as tarefas", error: error.message },
       { status: 500 }
     );
   }
