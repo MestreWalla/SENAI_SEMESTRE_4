@@ -1,8 +1,8 @@
 import Head from 'next/head';
-import ContactCard from '../../components/ContactCard';
-import GroupList from '../../components/GroupList';
-import Header from '@/components/Header';
-import Sidebar from '../../components/Sidebar';
+// import ContactCard from '../../components/ContactCard';
+// import GroupList from '../../components/GroupList';
+// import Header from '@/components/Header';
+// import Sidebar from '../../components/Sidebar';
 import useSWR from 'swr';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
