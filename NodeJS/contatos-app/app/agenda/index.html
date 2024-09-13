@@ -4,47 +4,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contact Manager</title>
+    <style>
+        :root {
+            --primary-color: #c68eda;
+            --secondary-color: #ab6cc2;
+            --tertiary-color: white;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            display: flex;
+            position: fixed;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .hamburguer {
+            background: url('hamburger-icon.png') no-repeat center;
+            background-size: 24px 24px;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            width: 200px;
+        }
+
+        .search-input {
+            border: 1px solid #ddd;
+            padding: 5px;
+            width: 100%;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .search-icon {
+            background: url('search-icon.png') no-repeat center;
+            background-size: 20px 20px;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        sidebar {
+            width: 225px;
+            background-color: #f4f4f4;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            position: fixed;
+            height: calc(100vh - 50px);
+        }
+
+        .groups {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .groups button {
+            width: 100%;
+            height: 40px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        container {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 15px;
+            margin-left: 250px;
+            margin-top: 50px;
+        }
+
+        button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .add,
+        .contatos {
+            display: block;
+            margin-bottom: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .add:hover,
+        .contatos:hover {
+            background-color: #0056b3;
+        }
+
+        .add::before {
+            content: '+';
+            font-size: 18px;
+            margin-right: 5px;
+        }
+
+        .contatos::before {
+            content: '📞';
+            font-size: 18px;
+            margin-right: 5px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        .card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin: 8px;
+        }
+
+        .card:hover {
+            background-color: rgb(235, 235, 235);
+        }
+
+        .card img {
+            height: 80px;
+            border-radius: 8px;
+        }
+
+        .card .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #007bff;
+            font-size: 16px;
+        }
+
+        .actions button:hover {
+            color: #0056b3;
+        }
+
+        .actions .options {
+            position: relative;
+        }
+
+        .actions .options .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 5px;
+            z-index: 1000;
+        }
+
+        .actions .options .dropdown-menu a {
+            display: block;
+            padding: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .actions .options .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .actions .options.active .dropdown-menu {
+            display: block;
+        }
+
+        .iconify {
+            font-size: 30px;
+        }
+    </style>
 </head>
 
 <body>
     <header>
         <div class="hamburguer"></div>
-        <div class="search"></div>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search...">
+            <div class="search-icon"></div>
+        </div>
     </header>
     <sidebar>
-        <button class="add"></button>
-        <button class="contatos"></button>
-        <div>
-            <p>Grupos</p>
-            <ul>
-                <li>
-                    <button>
-                        <span class="iconify" data-icon=""></span>
-                        <p>Grupo 01</p>
-                        <p>123</p>
-                    </button>
-                </li>
-            </ul>
+        <button class="add">Add</button>
+        <button class="contatos">Contacts</button>
+        <div class="groups">
+            <p>Groups</p>
+            <button>
+                <span class="iconify" data-icon="mdi:group"></span>
+                <p>Group 01</p>
+                <p>123 Members</p>
+            </button>
+            <button>
+                <span class="iconify" data-icon="mdi:group"></span>
+                <p>Group 02</p>
+                <p>456 Members</p>
+            </button>
         </div>
     </sidebar>
     <container>
         <div class="card">
-            <img src="" alt="">
-            <p class="name"></p>
-            <p class="number"></p>
-            <p class="email"></p>
+            <img src="https://via.placeholder.com/300" alt="Profile Picture">
+            <p class="name">John Doe</p>
+            <p class="number">+1 (555) 123-4567</p>
+            <p class="email">john.doe@example.com</p>
             <div class="actions">
-                <button class="edit"></button>
+                <button class="edit">✎</button>
                 <button class="options">
-                    <a href="">compartilhar</a>
-                    <a href="">imprimir</a>
-                    <a href="">editar</a>
-                    <a href="">excluir</a>
+                    Options
+                    <div class="dropdown-menu">
+                        <a href="#">Share</a>
+                        <a href="#">Print</a>
+                        <a href="#">Edit</a>
+                        <a href="#">Delete</a>
+                    </div>
+                </button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300" alt="Profile Picture">
+            <p class="name">Jane Smith</p>
+            <p class="number">+1 (555) 987-6543</p>
+            <p class="email">jane.smith@example.com</p>
+            <div class="actions">
+                <button class="edit">✎</button>
+                <button class="options">
+                    Options
+                    <div class="dropdown-menu">
+                        <a href="#">Share</a>
+                        <a href="#">Print</a>
+                        <a href="#">Edit</a>
+                        <a href="#">Delete</a>
+                    </div>
                 </button>
             </div>
         </div>
     </container>
+    <script>
+        document.querySelectorAll('.options').forEach(button => {
+            button.addEventListener('click', function () {
+                this.classList.toggle('active');
+            });
+        });
+    </script>
 </body>
 
 </html>
