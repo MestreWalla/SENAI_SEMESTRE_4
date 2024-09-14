@@ -1,19 +1,25 @@
-import dbConnect from '../../../utils/dbConnect';
-import { getGroups, createGroup } from '../../../controllers/groupsController';
+import { getGroups, createGroup } from "@/controllers/groupsController";
 
-export default async function handler(req, res) {
-  await dbConnect();
-  const { method } = req;
+export async function GET(req) {
+  try {
+    const response = await getGroups(req);
+    return response;
+  } catch (error) {
+    return new Response(
+      JSON.stringify({ success: false, error: error.message }),
+      { status: 500 }
+    );
+  }
+}
 
-  switch (method) {
-    case 'GET':
-      await getGroups(req, res);
-      break;
-    case 'POST':
-      await createGroup(req, res);
-      break;
-    default:
-      res.setHeader('Allow', ['GET', 'POST']);
-      res.status(405).end(`Method ${method} Not Allowed`);
+export async function POST(req) {
+  try {
+    const response = await createGroup(req);
+    return response;
+  } catch (error) {
+    return new Response(
+      JSON.stringify({ success: false, error: error.message }),
+      { status: 500 }
+    );
   }
 }

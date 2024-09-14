@@ -1,64 +1,71 @@
 import Group from '../models/Group';
+import { NextResponse } from 'next/server';
 
-export const getGroups = async (req, res) => {
+// Função para obter todos os grupos
+export async function getGroups() {
   try {
     const groups = await Group.find({});
-    res.status(200).json({ success: true, data: groups });
+    return NextResponse.json({ success: true, data: groups }, { status: 200 });
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
   }
-};
+}
 
-export const createGroup = async (req, res) => {
+// Função para criar um novo grupo
+export async function createGroup(req) {
   try {
-    const group = await Group.create(req.body);
-    res.status(201).json({ success: true, data: group });
+    const data = await req.json(); // Certifique-se de que está usando req.json() para extrair o body no Next.js
+    const group = await Group.create(data);
+    return NextResponse.json({ success: true, data: group }, { status: 201 });
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
   }
-};
+}
 
-export const getGroupById = async (req, res) => {
+// Função para obter grupo por ID
+export async function getGroupById(req) {
   const { id } = req.query;
 
   try {
     const group = await Group.findById(id);
     if (!group) {
-      return res.status(404).json({ success: false, message: 'Group not found' });
+      return NextResponse.json({ success: false, message: 'Group not found' }, { status: 404 });
     }
-    res.status(200).json({ success: true, data: group });
+    return NextResponse.json({ success: true, data: group }, { status: 200 });
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
   }
-};
+}
 
-export const updateGroup = async (req, res) => {
+// Função para atualizar grupo
+export async function updateGroup(req) {
   const { id } = req.query;
-
   try {
-    const group = await Group.findByIdAndUpdate(id, req.body, {
+    const data = await req.json(); // Extraindo o body
+    const group = await Group.findByIdAndUpdate(id, data, {
       new: true,
       runValidators: true,
     });
     if (!group) {
-      return res.status(404).json({ success: false, message: 'Group not found' });
+      return NextResponse.json({ success: false, message: 'Group not found' }, { status: 404 });
     }
-    res.status(200).json({ success: true, data: group });
+    return NextResponse.json({ success: true, data: group }, { status: 200 });
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
   }
-};
+}
 
-export const deleteGroup = async (req, res) => {
+// Função para deletar grupo
+export async function deleteGroup(req) {
   const { id } = req.query;
 
   try {
     const deletedGroup = await Group.deleteOne({ _id: id });
     if (!deletedGroup.deletedCount) {
-      return res.status(404).json({ success: false, message: 'Group not found' });
+      return NextResponse.json({ success: false, message: 'Group not found' }, { status: 404 });
     }
-    res.status(200).json({ success: true, data: {} });
+    return NextResponse.json({ success: true, data: {} }, { status: 200 });
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
   }
-};
+}

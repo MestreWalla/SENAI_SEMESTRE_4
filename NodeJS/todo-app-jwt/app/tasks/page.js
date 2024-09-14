@@ -12,6 +12,7 @@ export default function TasksPage() {
 
   useEffect(() => {
     const fetchTasks = async () => {
+
       const token = localStorage.getItem("token");
       if (!token) {
         router.push("/login");

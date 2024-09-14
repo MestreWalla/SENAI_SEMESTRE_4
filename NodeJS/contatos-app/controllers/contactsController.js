@@ -1,64 +1,55 @@
-import Contact from '../models/Contact';
+// controllers/contactsController.js
 
-export const getContacts = async (req, res) => {
-  try {
-    const contacts = await Contact.find({});
-    res.status(200).json({ success: true, data: contacts });
-  } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
-  }
+import Contact from "@/models/Contact"; // Certifique-se de que o caminho está correto
+
+// Função para buscar todos os contatos
+// export async function getContacts() {
+//   try {
+//     const contacts = await Contact.find().populate("group");
+//     return contacts;
+//   } catch (error) {
+//     console.error("Erro ao buscar contatos:", error);
+//     throw new Error(`Erro ao buscar contatos: ${error.message}`);
+//   }
+// }
+
+export const getContacts = async () => {
+  await connectMongo();
+  const contact = await Contact.find();
+  return contact;
 };
 
-export const createContact = async (req, res) => {
+// Função para buscar um contato por ID
+export async function getContactById(id) {
   try {
-    const contact = await Contact.create(req.body);
-    res.status(201).json({ success: true, data: contact });
+    // Busca o contato pelo ID, populando o campo 'group' se necessário
+    const contact = await Contact.findById(id).populate("group");
+    return contact;
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+    throw new Error(`Erro ao buscar contato por ID: ${error.message}`);
   }
-};
+}
 
-export const getContactById = async (req, res) => {
-  const { id } = req.query;
-
+// Função para atualizar um contato
+export async function updateContact(id, data) {
   try {
-    const contact = await Contact.findById(id);
-    if (!contact) {
-      return res.status(404).json({ success: false, message: 'Contact not found' });
-    }
-    res.status(200).json({ success: true, data: contact });
-  } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
-  }
-};
-
-export const updateContact = async (req, res) => {
-  const { id } = req.query;
-
-  try {
-    const contact = await Contact.findByIdAndUpdate(id, req.body, {
+    // Atualiza o contato e retorna o novo documento, populando o campo 'group' se necessário
+    const contact = await Contact.findByIdAndUpdate(id, data, {
       new: true,
-      runValidators: true,
-    });
-    if (!contact) {
-      return res.status(404).json({ success: false, message: 'Contact not found' });
-    }
-    res.status(200).json({ success: true, data: contact });
+    }).populate("group");
+    return contact;
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+    throw new Error(`Erro ao atualizar contato: ${error.message}`);
   }
-};
+}
 
-export const deleteContact = async (req, res) => {
-  const { id } = req.query;
-
+// Função para deletar um contato
+export async function deleteContact(id) {
   try {
-    const deletedContact = await Contact.deleteOne({ _id: id });
-    if (!deletedContact.deletedCount) {
-      return res.status(404).json({ success: false, message: 'Contact not found' });
-    }
-    res.status(200).json({ success: true, data: {} });
+    // Deleta o contato pelo ID e retorna o contato deletado
+    const contact = await Contact.findByIdAndDelete(id);
+    return contact;
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+    throw new Error(`Erro ao deletar contato: ${error.message}`);
   }
-};
+}
