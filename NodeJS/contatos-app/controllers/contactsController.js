@@ -1,6 +1,7 @@
 // controllers/contactsController.js
 
 import Contact from "@/models/Contact"; // Certifique-se de que o caminho está correto
+import connectMongo from "@/utils/dbConnect";
 
 // Função para buscar todos os contatos
 // export async function getContacts() {
@@ -15,8 +16,8 @@ import Contact from "@/models/Contact"; // Certifique-se de que o caminho está 
 
 export const getContacts = async () => {
   await connectMongo();
-  const contact = await Contact.find();
-  return contact;
+  const contacts = await Contact.find();
+  return contacts;
 };
 
 // Função para buscar um contato por ID
