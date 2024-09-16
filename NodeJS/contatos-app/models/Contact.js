@@ -16,8 +16,7 @@ const ContactSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    // Regex mais genérico para números internacionais
-    match: /^\+\d{1,3}\s?\(?\d{1,4}\)?\s?\d{3,5}-?\d{4,5}$/,
+    // match: /^\+\d{1,3}\s?\(?\d{1,4}\)?\s?\d{3,5}-?\d{4,5}$/,
   },
   address: {
     type: String,
