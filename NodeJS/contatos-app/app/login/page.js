@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -10,20 +11,24 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleLogin = async () => {
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
+    try {
+      const response = await axios.post("/api/auth/login", {
+        username,
+        password,
+      });
 
-    if (response.ok) {
-      const { token } = await response.json();
-      localStorage.setItem("token", token);
-      router.push("/agenda");
-    } else {
-      setError("Credenciais inválidas");
+      if (response.data.success) {
+        // Defina o cookie com o token retornado
+        document.cookie = `auth-token=${response.data.token}; path=/; secure; samesite=strict;`;
+
+        // Redirecione para a página desejada após login
+        router.push("/agenda");
+      } else {
+        setError(response.data.message);
+      }
+    } catch (error) {
+      setError("Erro ao fazer login. Por favor, tente novamente.");
+      console.error("Erro ao fazer login:", error);
     }
   };
 
