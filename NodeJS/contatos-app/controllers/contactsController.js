@@ -2,6 +2,7 @@
 
 import Contact from "@/models/Contact"; // Certifique-se de que o caminho está correto
 import connectMongo from "@/utils/dbConnect";
+import Group from "@/models/Group";
 
 // Função para buscar todos os contatos
 // export async function getContacts() {
@@ -22,9 +23,12 @@ export const getContacts = async () => {
 
 // Função para buscar um contato por ID
 export async function getContactById(id) {
+  await connectMongo();
   try {
-    // Busca o contato pelo ID, populando o campo 'group' se necessário
     const contact = await Contact.findById(id).populate("group");
+    if (!contact) {
+      throw new Error("Contato não encontrado");
+    }
     return contact;
   } catch (error) {
     throw new Error(`Erro ao buscar contato por ID: ${error.message}`);
@@ -33,16 +37,20 @@ export async function getContactById(id) {
 
 // Função para atualizar um contato
 export async function updateContact(id, data) {
+  await connectMongo();
   try {
-    // Atualiza o contato e retorna o novo documento, populando o campo 'group' se necessário
     const contact = await Contact.findByIdAndUpdate(id, data, {
       new: true,
     }).populate("group");
+    if (!contact) {
+      throw new Error("Contato não encontrado");
+    }
     return contact;
   } catch (error) {
     throw new Error(`Erro ao atualizar contato: ${error.message}`);
   }
 }
+
 
 // Função para deletar um contato
 export async function deleteContact(id) {

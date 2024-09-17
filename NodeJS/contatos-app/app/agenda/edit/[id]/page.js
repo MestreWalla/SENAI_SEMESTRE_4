@@ -1,15 +1,43 @@
 "use client";
 
-import { useState } from "react";
-import themes from "../themes";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import themes from "../../themes";
 
-export default function AddContact() {
+export default function EditContact({ params }) {
+  const router = useRouter();
+  const { id } = params; // Pegando o ID do contato da URL
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const [currentTheme, setCurrentTheme] = useState("light"); // Defina o tema padrão aqui
+
+  useEffect(() => {
+    // Função para buscar os dados do contato
+    const fetchContact = async () => {
+      try {
+        const response = await fetch(`/api/contacts/${id}`);
+        const data = await response.json();
+
+        if (data.success) {
+          setName(data.data.name);
+          setPhone(data.data.phone);
+          setEmail(data.data.email);
+          setAddress(data.data.address);
+          setProfilePicture(data.data.profilePicture);
+        } else {
+          alert("Erro ao carregar contato: " + data.error);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar contato:", error);
+        alert("Erro ao carregar contato. Tente novamente.");
+      }
+    };
+
+    fetchContact();
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,8 +49,8 @@ export default function AddContact() {
     }
 
     try {
-      const response = await fetch("/api/contacts", {
-        method: "POST",
+      const response = await fetch(`/api/contacts/${id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -32,18 +60,14 @@ export default function AddContact() {
       const result = await response.json();
 
       if (result.success) {
-        alert("Contato cadastrado com sucesso!");
-        // Redireciona ou limpa o formulário
-        setName("");
-        setPhone("");
-        setEmail("");
-        setProfilePicture("");
+        alert("Contato atualizado com sucesso!");
+        router.push("/agenda"); // Redireciona para a página principal ou para a lista de contatos
       } else {
-        alert("Erro ao cadastrar contato: " + result.error);
+        alert("Erro ao atualizar contato: " + result.error);
       }
     } catch (error) {
-      console.error("Erro ao cadastrar contato:", error);
-      alert("Erro ao cadastrar contato. Tente novamente.");
+      console.error("Erro ao atualizar contato:", error);
+      alert("Erro ao atualizar contato. Tente novamente.");
     }
   };
 
@@ -57,7 +81,7 @@ export default function AddContact() {
         color: theme.text,
       }}
     >
-      <h1>Cadastrar Contato</h1>
+      <h1>Editar Contato</h1>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: "10px" }}>
           <label htmlFor="name">Nome:</label>
@@ -160,7 +184,7 @@ export default function AddContact() {
             cursor: "pointer",
           }}
         >
-          Cadastrar
+          Atualizar
         </button>
       </form>
     </div>

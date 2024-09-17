@@ -21,14 +21,14 @@ export default function LoginPage() {
     if (response.ok) {
       const { token } = await response.json();
       localStorage.setItem("token", token);
-      router.push("/tasks");
+      router.push("/agenda");
     } else {
       setError("Credenciais inválidas");
     }
   };
 
   return (
-    <div>
+    <div className="corpo">
       <header>
         <div className="hamburguer">
           <svg
@@ -146,7 +146,7 @@ export default function LoginPage() {
       </footer>
       <style jsx>{`
         /* Estilos gerais para a página */
-        div {
+        .corpo {
           display: flex;
           flex-direction: column;
         }
@@ -170,13 +170,12 @@ export default function LoginPage() {
 
         .search-input {
           padding: 8px;
-          margin-left: 10px;
+          margin-right: 10px;
         }
 
         main {
           flex: 1;
           padding: 20px;
-          margin-left: 220px; /* Ajusta o espaço para o aside */
         }
 
         footer {

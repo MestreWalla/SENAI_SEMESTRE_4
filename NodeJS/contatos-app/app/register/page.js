@@ -33,7 +33,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div>
+    <div className="corpo">
       <header>
         <div className="hamburguer">
           <svg
@@ -150,7 +150,8 @@ export default function RegisterPage() {
         </div>
       </footer>
       <style jsx>{`
-        div {
+        /* Estilos gerais para a página */
+        .corpo {
           display: flex;
           flex-direction: column;
         }
@@ -174,7 +175,7 @@ export default function RegisterPage() {
 
         .search-input {
           padding: 8px;
-          margin-left: 10px;
+          margin-right: 10px;
         }
 
         main {

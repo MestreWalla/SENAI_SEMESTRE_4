@@ -61,6 +61,37 @@ export async function POST(request, { params }) {
   }
 }
 
+export async function PUT(request, { params }) {
+  try {
+    const data = await request.json();
+    const contact = await updateContact(params.id, data);
+    if (!contact) {
+      return NextResponse.json(
+        { success: false, message: "Contato não encontrado" },
+        { status: 404 }
+      );
+    }
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Contato atualizado com sucesso!",
+        data: contact,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Erro ao atualizar contato:", error);
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Erro ao atualizar contato",
+        error: error.message,
+      },
+      { status: 500 }
+    );
+  }
+}
+
 export async function DELETE(request, { params }) {
   try {
     const contact = await deleteContact(params.id);

@@ -3,13 +3,14 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import themes from "./themes";
 
 const ContactList = () => {
   const [contacts, setContacts] = useState([]);
+  const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
   const router = useRouter();
 
   useEffect(() => {
-    // Função para buscar contatos do banco de dados
     const fetchContacts = async () => {
       try {
         const response = await fetch("/api/contacts");
@@ -29,13 +30,15 @@ const ContactList = () => {
   }, []);
 
   const handleEdit = (id) => {
-    router.push(`/edit/${id}`);
+    router.push(`/agenda/edit/${id}`);
   };
 
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/api/contacts/${id}`);
-      setContacts(contacts.filter((contact) => contact._id !== id));
+      setContacts((prevContacts) =>
+        prevContacts.filter((contact) => contact._id !== id)
+      );
     } catch (error) {
       console.error("Erro ao excluir contato:", error);
     }
@@ -45,17 +48,27 @@ const ContactList = () => {
     router.push("/agenda/add-contact");
   };
 
+  const themeOptions = Object.keys(themes);
+
+  const handleThemeChange = (event) => {
+    const selectedThemeIndex = themeOptions.indexOf(event.target.value);
+    setCurrentThemeIndex(selectedThemeIndex);
+  };
+
   const getImageSrc = (url) => {
-    const imageUrl = typeof url === "string" ? url.trim() : "";
-    return imageUrl !== ""
-      ? imageUrl
+    return typeof url === "string" && url.trim() !== ""
+      ? url
       : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3lUXoW_2yUPKkKpFEVGM04gsRowd0vCyXew&s";
   };
 
+  const currentTheme = themes[themeOptions[currentThemeIndex]];
+
   return (
-    <div>
+    <div
+      style={{ background: currentTheme.background, color: currentTheme.text }}
+    >
       <header>
-        <div className="hamburguer">
+        <div className="hamburguer" aria-label="Menu">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1em"
@@ -65,11 +78,11 @@ const ContactList = () => {
             <g
               fill="none"
               stroke="currentColor"
-              stroke-dasharray="16"
-              stroke-dashoffset="16"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeDasharray="16"
+              strokeDashoffset="16"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
             >
               <path d="M5 5h14">
                 <animate
@@ -101,7 +114,12 @@ const ContactList = () => {
           </svg>
         </div>
         <div className="search-container">
-          <input type="text" className="search-input" placeholder="Search..." />
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search..."
+            aria-label="Search contacts"
+          />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1em"
@@ -111,13 +129,13 @@ const ContactList = () => {
             <g
               fill="none"
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
             >
               <path
-                stroke-dasharray="40"
-                stroke-dashoffset="40"
+                strokeDasharray="40"
+                strokeDashoffset="40"
                 d="M10.76 13.24c-2.34 -2.34 -2.34 -6.14 0 -8.49c2.34 -2.34 6.14 -2.34 8.49 0c2.34 2.34 2.34 6.14 0 8.49c-2.34 2.34 -6.14 2.34 -8.49 0Z"
               >
                 <animate
@@ -128,8 +146,8 @@ const ContactList = () => {
                 />
               </path>
               <path
-                stroke-dasharray="12"
-                stroke-dashoffset="12"
+                strokeDasharray="12"
+                strokeDashoffset="12"
                 d="M10.5 13.5l-7.5 7.5"
               >
                 <animate
@@ -143,6 +161,17 @@ const ContactList = () => {
             </g>
           </svg>
         </div>
+        <select
+          onChange={handleThemeChange}
+          value={themeOptions[currentThemeIndex]}
+          className="theme-select"
+        >
+          {themeOptions.map((theme) => (
+            <option key={theme} value={theme}>
+              {theme} Mode
+            </option>
+          ))}
+        </select>
       </header>
       <div className="container">
         <aside>
@@ -156,13 +185,13 @@ const ContactList = () => {
               <g
                 fill="none"
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
               >
                 <path
-                  stroke-dasharray="64"
-                  stroke-dashoffset="64"
+                  strokeDasharray="64"
+                  strokeDashoffset="64"
                   d="M3 12c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9c-4.97 0 -9 -4.03 -9 -9Z"
                 >
                   <animate
@@ -172,7 +201,7 @@ const ContactList = () => {
                     values="64;0"
                   />
                 </path>
-                <path stroke-dasharray="12" stroke-dashoffset="12" d="M7 12h10">
+                <path strokeDasharray="12" strokeDashoffset="12" d="M7 12h10">
                   <animate
                     fill="freeze"
                     attributeName="stroke-dashoffset"
@@ -181,7 +210,7 @@ const ContactList = () => {
                     values="12;0"
                   />
                 </path>
-                <path stroke-dasharray="12" stroke-dashoffset="12" d="M12 7v10">
+                <path strokeDasharray="12" strokeDashoffset="12" d="M12 7v10">
                   <animate
                     fill="freeze"
                     attributeName="stroke-dashoffset"
@@ -204,11 +233,11 @@ const ContactList = () => {
               <g
                 fill="none"
                 stroke="currentColor"
-                stroke-dasharray="32"
-                stroke-dashoffset="32"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeDasharray="32"
+                strokeDashoffset="32"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
               >
                 <path d="M4 21v-1c0 -3.31 2.69 -6 6 -6h4c3.31 0 6 2.69 6 6v1">
                   <animate
@@ -243,11 +272,11 @@ const ContactList = () => {
                 <path
                   fill="none"
                   stroke="currentColor"
-                  stroke-dasharray="56"
-                  stroke-dashoffset="56"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeDasharray="56"
+                  strokeDashoffset="56"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M5 4h14l-5 6.5v9.5l-4 -4v-5.5Z"
                 >
                   <animate
@@ -271,11 +300,11 @@ const ContactList = () => {
                 <path
                   fill="none"
                   stroke="currentColor"
-                  stroke-dasharray="56"
-                  stroke-dashoffset="56"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeDasharray="56"
+                  strokeDashoffset="56"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M5 4h14l-5 6.5v9.5l-4 -4v-5.5Z"
                 >
                   <animate
@@ -302,7 +331,6 @@ const ContactList = () => {
                     alt={contact.name || "Profile Picture"}
                     className="contact-photo"
                   />
-
                   <div className="contact-details">
                     <p className="contact-name">{contact.name}</p>
                     <p className="contact-email">{contact.email}</p>
@@ -343,7 +371,7 @@ const ContactList = () => {
           align-items: center;
           justify-content: space-between;
           padding: 1rem;
-          background: #f0f0f0;
+          background: ${currentTheme.background};
         }
 
         main {
@@ -362,16 +390,27 @@ const ContactList = () => {
         .search-input {
           padding: 0.5rem;
           margin-right: 0.5rem;
-          border: 1px solid #ccc;
+          border: 1px solid ${currentTheme.border};
           border-radius: 4px;
+          background: ${currentTheme.background};
+          color: ${currentTheme.text};
+        }
+
+        .theme-select {
+          padding: 0.5rem;
+          border: 1px solid ${currentTheme.border};
+          border-radius: 4px;
+          background: ${currentTheme.background};
+          color: ${currentTheme.text};
+          cursor: pointer;
         }
 
         aside {
           display: flex;
           flex-direction: column;
           padding: 1rem;
-          background: #f9f9f9;
-          border-right: 1px solid #ddd;
+          background: ${currentTheme.background};
+          border-right: 1px solid ${currentTheme.border};
         }
 
         .add,
@@ -380,11 +419,12 @@ const ContactList = () => {
           align-items: center;
           padding: 0.5rem;
           margin-bottom: 1rem;
-          background: #e0e0e0;
+          background: ${currentTheme.buttonBackground};
           border: none;
           border-radius: 4px;
           cursor: pointer;
           font-size: 1rem;
+          color: ${currentTheme.buttonText};
         }
 
         .add svg,
@@ -400,12 +440,13 @@ const ContactList = () => {
           display: flex;
           flex-direction: column;
           align-items: center;
-          background: #e0e0e0;
+          background: ${currentTheme.buttonBackground};
           border: none;
           border-radius: 4px;
           padding: 0.5rem;
           margin-bottom: 1rem;
           cursor: pointer;
+          color: ${currentTheme.buttonText};
         }
 
         .contact-list {
@@ -421,8 +462,8 @@ const ContactList = () => {
           width: 100%;
           margin-bottom: 1rem;
           padding: 0.5rem;
-          background: #fff;
-          border: 1px solid #ddd;
+          background: ${currentTheme.contactBackground};
+          border: 1px solid ${currentTheme.border};
           border-radius: 4px;
         }
 
@@ -456,11 +497,11 @@ const ContactList = () => {
         }
 
         .edit-button {
-          background: #4caf50;
+          background: ${currentTheme.buttonEdit};
         }
 
         .delete-button {
-          background: #f44336;
+          background: ${currentTheme.buttonDelete};
         }
       `}</style>
     </div>
