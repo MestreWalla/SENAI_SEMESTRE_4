@@ -9,6 +9,7 @@ const ContactList = () => {
   const [contacts, setContacts] = useState([]);
   const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
   const router = useRouter();
+  const [contactCount, setContactCount] = useState(0);
 
   useEffect(() => {
     const fetchContacts = async () => {
@@ -18,6 +19,7 @@ const ContactList = () => {
 
         if (result.success) {
           setContacts(result.data);
+          setContactCount(result.data.length);
         } else {
           console.error("Erro ao buscar contatos:", result.message);
         }
@@ -221,7 +223,7 @@ const ContactList = () => {
                 </path>
               </g>
             </svg>
-            Adicionar
+            Adicionar contato
           </button>
           <button className="contatos">
             <svg
@@ -252,13 +254,13 @@ const ContactList = () => {
                     fill="freeze"
                     attributeName="stroke-dashoffset"
                     begin="0.4s"
-                    dur="0.4s"
+                    dur="0.2s"
                     values="32;0"
                   />
                 </path>
               </g>
             </svg>
-            Contatos
+            Contatos ({contactCount}) {/* Exibe a contagem de contatos */}
           </button>
           <div className="groups">
             <p>Grupos</p>
@@ -341,7 +343,17 @@ const ContactList = () => {
                       onClick={() => handleEdit(contact._id)}
                       className="edit-button"
                     >
-                      Editar
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="m16.77 8l1.94-2a1 1 0 0 0 0-1.41l-3.34-3.3a1 1 0 0 0-1.41 0L12 3.23zM1 14.25V19h4.75l9.96-9.96l-4.75-4.75z"
+                        />
+                      </svg>
                     </button>
                     <button
                       onClick={() => handleDelete(contact._id)}
@@ -376,6 +388,7 @@ const ContactList = () => {
 
         main {
           flex: 1;
+          background: ${currentTheme.bodyBackground};
         }
 
         .hamburguer {

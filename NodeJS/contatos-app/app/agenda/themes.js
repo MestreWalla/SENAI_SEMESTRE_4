@@ -1,6 +1,17 @@
 // styles/themes.js
 
 const themes = {
+  figma: {
+    background: "#b9aac2",
+    text: "#000",
+    buttonBackground: "#fbf2f2",
+    buttonText: "#000",
+    buttonEdit: "#4caf50",
+    buttonDelete: "#f44336",
+    border: "#ddd",
+    contactBackground: "#fff",
+    bodyBackground: "#ece6f0",
+  },
   light: {
     background: "#f0f0f0",
     text: "#000",
@@ -10,6 +21,7 @@ const themes = {
     buttonDelete: "#f44336",
     border: "#ddd",
     contactBackground: "#fff",
+    bodyBackground: "#ece6f0",
   },
   dark: {
     background: "#333",
@@ -20,6 +32,7 @@ const themes = {
     buttonDelete: "#f44336",
     border: "#444",
     contactBackground: "#222",
+    bodyBackground: "#ece6f0",
   },
   lightBlue: {
     background: "#e3f2fd",
@@ -30,6 +43,7 @@ const themes = {
     buttonDelete: "#d32f2f",
     border: "#81d4fa",
     contactBackground: "#ffffff",
+    bodyBackground: "#ece6f0",
   },
   pink: {
     background: "#fce4ec",
@@ -40,6 +54,7 @@ const themes = {
     buttonDelete: "#c2185b",
     border: "#f48fb1",
     contactBackground: "#ffffff",
+    bodyBackground: "#ece6f0",
   },
   darkOrange: {
     background: "#212121",
@@ -50,6 +65,7 @@ const themes = {
     buttonDelete: "#ff7043",
     border: "#616161",
     contactBackground: "#303030",
+    bodyBackground: "#ece6f0",
   },
   green: {
     background: "#e8f5e9",
@@ -60,6 +76,7 @@ const themes = {
     buttonDelete: "#c62828",
     border: "#a5d6a7",
     contactBackground: "#ffffff",
+    bodyBackground: "#ece6f0",
   },
   purple: {
     background: "#f3e5f5",
@@ -70,6 +87,7 @@ const themes = {
     buttonDelete: "#d81b60",
     border: "#ce93d8",
     contactBackground: "#ffffff",
+    bodyBackground: "#ece6f0",
   },
   teal: {
     background: "#e0f2f1",
@@ -80,6 +98,7 @@ const themes = {
     buttonDelete: "#004d40",
     border: "#80cbc4",
     contactBackground: "#ffffff",
+    bodyBackground: "#ece6f0",
   },
   amber: {
     background: "#fff8e1",
@@ -90,6 +109,7 @@ const themes = {
     buttonDelete: "#f57f17",
     border: "#ffecb3",
     contactBackground: "#ffffff",
+    bodyBackground: "#ece6f0",
   },
 };
 
