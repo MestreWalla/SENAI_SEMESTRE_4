@@ -289,8 +289,8 @@ const ContactList = () => {
                   />
                 </path>
               </svg>
-              <p>Group 01</p>
-              <p>123 Members</p>
+              <p>Trabalho</p>
+              <p>(5)</p>
             </button>
             <button>
               <svg
@@ -317,8 +317,8 @@ const ContactList = () => {
                   />
                 </path>
               </svg>
-              <p>Group 02</p>
-              <p>45 Members</p>
+              <p>Familia</p>
+              <p>(8)</p>
             </button>
           </div>
         </aside>
@@ -451,7 +451,7 @@ const ContactList = () => {
 
         .groups button {
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
           align-items: center;
           background: ${currentTheme.buttonBackground};
           border: none;
@@ -459,6 +459,7 @@ const ContactList = () => {
           padding: 0.5rem;
           margin-bottom: 1rem;
           cursor: pointer;
+          gap: 0.5rem;
           color: ${currentTheme.buttonText};
         }
 
@@ -477,13 +478,13 @@ const ContactList = () => {
           padding: 0.5rem;
           background: ${currentTheme.contactBackground};
           border: 1px solid ${currentTheme.border};
-          border-radius: 4px;
+          border-radius: 25px;
         }
 
         .contact-photo {
           width: 50px;
           height: 50px;
-          border-radius: 50%;
+          border-radius: 15px;
           margin-right: 1rem;
         }
 
