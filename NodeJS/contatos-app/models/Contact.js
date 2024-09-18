@@ -32,13 +32,11 @@ const ContactSchema = new mongoose.Schema({
     ref: 'Group',
     required: false,
   },
-  // Array de URLs para fotos
-  photoURL: [
-    {
+  // URLs para fotos
+  photoURL: {
       type: String,
       required: false,
     },
-  ],
   // Tags como array de strings
   tags: [
     {
