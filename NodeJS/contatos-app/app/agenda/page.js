@@ -270,7 +270,7 @@ const ContactList = () => {
                 </path>
               </g>
             </svg>
-            Contatos ({contactCount}) {/* Exibe a contagem de contatos */}
+            Contatos ({contactCount}) {}
           </button>
           <div className="groups">
             <p>Grupos</p>
@@ -492,8 +492,8 @@ const ContactList = () => {
         }
 
         .contact-photo {
-          width: 50px;
-          height: 50px;
+          width: 100px;
+          height: 80px;
           border-radius: 15px;
           margin-right: 1rem;
         }
