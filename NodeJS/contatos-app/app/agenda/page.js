@@ -10,6 +10,7 @@ const ContactList = () => {
   const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
   const router = useRouter();
   const [contactCount, setContactCount] = useState(0);
+  const themeOptions = Object.keys(themes);
 
   useEffect(() => {
     const fetchContacts = async () => {
@@ -50,8 +51,6 @@ const ContactList = () => {
     router.push("/agenda/add-contact");
   };
 
-  const themeOptions = Object.keys(themes);
-
   const handleThemeChange = (event) => {
     const selectedThemeIndex = themeOptions.indexOf(event.target.value);
     setCurrentThemeIndex(selectedThemeIndex);
@@ -63,6 +62,16 @@ const ContactList = () => {
       : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3lUXoW_2yUPKkKpFEVGM04gsRowd0vCyXew&s";
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post("/api/auth/logout");
+      console.log("Resposta do logout:", response.data); // Log da resposta
+      alert("Logout realizado com sucesso!");
+      router.push("/login");
+    } catch (error) {
+      console.error("Erro ao fazer logout:", error);
+    }
+  };
   const currentTheme = themes[themeOptions[currentThemeIndex]];
 
   return (
@@ -174,6 +183,7 @@ const ContactList = () => {
             </option>
           ))}
         </select>
+        <button onClick={handleLogout}>Logout</button>
       </header>
       <div className="container">
         <aside>
