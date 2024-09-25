@@ -10,5 +10,5 @@ public abstract class Produto {
     private String nome;
     private double preco;
 
-    public abstract String calcularFrete();
+    public abstract double calcularPeso();
 }
