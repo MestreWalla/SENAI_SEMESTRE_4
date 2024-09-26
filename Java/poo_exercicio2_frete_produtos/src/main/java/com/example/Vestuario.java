@@ -11,13 +11,13 @@ public class Vestuario
 
     @Override
     public double calcularPeso() {
-        double peso = volume * 1.5;
+        double peso = volume * 0.5;
         return peso;
     }
 
     @Override
     public double calcularFrete() {
-        double valorFrete = calcularPeso() * 2;
+        double valorFrete = calcularPeso() * 3;
         return valorFrete;
     }
 }
