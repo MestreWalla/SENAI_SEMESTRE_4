@@ -23,12 +23,13 @@ public class Main {
                     gv.venda(CPF, produto);
                     break;
                 case "2":
-                String CPF = JOptionPane.showInputDialog("Informe o CPF do cliente: ");
-                double valorMinimo = Double.parseDouble(JOptionPane.showInputDialog("Informe o valor mínimo: "));
-                    gv.consultarVendaPorCliente(String CPF);
+                    String CPF2 = JOptionPane.showInputDialog("Informe o CPF do cliente: ");
+                    gv.consultarVendaPorCliente(CPF2);
                     break;
                 case "3":
-                    gv.listarVendasAcimaDeValor(String CPF, double valorMinimo);
+                    String CPF3 = JOptionPane.showInputDialog("Informe o CPF do cliente: ");
+                    double valorMinimo2 = Double.parseDouble(JOptionPane.showInputDialog("Informe o valor mínimo: "));
+                    gv.listarVendasAcimaDeValor(CPF3, valorMinimo2);
                     break;
                 case "4":
                     JOptionPane.showMessageDialog(null, "Saindo do programa...");
