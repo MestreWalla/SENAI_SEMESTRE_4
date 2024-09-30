@@ -6,7 +6,8 @@ import java.io.FileReader;
 
 public class LeituraArquivo {
     public void exemplo() {
-        try (BufferedReader br = new BufferedReader(new FileReader("dados.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(
+                "C:\\Users\\DevNoite\\Documents\\GitHub\\SENAI_SEMESTRE_4\\Java\\io_exemplo\\dados.txt"))) {
             String linha;
             do {
                 // String line = br.readLine();
