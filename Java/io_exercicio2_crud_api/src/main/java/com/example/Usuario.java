@@ -21,7 +21,7 @@ public class Usuario {
                 "\n   id=" + id + "\n" +
                 "   nome=" + nome + "\n" +
                 "   idade=" + idade + "\n" +
-                "   endereco='" + endereco + "\n" +
+                "   endereco=" + endereco + "\n" +
                 '}';
     }
 }

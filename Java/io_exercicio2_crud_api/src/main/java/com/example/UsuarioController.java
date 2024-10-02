@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class UsuarioController {
@@ -61,15 +62,16 @@ public class UsuarioController {
         }
     }
 
-    public void Write(Usuario usuario) {
+    public void write(Usuario usuario) {
         try {
             url = new URL("http://localhost:3000/usuarios");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json; utf-8");
             conn.setRequestProperty("Accept", "aplication/json");
-            // conn.setDoOutput("endereco", usuario.getEndereco());
-
+            conn.setDoOutput(true);
+            // Informações nescessarias para o post
+            // Criando o objeto JSON com as informações do usuário
             JSONObject usuarioJson = new JSONObject();
             usuarioJson.put("nome", usuario.getNome());
             usuarioJson.put("idade", usuario.getIdade());
@@ -91,6 +93,62 @@ public class UsuarioController {
             }
         } catch (Exception e) {
             System.out.println("Erro ao gravar dados na API: " + e.getMessage());
+        }
+    }
+
+    public void update(Usuario usuario) {
+        try {
+            url = new URL("http://localhost:3000/usuarios/" + usuario.getId());
+            // Criando a conexão com a API
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("PUT");
+            conn.setRequestProperty("Content-Type", "application/json; utf-8");
+            conn.setRequestProperty("Accept", "aplication/json");
+            conn.setDoOutput(true);
+            // Criando o objeto JSON com as informações do usuário
+            JSONObject usuarioJson = new JSONObject();
+            usuarioJson.put("id", usuario.getId());
+            usuarioJson.put("nome", usuario.getNome());
+            usuarioJson.put("idade", usuario.getIdade());
+            usuarioJson.put("endereço", usuario.getEndereco());
+            // Enviando os dados para a API
+            try (BufferedWriter bw = new BufferedWriter(
+                    new OutputStreamWriter(conn.getOutputStream(), "UTF-8"))) {
+                bw.write(usuarioJson.toString());
+                bw.flush();
+            }
+            // Verificar status da conexão
+            int status = conn.getResponseCode();
+            if (status == 200) { // Se 200, o usuário foi atualizado com sucesso
+                System.out.println("Usuario atualizado com sucesso!");
+                read(); // Mostrar os dados dos usuários
+            } else {
+                throw new Exception("Erro ao atualizar usuario" + status);
+            }
+        } catch (JSONException e) {
+            System.out.println("Erro ao converter objeto para JSON: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar usuario na API: " + e.getMessage());
+        }
+    }
+
+    public void delete(String id) {
+        try {
+            url = new URL("http://localhost:3000/usuarios/" + id);
+            // Criando a conexão com a API
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("DELETE");
+            conn.setRequestProperty("Accept", "application/json");
+            // Verificar status da conexão
+            int status = conn.getResponseCode();
+            if (status == 200) { // Se 200, o usuário foi excluído com sucesso
+                System.out.println("Usuario excluído com sucesso!");
+                read(); // Mostrar os dados dos usuários
+            } else {
+                throw new Exception("Erro ao excluir usuario: " + status);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao deletar usuario na API: " + e.getMessage());
         }
     }
 }
