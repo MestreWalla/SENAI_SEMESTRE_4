@@ -1,0 +1,44 @@
+{
+    "usuarios": [
+        {
+            "nome": "Maria",
+            "idade": 30,
+            "endereco": "Rua das Flores, 123"
+        },
+        {
+            "nome": "João",
+            "idade": 25,
+            "endereco": "Av. Paulista, 456"
+        },
+        {
+            "nome": "Gabriela",
+            "idade": 35,
+            "endereco": "Rua do Sol, 789"
+        },
+        {
+            "nome": "Ana",
+            "idade": 28,
+            "endereco": "Av. Brasil, 1011"
+        },
+        {
+            "nome": "Lucas",
+            "idade": 40,
+            "endereco": "Rua das Rosas, 1213"
+        },
+        {
+            "nome": "Isabella",
+            "idade": 32,
+            "endereco": "Rua do Acre, 1415"
+        },
+        {
+            "nome": "Maria",
+            "idade": 30,
+            "endereco": "Rua das Flores, 123"
+        },
+        {
+            "nome": "Leticia",
+            "idade": 25,
+            "endereco": "Av. Paulista, 656"
+        }
+    ]
+}

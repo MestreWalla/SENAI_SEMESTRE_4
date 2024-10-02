@@ -9,6 +9,7 @@ public class Main {
         // obj.alunoMenorNota();
         // obj.alunoMediaCadaAluno();
 
-        new LeituraCSV().exemplo();
+        // new LeituraCSV().exemplo();
+        new LeituraAPI().exemplo();
     }
 }
