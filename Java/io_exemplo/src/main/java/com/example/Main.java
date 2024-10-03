@@ -12,11 +12,11 @@ public class Main {
         // new LeituraCSV().exemplo();
         // new LeituraAPI().exemplo();
         // new LeituraBD().exemplo();
-        
-        // new LeituraBD().viewClientes();
-        new LeituraBD().addCliente("João", "joao@example.com");
-        // new LeituraBD().updateUsuario(1, "Jose", "jose@example.com");
-        // new LeituraBD().deleteCliente(2);
+
+        new LeituraBD().viewClientes();
+        // new LeituraBD().addCliente("João", "joao@example.com");
+        // new LeituraBD().updateCliente(1, "Jose", "jose@example.com");
+        // new LeituraBD().deleteCliente(1);
 
     }
 }

@@ -2,6 +2,7 @@ package com.example;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -67,71 +68,64 @@ public class LeituraBD {
     }
 
     public void addCliente(String nome, String email) {
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres",
-                    "postgres", "postgres");
-            if (conn != null) {
-                System.out.println("Conexão bem-sucedida!");
-            } else {
-                System.out.println("Falha na conexão.");
-            }
-            // Executar um comando SQL simples
-            Statement stmt = conn.createStatement();
-            // Formatar e preparar o comando SQL para inserção de dados
-            String sql = "INSERT INTO clientes (nome, email) VALUES (?,?,?)";
-            // Executar um comando SQL simples
-            stmt.executeUpdate(sql, new String[] { nome, email });
+        String sql = "INSERT INTO clientes (nome, email) VALUES (?, ?)";
+        try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres",
+                "postgres", "postgres");
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            // Verificar se a conexão foi bem-sucedida
+            System.out.println("Conexão bem-sucedida!");
+            // Adicionar os parâmetros ao comando SQL
+            pstmt.setString(1, nome);
+            pstmt.setString(2, email);
+            // Executar o comando SQL
+            pstmt.executeUpdate();
             System.out.println("Usuário adicionado com sucesso!");
-            stmt.close();
-            conn.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void updateUsuario(int id, String nome, String email) {
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres",
-                    "postgres", "postgres");
-            if (conn != null) {
-                System.out.println("Conexão bem-sucedida!");
-            } else {
-                System.out.println("Falha na conexão.");
-            }
-            // Executar um comando SQL simples
-            Statement stmt = conn.createStatement();
-            // Formatar e preparar o comando SQL para atualização de dados
-            String sql = "UPDATE clientes SET nome=?, email=? WHERE id=?";
-            // Executar um comando SQL simples
-            stmt.executeUpdate(sql, new String[] { nome, email, Integer.toString(id) });
+    public void updateCliente(int id, String nome, String email) {
+        String sql = "UPDATE clientes SET nome=?, email=? WHERE id=?";
+        try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres",
+                "postgres", "postgres");
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            // Verificar se a conexão foi bem-sucedida
+            System.out.println("Conexão bem-sucedida!");
+
+            // Definir os parâmetros para a consulta SQL
+            pstmt.setString(1, nome);
+            pstmt.setString(2, email);
+            pstmt.setInt(3, id);
+
+            // Executar o comando SQL
+            pstmt.executeUpdate();
             System.out.println("Usuário atualizado com sucesso!");
-            stmt.close();
-            conn.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void deleteCliente(int id) {
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres",
-                    "postgres", "postgres");
-            if (conn != null) {
-                System.out.println("Conexão bem-sucedida!");
-            } else {
-                System.out.println("Falha na conexão.");
-            }
-            // Executar um comando SQL simples
-            Statement stmt = conn.createStatement();
-            // Formatar e preparar o comando SQL para exclusão de dados
-            String sql = "DELETE FROM clientes WHERE id=?";
-            // Executar um comando SQL simples
-            stmt.executeUpdate(sql, new String[] { Integer.toString(id) });
-            System.out.println("Usuário excluído com sucesso!");
-            stmt.close();
-            conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    String sql = "DELETE FROM clientes WHERE id=?";
+    try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres",
+            "postgres", "postgres");
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+        System.out.println("Conexão bem-sucedida!");
+
+        // Definir o parâmetro para a consulta SQL
+        pstmt.setInt(1, id);
+
+        // Executar o comando SQL
+        pstmt.executeUpdate();
+        System.out.println("Usuário excluído com sucesso!");
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
+
 }
