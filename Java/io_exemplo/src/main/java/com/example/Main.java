@@ -10,6 +10,13 @@ public class Main {
         // obj.alunoMediaCadaAluno();
 
         // new LeituraCSV().exemplo();
-        new LeituraAPI().exemplo();
+        // new LeituraAPI().exemplo();
+        // new LeituraBD().exemplo();
+        
+        // new LeituraBD().viewClientes();
+        new LeituraBD().addCliente("João", "joao@example.com");
+        // new LeituraBD().updateUsuario(1, "Jose", "jose@example.com");
+        // new LeituraBD().deleteCliente(2);
+
     }
 }

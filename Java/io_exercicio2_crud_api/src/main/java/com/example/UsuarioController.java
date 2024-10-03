@@ -75,7 +75,7 @@ public class UsuarioController {
             JSONObject usuarioJson = new JSONObject();
             usuarioJson.put("nome", usuario.getNome());
             usuarioJson.put("idade", usuario.getIdade());
-            usuarioJson.put("endereço", usuario.getEndereco());
+            usuarioJson.put("endereco", usuario.getEndereco());
 
             // Enviar os dados para a API
             try (BufferedWriter bw = new BufferedWriter(
@@ -110,7 +110,7 @@ public class UsuarioController {
             usuarioJson.put("id", usuario.getId());
             usuarioJson.put("nome", usuario.getNome());
             usuarioJson.put("idade", usuario.getIdade());
-            usuarioJson.put("endereço", usuario.getEndereco());
+            usuarioJson.put("endereco", usuario.getEndereco());
             // Enviando os dados para a API
             try (BufferedWriter bw = new BufferedWriter(
                     new OutputStreamWriter(conn.getOutputStream(), "UTF-8"))) {
@@ -141,7 +141,7 @@ public class UsuarioController {
             conn.setRequestProperty("Accept", "application/json");
             // Verificar status da conexão
             int status = conn.getResponseCode();
-            if (status == 200) { // Se 200, o usuário foi excluído com sucesso
+            if (status == 200 || status == 204) { // Se 200 ou 204, o usuário foi excluído com sucesso
                 System.out.println("Usuario excluído com sucesso!");
                 read(); // Mostrar os dados dos usuários
             } else {
