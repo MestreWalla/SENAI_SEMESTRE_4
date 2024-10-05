@@ -1,7 +1,9 @@
-package com.example;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
+import com.example.Calculadora;
 
 public class CalculadoraTeste {
     Calculadora calc = new Calculadora();
@@ -35,8 +37,16 @@ public class CalculadoraTeste {
         assertEquals(resultadoEsperado, resultadoObtido, 0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testeDivisaoPorZero() {
-        double resultadoObtido = calc.divisao(5, 0);
+        try {
+            calc.divisao(5, 0);
+        } catch (IllegalArgumentException e) {
+            // Expected exception for division by zero
+            return;
+        }
+        // Fail the test if no exception is thrown
+        assertEquals(true, false, "Expected IllegalArgumentException for division by zero");
     }
+
 }
