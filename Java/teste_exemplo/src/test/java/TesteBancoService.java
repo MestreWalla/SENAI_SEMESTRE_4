@@ -62,22 +62,21 @@ class BancoServiceTest {
     }
 
     @Test
-public void testSacarSaldoInsuficiente() {
-    // Assuming contaMock is properly initialized and has a saldo of 1000.0
-    when(repositoryMock.encontrarPorNumero("12345")).thenReturn(contaMock);
-    
-    // Verificar se a exceção é lançada ao tentar sacar mais que o saldo disponível
-    assertThrows(IllegalArgumentException.class, () -> {
-        bancoService.sacar("12345", 2000.0);
-    });
+    void testSacarSaldoInsuficiente() {
+        // Simular comportamento do repositório
+        when(repositoryMock.encontrarPorNumero("12345")).thenReturn(contaMock);
 
-    // Verificar que o saldo não foi alterado
-    assertEquals(1000.0, contaMock.getSaldo(), 0.001); // Use a delta for floating-point comparison
+        // Verificar se a exceção é lançada ao tentar sacar mais que o saldo disponível
+        assertThrows(IllegalArgumentException.class, () -> {
+            bancoService.sacar("12345", 2000.0);
+        });
 
-    // Verificar que o método de atualizar NÃO foi chamado, pois a operação falhou
-    verify(repositoryMock, never()).atualizar(contaMock);
-}
+        // Verificar que o saldo não foi alterado
+        assertEquals(1000.0, contaMock.getSaldo());
 
+        // Verificar que o método de atualizar NÃO foi chamado, pois a operação falhou
+        verify(repositoryMock, never()).atualizar(contaMock);
+    }
 
     @Test
     public void testDepositarValorNegativo() {
