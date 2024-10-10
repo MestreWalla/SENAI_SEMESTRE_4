@@ -10,7 +10,7 @@ import lombok.Setter;
 public class Tecnico {
 
     private int id;
-    private String nome;;
-    private String especialidade;;
-    private String disponibilidade;;
+    private String nome;
+    private String especialidade;
+    private String disponibilidade;
 }

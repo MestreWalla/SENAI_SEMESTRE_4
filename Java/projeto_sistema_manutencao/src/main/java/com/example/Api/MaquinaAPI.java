@@ -1,5 +1,6 @@
 package com.example.Api;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class MaquinaAPI {
                         jsonObject.getString("nome"),
                         jsonObject.getString("modelo"),
                         jsonObject.getString("fabricante"),
-                        jsonObject.getString("dataAquisicao"),
+                        LocalDate.parse(jsonObject.getString("dataAquisicao")),
                         jsonObject.getLong("tempoVidaEstimado"),
                         jsonObject.getString("localizacao"),
                         jsonObject.getString("detalhes"),

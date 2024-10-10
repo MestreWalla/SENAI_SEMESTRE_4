@@ -1,5 +1,7 @@
 package com.example.Models;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +16,7 @@ public class Maquina {
     private String nome;
     private String modelo;
     private String fabricante;
-    private String dataAquisicao;
+    private LocalDate dataAquisicao;
     private long tempoVidaEstimado;
     private String localizacao;
     private String detalhes;
