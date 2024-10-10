@@ -11,7 +11,7 @@ import com.example.Models.Tecnico;
 public class TecnicoAPI {
 
     // Get all Tecnicos
-    public static List<Tecnico> getTecnico() {
+    public static List<Tecnico> getTecnicos() {
         String json = ApiConnection.getData("tecnicos");
         List<Tecnico> tecnicos = new ArrayList<>();
 
