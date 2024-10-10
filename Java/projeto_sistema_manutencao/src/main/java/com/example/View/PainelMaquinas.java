@@ -50,7 +50,8 @@ public class PainelMaquinas extends JPanel {
         JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnCadastrarMaquina = new JButton("Cadastrar Maquina");
         btnSalvarAlteracoes = new JButton("Salvar Alterações");
-        painelInferior.add(btnCadastrarMaquina, btnSalvarAlteracoes);
+        painelInferior.add(btnCadastrarMaquina);
+        painelInferior.add(btnSalvarAlteracoes);
         this.add(painelInferior, BorderLayout.SOUTH);
 
         // Adiciona o listener para os botões

@@ -51,7 +51,8 @@ public class PainelManutencao extends JPanel {
         JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnCadastrarManutencao = new JButton("Cadastrar Manutencao");
         btnSalvarAlteracoes = new JButton("Salvar Alterações");
-        painelInferior.add(btnCadastrarManutencao, btnSalvarAlteracoes);
+        painelInferior.add(btnCadastrarManutencao);
+        painelInferior.add(btnSalvarAlteracoes);
         this.add(painelInferior, BorderLayout.SOUTH);
 
         // Adiciona o listener para os botões
