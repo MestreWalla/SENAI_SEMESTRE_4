@@ -1,7 +1,6 @@
 package com.example.Api;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,35 +11,25 @@ import com.example.Models.Maquina;
 
 public class MaquinaAPI {
 
-    // Define o formato da data, sem o tempo
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-    // Get all maintenance records
     public static List<Maquina> getMaquina() {
-        String json = ApiConnection.getData("maquina");
+        String json = ApiConnection.getData("maquinas");
         List<Maquina> maquinas = new ArrayList<>();
 
         if (json != null) {
-            // Acessa o objeto raiz do JSON
-            JSONObject jsonObject = new JSONObject(json);
-            // Acessa o array de histórico de manutenção
-            JSONArray historicoMaquinaArray = jsonObject.getJSONArray("maquinas");
-
-            for (int i = 0; i < historicoMaquinaArray.length(); i++) {
-                JSONObject maquinaObject = historicoMaquinaArray.getJSONObject(i);
-                Maquina maquina;
-
-                maquina = new Maquina(
-                        maquinaObject.getString("id"),  // Tratando o id como String
-                        maquinaObject.getString("codigo"),
-                        maquinaObject.getString("nome"),
-                        maquinaObject.getString("modelo"),
-                        maquinaObject.getString("fabricante"),
-                        parseDate(maquinaObject.getString("dataAquisicao")),  // Convertendo para LocalDate
-                        maquinaObject.getLong("tempoVidaEstimado"),
-                        maquinaObject.getString("localizacao"),
-                        maquinaObject.getString("detalhes"),
-                        maquinaObject.getString("manual")
+            JSONArray jsonArray = new JSONArray(json);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Maquina maquina = new Maquina(
+                        jsonObject.getString("id"),
+                        jsonObject.getString("codigo"),
+                        jsonObject.getString("nome"),
+                        jsonObject.getString("modelo"),
+                        jsonObject.getString("fabricante"),
+                        LocalDate.parse(jsonObject.getString("dataAquisicao")),
+                        jsonObject.getInt("tempoVidaEstimado"),
+                        jsonObject.getString("localizacao"),
+                        jsonObject.getString("detalhes"),
+                        jsonObject.getString("manual")
                 );
                 maquinas.add(maquina);
             }
@@ -48,8 +37,21 @@ public class MaquinaAPI {
         return maquinas;
     }
 
-    // Método para converter strings de data (formato "yyyy-MM-dd") para LocalDate
-    private static LocalDate parseDate(String dateString) {
-        return LocalDate.parse(dateString, DATE_FORMAT);
+    public static void postMaquinas(Maquina maquina) {
+        JSONObject maquinaObject = new JSONObject();
+        maquinaObject.put("id", maquina.getId());
+        maquinaObject.put("codigo", maquina.getCodigo());
+        maquinaObject.put("nome", maquina.getNome());
+        maquinaObject.put("modelo", maquina.getModelo());
+        maquinaObject.put("fabricante", maquina.getFabricante());
+        maquinaObject.put("dataAquisicao", maquina.getDataAquisicao());
+        maquinaObject.put("tempoVidaEstimado", maquina.getTempoVidaEstimado());
+        maquinaObject.put("localizacao", maquina.getLocalizacao());
+        maquinaObject.put("detalhes", maquina.getDetalhes());
+        maquinaObject.put("manual", maquina.getManual());
+
+        if (!maquinaObject.isEmpty()) {
+            ApiConnection.postData("maquinas", maquinaObject.toString());
+        }
     }
 }

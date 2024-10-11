@@ -2,6 +2,8 @@ package com.example.View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -55,5 +57,15 @@ public class PainelMaquinas extends JPanel {
         this.add(painelInferior, BorderLayout.SOUTH);
 
         // Adiciona o listener para os botões
+        btnCadastrarMaquina.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Criar o metodo de Cadastrar
+                // pegar as informaçoes em um formulario
+                // gravar o objeto de maquinas
+                // chamar o controller
+            }
+        });
+
     }
 }

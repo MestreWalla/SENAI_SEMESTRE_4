@@ -16,7 +16,8 @@ public class MaquinaController {
 
     // metodos CRUD
     public void CreateMaquina(Maquina maquina) {
-        maquinas.add(maquina);
+        MaquinaAPI.postMaquinas(maquina);
+        this.maquinas.add(maquina);
     }
 
     public List<Maquina> ReadMaquina() {
