@@ -1,9 +1,8 @@
 package com.example.Api;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -13,46 +12,45 @@ import com.example.Models.Manutencao;
 
 public class ManutencaoAPI {
 
-    // Define o formato da data, sem o tempo
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-
-    // Get all maintenance records
     public static List<Manutencao> getManutencao() {
-        String json = ApiConnection.getData("manutencao");
-        List<Manutencao> manutencao = new ArrayList<>();
+        String json = ApiConnection.getData("manutencaos");
+        List<Manutencao> manutencaos = new ArrayList<>();
 
         if (json != null) {
-            // Acessa o objeto raiz do JSON
-            JSONObject jsonObject = new JSONObject(json);
-            // Acessa o array de histórico de manutenção
-            JSONArray historicoManutencaoArray = jsonObject.getJSONArray("historicoManutencao");
-
-            for (int i = 0; i < historicoManutencaoArray.length(); i++) {
-                JSONObject manutencaoObject = historicoManutencaoArray.getJSONObject(i);
-                Manutencao maquina;
-
-                maquina = new Manutencao(
-                        manutencaoObject.getInt("id"),
-                        manutencaoObject.getInt("maquinaId"),
-                        parseDate(manutencaoObject.getString("data")),  // Ajusta o parsing da data
-                        manutencaoObject.getString("tipo"),
-                        manutencaoObject.getString("pecasTrocadas"),
-                        manutencaoObject.getInt("tempoDeParada"),
-                        0,  // Colocando zero no técnico, já que não tem um campo tecnicoId
-                        manutencaoObject.getString("observacoes")
+            JSONArray jsonArray = new JSONArray(json);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Manutencao manutencao = new Manutencao(
+                        jsonObject.getString("id"),
+                        jsonObject.getString("maquinaId"),
+                        jsonObject.getString("data"),
+                        jsonObject.getString("tipo"),
+                        jsonObject.getString("pecasTrocadas"),
+                        jsonObject.getInt("tempoDeParada"),
+                        jsonObject.getInt("tecnicoId"),
+                        jsonObject.getString("observacoes")
                 );
-                manutencao.add(maquina);
+                manutencaos.add(manutencao);
             }
         }
-        return manutencao;
+        return manutencaos;
     }
 
-    // Método para converter strings de data (formato simples "yyyy-MM-dd")
-    private static Date parseDate(String dateString) {
-        try {
-            return DATE_FORMAT.parse(dateString); // Converte a string para java.util.Date
-        } catch (ParseException e) {
-            return null;
+    public static void postManutencaos(Manutencao manutencao) {
+        //Criar um Objeto Json
+        JSONObject manutencaoObject = new JSONObject();
+        manutencaoObject.put("id", manutencao.getId());
+        manutencaoObject.put("maquinaId", manutencao.getMaquinaId());
+        manutencaoObject.put("data", manutencao.getData());
+        manutencaoObject.put("tipo", manutencao.getTipo());
+        manutencaoObject.put("pecasTrocadas", manutencao.getPecasTrocadas());
+        manutencaoObject.put("tempoDeParada", manutencao.getTempoDeParada());
+        manutencaoObject.put("tecnicoId", manutencao.getTecnicoId());
+        manutencaoObject.put("observacoes", manutencao.getObservacoes());
+
+        //gravando no 
+        if (!manutencaoObject.isEmpty()) {
+            ApiConnection.postData("manutencaos", manutencaoObject.toString());
         }
     }
 }

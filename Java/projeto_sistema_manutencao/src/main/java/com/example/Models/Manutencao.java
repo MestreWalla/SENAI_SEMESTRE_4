@@ -1,7 +1,5 @@
 package com.example.Models;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,9 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Manutencao {
-    private int id;
-    private int maquinaId;
-    private Date data;
+    private String id;
+    private String maquinaId;
+    private String data;
     private String tipo;
     private String pecasTrocadas;
     private int tempoDeParada;
