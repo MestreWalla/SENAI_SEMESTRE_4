@@ -1,8 +1,7 @@
 package com.example.Api;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,8 +13,8 @@ import com.example.Models.Manutencao;
 
 public class ManutencaoAPI {
 
-    // Define o formato da data
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    // Define o formato da data, sem o tempo
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     // Get all maintenance records
     public static List<Manutencao> getManutencao() {
@@ -23,19 +22,24 @@ public class ManutencaoAPI {
         List<Manutencao> manutencao = new ArrayList<>();
 
         if (json != null) {
-            JSONArray jsonArray = new JSONArray(json);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
+            // Acessa o objeto raiz do JSON
+            JSONObject jsonObject = new JSONObject(json);
+            // Acessa o array de histórico de manutenção
+            JSONArray historicoManutencaoArray = jsonObject.getJSONArray("historicoManutencao");
+
+            for (int i = 0; i < historicoManutencaoArray.length(); i++) {
+                JSONObject manutencaoObject = historicoManutencaoArray.getJSONObject(i);
                 Manutencao maquina;
+
                 maquina = new Manutencao(
-                        jsonObject.getInt("id"),
-                        jsonObject.getInt("maquinaId"),
-                        parseDate(jsonObject.getString("data")),
-                        jsonObject.getString("tipo"),
-                        jsonObject.getString("pecasTrocadas"),
-                        jsonObject.getInt("tempoDeParada"),
-                        jsonObject.getInt("tecnicoId"),
-                        jsonObject.getString("observacoes")
+                        manutencaoObject.getInt("id"),
+                        manutencaoObject.getInt("maquinaId"),
+                        parseDate(manutencaoObject.getString("data")),  // Ajusta o parsing da data
+                        manutencaoObject.getString("tipo"),
+                        manutencaoObject.getString("pecasTrocadas"),
+                        manutencaoObject.getInt("tempoDeParada"),
+                        0,  // Colocando zero no técnico, já que não tem um campo tecnicoId
+                        manutencaoObject.getString("observacoes")
                 );
                 manutencao.add(maquina);
             }
@@ -43,13 +47,11 @@ public class ManutencaoAPI {
         return manutencao;
     }
 
-    // Método para converter strings de data
+    // Método para converter strings de data (formato simples "yyyy-MM-dd")
     private static Date parseDate(String dateString) {
         try {
-            LocalDateTime localDateTime = LocalDateTime.parse(dateString, FORMATTER);
-            return java.sql.Timestamp.valueOf(localDateTime); // Converte para java.util.Date, se necessário
-        } catch (DateTimeParseException e) {
-            e.printStackTrace();
+            return DATE_FORMAT.parse(dateString); // Converte a string para java.util.Date
+        } catch (ParseException e) {
             return null;
         }
     }

@@ -1,2 +1,3 @@
 .node_modules/
 Java/projeto_sistema_manutencao/src/main/resources/ApiRest/node_modules
+/Java/projeto_sistema_manutencao/target/classes/ApiRest/node_modules

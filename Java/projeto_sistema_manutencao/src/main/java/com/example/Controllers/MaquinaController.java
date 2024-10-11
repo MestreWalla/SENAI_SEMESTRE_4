@@ -20,7 +20,7 @@ public class MaquinaController {
     }
 
     public List<Maquina> ReadMaquina() {
-        maquinas = MaquinaAPI.getMaquinas();
+        maquinas = MaquinaAPI.getMaquina();
         return maquinas;
     }
 

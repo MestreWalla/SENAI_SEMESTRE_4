@@ -1,6 +1,7 @@
 package com.example.Api;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,26 +12,35 @@ import com.example.Models.Maquina;
 
 public class MaquinaAPI {
 
-    // Get all machines
-    public static List<Maquina> getMaquinas() {
-        String json = ApiConnection.getData("maquinas");
+    // Define o formato da data, sem o tempo
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    // Get all maintenance records
+    public static List<Maquina> getMaquina() {
+        String json = ApiConnection.getData("maquina");
         List<Maquina> maquinas = new ArrayList<>();
 
         if (json != null) {
-            JSONArray jsonArray = new JSONArray(json);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Maquina maquina = new Maquina(
-                        jsonObject.getString("id"),
-                        jsonObject.getString("codigo"),
-                        jsonObject.getString("nome"),
-                        jsonObject.getString("modelo"),
-                        jsonObject.getString("fabricante"),
-                        LocalDate.parse(jsonObject.getString("dataAquisicao")),
-                        jsonObject.getLong("tempoVidaEstimado"),
-                        jsonObject.getString("localizacao"),
-                        jsonObject.getString("detalhes"),
-                        jsonObject.getString("manual")
+            // Acessa o objeto raiz do JSON
+            JSONObject jsonObject = new JSONObject(json);
+            // Acessa o array de histórico de manutenção
+            JSONArray historicoMaquinaArray = jsonObject.getJSONArray("maquinas");
+
+            for (int i = 0; i < historicoMaquinaArray.length(); i++) {
+                JSONObject maquinaObject = historicoMaquinaArray.getJSONObject(i);
+                Maquina maquina;
+
+                maquina = new Maquina(
+                        maquinaObject.getString("id"),  // Tratando o id como String
+                        maquinaObject.getString("codigo"),
+                        maquinaObject.getString("nome"),
+                        maquinaObject.getString("modelo"),
+                        maquinaObject.getString("fabricante"),
+                        parseDate(maquinaObject.getString("dataAquisicao")),  // Convertendo para LocalDate
+                        maquinaObject.getLong("tempoVidaEstimado"),
+                        maquinaObject.getString("localizacao"),
+                        maquinaObject.getString("detalhes"),
+                        maquinaObject.getString("manual")
                 );
                 maquinas.add(maquina);
             }
@@ -38,45 +48,8 @@ public class MaquinaAPI {
         return maquinas;
     }
 
-    // Create a new machine
-    public static boolean createMaquina(Maquina maquina) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", maquina.getId());
-        jsonObject.put("codigo", maquina.getCodigo());
-        jsonObject.put("nome", maquina.getNome());
-        jsonObject.put("modelo", maquina.getModelo());
-        jsonObject.put("fabricante", maquina.getFabricante());
-        jsonObject.put("dataAquisicao", maquina.getDataAquisicao());
-        jsonObject.put("tempoVidaEstimado", maquina.getTempoVidaEstimado());
-        jsonObject.put("localizacao", maquina.getLocalizacao());
-        jsonObject.put("detalhes", maquina.getDetalhes());
-        jsonObject.put("manual", maquina.getManual());
-
-        String response = ApiConnection.postData("maquinas", jsonObject.toString());
-        return response != null && response.equals("success");
+    // Método para converter strings de data (formato "yyyy-MM-dd") para LocalDate
+    private static LocalDate parseDate(String dateString) {
+        return LocalDate.parse(dateString, DATE_FORMAT);
     }
-
-    // Update a machine
-    public static boolean updateMaquina(Maquina maquina) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("codigo", maquina.getCodigo());
-        jsonObject.put("nome", maquina.getNome());
-        jsonObject.put("modelo", maquina.getModelo());
-        jsonObject.put("fabricante", maquina.getFabricante());
-        jsonObject.put("dataAquisicao", maquina.getDataAquisicao());
-        jsonObject.put("tempoVidaEstimado", maquina.getTempoVidaEstimado());
-        jsonObject.put("localizacao", maquina.getLocalizacao());
-        jsonObject.put("detalhes", maquina.getDetalhes());
-        jsonObject.put("manual", maquina.getManual());
-
-        String response = ApiConnection.putData("maquinas/" + maquina.getId(), jsonObject.toString());
-        return response != null && response.equals("success");
-    }
-
-    // Delete a machine
-    public static boolean deleteMaquina(String id) {
-        String response = ApiConnection.deleteData("maquinas/" + id);
-        return response != null && response.equals("success");
-    }
-
 }

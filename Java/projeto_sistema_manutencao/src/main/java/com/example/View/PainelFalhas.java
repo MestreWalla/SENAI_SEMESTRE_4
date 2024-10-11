@@ -11,7 +11,7 @@ import com.example.Controllers.FalhaController;
 
 public class PainelFalhas extends JPanel {
 
-    private FalhaController falhaController;
+    private final FalhaController falhaController;
     private JTable falhasTable;
     private DefaultTableModel tableModel;
     private JButton btnSalvarAlteracoes;
