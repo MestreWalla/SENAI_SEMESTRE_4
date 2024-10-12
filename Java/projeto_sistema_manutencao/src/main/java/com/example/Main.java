@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         // SistemaManutencaoGUI sistemaManutencaoGUI = new SistemaManutencaoGUI();
-
+        System.setProperty("file.encoding", "UTF-8");
         SwingUtilities.invokeLater(() -> {
             SistemaManutencaoGUI sistemaManutencaoGUI = new SistemaManutencaoGUI();
             sistemaManutencaoGUI.setVisible(true);

@@ -2,6 +2,8 @@ package com.example.View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -16,7 +18,7 @@ import com.example.Models.Manutencao;
 public class PainelManutencao extends JPanel {
 
     private final ManutencaoController manutencaoController;
-    private final JTable manutencoesTable;
+    private final JTable manutencaoTable;
     private final DefaultTableModel tableModel;
     private final JButton btnSalvarAlteracoes;
     private final JButton btnCadastrarManutencao;
@@ -26,9 +28,9 @@ public class PainelManutencao extends JPanel {
         super(new BorderLayout());
         manutencaoController = new ManutencaoController();
         tableModel = new DefaultTableModel(new Object[]{
-            "ID", "Nome", "Fabricante", "Modelo", "Detalhes", "Localização", "Tempo de Vida Estimado"
+            "ID", "Máquina ID", "Data", "Tipo", "Peças Trocadas", "Tempo de Parada", "Técnico ID", "Observações"
         }, 0);
-        manutencoesTable = new JTable(tableModel);
+        manutencaoTable = new JTable(tableModel);
 
         // Criar a tabela
         List<Manutencao> manutencoes = manutencaoController.ReadManutencao();
@@ -40,21 +42,30 @@ public class PainelManutencao extends JPanel {
                 manutencao.getTipo(),
                 manutencao.getPecasTrocadas(),
                 manutencao.getTempoDeParada(),
-                manutencao.getTecnicoId(),
+                manutencao.getTecnico(),
                 manutencao.getObservacoes()
             });
         }
-        JScrollPane scrollPane = new JScrollPane(manutencoesTable);
+        JScrollPane scrollPane = new JScrollPane(manutencaoTable);
         this.add(scrollPane, BorderLayout.CENTER);
 
         // Cria os botões
         JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        btnCadastrarManutencao = new JButton("Cadastrar Manutencao");
+        btnCadastrarManutencao = new JButton("Cadastrar Manutenção");
         btnSalvarAlteracoes = new JButton("Salvar Alterações");
         painelInferior.add(btnCadastrarManutencao);
         painelInferior.add(btnSalvarAlteracoes);
         this.add(painelInferior, BorderLayout.SOUTH);
 
         // Adiciona o listener para os botões
+        btnCadastrarManutencao.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Criar o método de Cadastrar
+                // pegar as informações em um formulário
+                // gravar o objeto de manutenção
+                // chamar o controller
+            }
+        });
     }
 }

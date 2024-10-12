@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,50 +23,120 @@ public class PainelMaquinas extends JPanel {
     private final DefaultTableModel tableModel;
     private final JButton btnSalvarAlteracoes;
     private final JButton btnCadastrarMaquina;
+    private final JButton btnExcluirMaquina; // Botão para excluir máquina
+    private final JButton btnAtualizarLista; // Botão para atualizar a lista
 
     // Construtor
     public PainelMaquinas() {
         super(new BorderLayout());
         maquinaController = new MaquinaController();
         tableModel = new DefaultTableModel(new Object[]{
-            "ID", "Nome", "Fabricante", "Modelo", "Detalhes", "Localização", "Tempo de Vida Estimado"
+            "ID", "Código", "Nome", "Fabricante", "Modelo", "Data de Aquisição", "Tempo de Vida Estimado", "Localização", "Detalhes"
         }, 0);
         maquinasTable = new JTable(tableModel);
 
-        // Criar a tabela
-        List<Maquina> maquinas = maquinaController.ReadMaquina();
-        for (Maquina maquina : maquinas) {
-            tableModel.addRow(new Object[]{
-                maquina.getId(),
-                maquina.getNome(),
-                maquina.getFabricante(),
-                maquina.getModelo(),
-                maquina.getDetalhes(),
-                maquina.getLocalizacao(),
-                maquina.getTempoVidaEstimado()
-            });
-        }
+        // Criar a tabela inicial
+        atualizarLista();
+
         JScrollPane scrollPane = new JScrollPane(maquinasTable);
         this.add(scrollPane, BorderLayout.CENTER);
 
         // Cria os botões
         JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        btnCadastrarMaquina = new JButton("Cadastrar Maquina");
+        btnCadastrarMaquina = new JButton("Cadastrar Máquina");
         btnSalvarAlteracoes = new JButton("Salvar Alterações");
+        btnExcluirMaquina = new JButton("Excluir Máquina");
+        btnAtualizarLista = new JButton("Atualizar Lista"); // Adicionando o botão de atualizar lista
+        
         painelInferior.add(btnCadastrarMaquina);
         painelInferior.add(btnSalvarAlteracoes);
+        painelInferior.add(btnExcluirMaquina);
+        painelInferior.add(btnAtualizarLista); // Adicionando o botão ao painel
         this.add(painelInferior, BorderLayout.SOUTH);
 
-        // Adiciona o listener para os botões
+        // Adiciona o listener para o botão de cadastrar
         btnCadastrarMaquina.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Criar o metodo de Cadastrar
-                // pegar as informaçoes em um formulario
-                // gravar o objeto de maquinas
-                // chamar o controller
+                abrirFormularioCadastro();
             }
         });
 
+        // Adiciona o listener para o botão de excluir
+        btnExcluirMaquina.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                excluirMaquinaSelecionada();
+            }
+        });
+
+        // Adiciona o listener para o botão de atualizar lista
+        btnAtualizarLista.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                atualizarLista();
+            }
+        });
+    }
+
+    private void abrirFormularioCadastro() {
+        CadastroMaquinaDialog dialog = new CadastroMaquinaDialog(maquinaController, tableModel);
+        dialog.setVisible(true); // Exibe o dialog
+    }
+
+    private void excluirMaquinaSelecionada() {
+        int linhaSelecionada = maquinasTable.getSelectedRow();
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione uma máquina para excluir.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    
+        // Mensagem de confirmação
+        int resposta = JOptionPane.showConfirmDialog(this,
+                "Você tem certeza que deseja excluir esta máquina?",
+                "Confirmação de Exclusão",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+    
+        if (resposta == JOptionPane.YES_OPTION) {
+            int id = (int) tableModel.getValueAt(linhaSelecionada, 0); // Obtém o ID da máquina selecionada
+            
+            try {
+                // Chama o método do controlador para excluir a máquina
+                maquinaController.DeleteMaquina(id); 
+                // Remove a linha da tabela
+                tableModel.removeRow(linhaSelecionada);
+                JOptionPane.showMessageDialog(this, "Máquina excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Erro ao excluir máquina: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            // Se o usuário cancelar, não faz nada
+            JOptionPane.showMessageDialog(this, "Exclusão cancelada.", "Cancelamento", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+
+    private void atualizarLista() {
+        // Limpa a tabela existente
+        tableModel.setRowCount(0);
+        
+        // Obtém a lista atualizada de máquinas
+        List<Maquina> maquinas = maquinaController.ReadMaquina();
+        
+        // Adiciona as máquinas à tabela
+        for (Maquina maquina : maquinas) {
+            tableModel.addRow(new Object[]{
+                maquina.getId(),
+                maquina.getCodigo(),
+                maquina.getNome(),
+                maquina.getFabricante(),
+                maquina.getModelo(),
+                maquina.getDataAquisicao(),
+                maquina.getTempoVidaEstimado(),
+                maquina.getLocalizacao(),
+                maquina.getDetalhes()
+            });
+        }
     }
 }

@@ -7,28 +7,28 @@ import com.example.Api.ManutencaoAPI;
 import com.example.Models.Manutencao;
 
 public class ManutencaoController {
-    
-    private List<Manutencao> manutencao;
+    private List<Manutencao> manutencoes;
 
     public ManutencaoController() {
-        manutencao = new ArrayList<>();
+        manutencoes = new ArrayList<>();
     }
 
-    // metodos CRUD
-    public void CreateManutencao(Manutencao maquina) {
-        manutencao.add(maquina);
+    // Metodos CRUD
+    public void CreateManutencao(Manutencao manutencao) {
+        ManutencaoAPI.postManutencao(manutencao);
+        this.manutencoes.add(manutencao);
     }
 
     public List<Manutencao> ReadManutencao() {
-        manutencao = ManutencaoAPI.getManutencao();
-        return manutencao;
+        manutencoes = ManutencaoAPI.getManutencoes();
+        return manutencoes;
     }
 
-    public void UpdateManutencao(int posicao, Manutencao maquina) {
-        manutencao.set(posicao, maquina);
+    public void UpdateManutencao(int posicao, Manutencao manutencao) {
+        manutencoes.set(posicao, manutencao);
     }
 
     public void DeleteManutencao(int posicao) {
-        manutencao.remove(posicao);
-        }
+        manutencoes.remove(posicao);
+    }
 }

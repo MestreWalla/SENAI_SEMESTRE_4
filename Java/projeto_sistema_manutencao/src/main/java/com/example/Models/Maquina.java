@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class Maquina {
 
-    private String id;
+    private int id;
     private String codigo;
     private String nome;
     private String modelo;

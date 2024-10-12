@@ -29,7 +29,23 @@ public class MaquinaController {
         maquinas.set(posicao, maquina);
     }
 
-    public void DeleteMaquina(int posicao) {
-        maquinas.remove(posicao);
+    public void DeleteMaquina(int id) {
+        System.out.println("Tentando excluir a máquina com ID: " + id);
+
+        try {
+            // Chama o método da API para deletar a máquina
+            MaquinaAPI.deleteMaquina(id);
+
+            // Remove a máquina da lista local (maquinas)
+            maquinas.removeIf(maquina -> maquina.getId() == id);
+
+            // Opcional: Atualizar a lista após a exclusão
+            ReadMaquina();
+
+            System.out.println("Máquina excluída com sucesso!");
+        } catch (Exception e) {
+            System.out.println("Erro ao excluir a máquina: " + e.getMessage());
         }
+    }
+
 }

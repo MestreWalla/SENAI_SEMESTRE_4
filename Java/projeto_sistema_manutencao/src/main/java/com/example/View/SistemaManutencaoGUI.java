@@ -30,8 +30,8 @@ public class SistemaManutencaoGUI extends JFrame {
         // Inicializa os painéis:
         painelMaquinas = new PainelMaquinas();
         painelManutencao = new PainelManutencao();
-        // painelFalhas = new PainelFalhas();
-        // painelTecnicos = new PainelTecnicos();
+        painelFalhas = new PainelFalhas();
+        painelTecnicos = new PainelTecnicos();
 
         // Cria o JTabbedPane:
         tabbedPane = new JTabbedPane();
