@@ -1,14 +1,17 @@
 package com.example.View;
 
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -37,7 +40,11 @@ public class CadastroMaquinaDialog extends JDialog {
         setTitle("Cadastrar Máquina");
         setModal(true);
         setSize(400, 400);
-        setLayout(new FlowLayout());
+        setLayout(new BorderLayout()); // Usar BorderLayout para adicionar padding
+
+        // Cria um painel com padding
+        JPanel panel = new JPanel(new GridLayout(9, 2));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Padding: top, left, bottom, right
 
         // Inicializa os campos de entrada
         txtCodigo = new JTextField(10);
@@ -49,34 +56,39 @@ public class CadastroMaquinaDialog extends JDialog {
         txtTempoVidaEstimado = new JTextField(10);
         txtDataAquisicao = new JTextField(10);
 
-        // Adiciona labels e campos ao dialog
-        add(new JLabel("Código:"));
-        add(txtCodigo);
-        add(new JLabel("Nome:"));
-        add(txtNome);
-        add(new JLabel("Fabricante:"));
-        add(txtFabricante);
-        add(new JLabel("Modelo:"));
-        add(txtModelo);
-        add(new JLabel("Detalhes:"));
-        add(txtDetalhes);
-        add(new JLabel("Localização:"));
-        add(txtLocalizacao);
-        add(new JLabel("Tempo de Vida Estimado:"));
-        add(txtTempoVidaEstimado);
-        add(new JLabel("Data de Aquisição (dd-MM-yyyy):"));
-        add(txtDataAquisicao);
+        // Configura os componentes no diálogo
+        setupComponents(panel);
+
+        // Adiciona o painel ao diálogo
+        add(panel, BorderLayout.CENTER);
 
         // Botão para cadastrar a máquina
         JButton btnCadastrar = new JButton("Cadastrar");
-        add(btnCadastrar);
-
-        btnCadastrar.addActionListener((ActionEvent e) -> {
-            cadastrarMaquina();
-        });
+        btnCadastrar.addActionListener(this::cadastrarMaquina);
+        add(btnCadastrar, BorderLayout.SOUTH); // Adiciona o botão na parte inferior
     }
 
-    private void cadastrarMaquina() {
+    private void setupComponents(JPanel panel) {
+        // Adiciona labels e campos ao painel
+        panel.add(new JLabel("Código:"));
+        panel.add(txtCodigo);
+        panel.add(new JLabel("Nome:"));
+        panel.add(txtNome);
+        panel.add(new JLabel("Fabricante:"));
+        panel.add(txtFabricante);
+        panel.add(new JLabel("Modelo:"));
+        panel.add(txtModelo);
+        panel.add(new JLabel("Detalhes:"));
+        panel.add(txtDetalhes);
+        panel.add(new JLabel("Localização:"));
+        panel.add(txtLocalizacao);
+        panel.add(new JLabel("Tempo de Vida Estimado:"));
+        panel.add(txtTempoVidaEstimado);
+        panel.add(new JLabel("Data de Aquisição (dd/MM/yyyy):"));
+        panel.add(txtDataAquisicao);
+    }
+
+    private void cadastrarMaquina(ActionEvent e) {
         String codigo = txtCodigo.getText();
         String nome = txtNome.getText();
         String fabricante = txtFabricante.getText();
@@ -84,31 +96,31 @@ public class CadastroMaquinaDialog extends JDialog {
         String detalhes = txtDetalhes.getText();
         String localizacao = txtLocalizacao.getText();
         long tempoVidaEstimado;
-    
+
         // Validação do tempo de vida estimado
         try {
             tempoVidaEstimado = Long.parseLong(txtTempoVidaEstimado.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Tempo de vida estimado deve ser um número.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException ex) {
+            showErrorDialog("Tempo de vida estimado deve ser um número.");
             return;
         }
-    
+
         // Validação da data de aquisição
         LocalDate dataAquisicao;
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // Atualiza para o formato dd/MM/yyyy
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             dataAquisicao = LocalDate.parse(txtDataAquisicao.getText(), formatter);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Formato de data inválido. Use: dd/MM/yyyy", "Erro", JOptionPane.ERROR_MESSAGE); // Atualiza mensagem de erro
+        } catch (Exception ex) {
+            showErrorDialog("Formato de data inválido. Use: dd/MM/yyyy");
             return;
         }
-    
+
         // Criar a nova máquina
-        Maquina novaMaquina = new Maquina(0, codigo, nome, modelo, fabricante, dataAquisicao, tempoVidaEstimado, localizacao, detalhes, ""); // Adiciona um valor vazio para manual
-    
+        Maquina novaMaquina = new Maquina("0", codigo, nome, modelo, fabricante, dataAquisicao, tempoVidaEstimado, localizacao, detalhes, "");
+
         // Chamar o controller para salvar a máquina
         maquinaController.CreateMaquina(novaMaquina);
-    
+
         // Atualizar a tabela
         tableModel.addRow(new Object[]{
             novaMaquina.getId(),
@@ -121,9 +133,12 @@ public class CadastroMaquinaDialog extends JDialog {
             novaMaquina.getLocalizacao(),
             novaMaquina.getDetalhes()
         });
-    
+
         // Limpar campos do formulário
         dispose();
     }
-    
+
+    private void showErrorDialog(String message) {
+        JOptionPane.showMessageDialog(this, message, "Erro", JOptionPane.ERROR_MESSAGE);
+    }
 }
