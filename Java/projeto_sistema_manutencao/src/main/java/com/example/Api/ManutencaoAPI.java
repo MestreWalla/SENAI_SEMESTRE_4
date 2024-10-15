@@ -13,7 +13,6 @@ public class ManutencaoAPI {
 
     public static List<Manutencao> getManutencoes() {
         String json = ApiConnection.getData("manutencoes");
-        System.out.println("Resposta da API: " + json);
         List<Manutencao> manutencoes = new ArrayList<>();
 
         if (json != null && !json.trim().isEmpty()) {

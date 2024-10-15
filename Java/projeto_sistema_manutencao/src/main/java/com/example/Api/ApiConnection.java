@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ApiConnection {
+
     private static final String API_URL = "http://localhost:3000/";
 
     // Métodos GET
@@ -44,7 +45,7 @@ public class ApiConnection {
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
             connection.setRequestProperty("Accept", "application/json");
             connection.setDoOutput(true); // enviar os dados para a API
-            
+
             try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"))) {
                 bw.write(inputData);
                 bw.flush();
@@ -52,7 +53,7 @@ public class ApiConnection {
             // Verificar o status da resposta
             int status = connection.getResponseCode();
             if (status != HttpURLConnection.HTTP_CREATED) { // HTTP 201 Created
-                throw new Exception("Erro ao criar usuário: " + status);
+                throw new Exception("Erro ao criar maquina: " + status);
             }
 
             System.out.println("Cadastro Realizado com Sucesso");
@@ -72,7 +73,7 @@ public class ApiConnection {
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
             connection.setRequestProperty("Accept", "application/json");
             connection.setDoOutput(true); // enviar os dados para a API
-            
+
             try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"))) {
                 bw.write(inputData);
                 bw.flush();
@@ -92,14 +93,14 @@ public class ApiConnection {
     }
 
     // DELETE
-    public static void deleteData(String endPoint, String id) {
+    public static void deleteData(String endPoint, int id) {
         try {
             URL url = new URL(API_URL + endPoint + "/" + id);
+            System.out.println(url);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("DELETE");
-            connection.setDoOutput(true); // Enviar dados para a API (não é necessário, mas bom para manter consistente)
-            
-            // Verificar o status da resposta
+            connection.setDoOutput(true);
+
             int status = connection.getResponseCode();
             if (status != HttpURLConnection.HTTP_NO_CONTENT) { // HTTP 204 No Content
                 throw new Exception("Erro ao deletar usuário: " + status);
@@ -112,4 +113,5 @@ public class ApiConnection {
             e.printStackTrace();
         }
     }
+
 }

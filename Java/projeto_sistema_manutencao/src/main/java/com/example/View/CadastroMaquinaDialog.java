@@ -116,7 +116,7 @@ public class CadastroMaquinaDialog extends JDialog {
         }
 
         // Criar a nova máquina
-        Maquina novaMaquina = new Maquina("0", codigo, nome, modelo, fabricante, dataAquisicao, tempoVidaEstimado, localizacao, detalhes, "");
+        Maquina novaMaquina = new Maquina(0, codigo, nome, modelo, fabricante, dataAquisicao, tempoVidaEstimado, localizacao, detalhes, "");
 
         // Chamar o controller para salvar a máquina
         maquinaController.CreateMaquina(novaMaquina);

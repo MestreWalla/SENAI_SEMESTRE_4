@@ -41,7 +41,7 @@ public class MaquinaAPI {
     public static void postMaquinas(Maquina maquina) {
         // Criar um Objeto Json
         JSONObject maquinaObject = new JSONObject();
-        maquinaObject.put("id", maquina.getId()); // Se id for int, não precisa mudar
+        maquinaObject.put("id", String.valueOf(maquina.getId()));
         maquinaObject.put("codigo", maquina.getCodigo());
         maquinaObject.put("nome", maquina.getNome());
         maquinaObject.put("modelo", maquina.getModelo());
@@ -59,8 +59,9 @@ public class MaquinaAPI {
     }
 
     public static void deleteMaquina(int id) {
-        ApiConnection.deleteData("maquinas", String.valueOf(id)); // Certifique-se de passar ambos os parâmetros
-    }
-    
-}
+        // ApiConnection.deleteData("maquinas", id.valueOf(id));
+        ApiConnection.deleteData("maquinas", id);
 
+    }
+
+}

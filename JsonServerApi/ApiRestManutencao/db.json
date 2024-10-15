@@ -13,16 +13,232 @@
       "manual": "URL do manual"
     },
     {
-      "id": "0",
+      "id": "2",
+      "codigo": "M002",
+      "nome": "Fresadora",
+      "modelo": "FRE-2000",
+      "fabricante": "Bosch",
+      "dataAquisicao": "2021-05-15",
+      "tempoVidaEstimado": 8,
+      "localizacao": "Linha 2",
+      "detalhes": "Fresagem de alta precisão",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "3",
+      "codigo": "M003",
+      "nome": "Prensa Hidráulica",
+      "modelo": "PH-1500",
+      "fabricante": "Makita",
+      "dataAquisicao": "2019-03-20",
       "tempoVidaEstimado": 12,
-      "codigo": "12",
-      "localizacao": "asd",
-      "nome": "asd",
-      "fabricante": "asd",
-      "manual": "",
-      "modelo": "asd",
-      "dataAquisicao": "2025-10-10",
-      "detalhes": "asd"
+      "localizacao": "Linha 3",
+      "detalhes": "Prensagem de peças metálicas",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "4",
+      "codigo": "M004",
+      "nome": "Cortadora a Laser",
+      "modelo": "CL-1000",
+      "fabricante": "LaserCut",
+      "dataAquisicao": "2022-02-01",
+      "tempoVidaEstimado": 5,
+      "localizacao": "Linha 4",
+      "detalhes": "Corte preciso com laser",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "5",
+      "codigo": "M005",
+      "nome": "Torres CNC",
+      "modelo": "TOR-CNC",
+      "fabricante": "CNC Tech",
+      "dataAquisicao": "2020-07-12",
+      "tempoVidaEstimado": 9,
+      "localizacao": "Linha 5",
+      "detalhes": "Operações complexas em 3D",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "6",
+      "codigo": "M006",
+      "nome": "Esmerilhadeira",
+      "modelo": "ESM-400",
+      "fabricante": "Black & Decker",
+      "dataAquisicao": "2021-06-10",
+      "tempoVidaEstimado": 7,
+      "localizacao": "Linha 1",
+      "detalhes": "Acabamento de peças",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "7",
+      "codigo": "M007",
+      "nome": "Equipamento de Solda",
+      "modelo": "SOLD-3000",
+      "fabricante": "WeldMaster",
+      "dataAquisicao": "2021-08-14",
+      "tempoVidaEstimado": 6,
+      "localizacao": "Linha 2",
+      "detalhes": "Soldagem de materiais metálicos",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "8",
+      "codigo": "M008",
+      "nome": "Refrigeração",
+      "modelo": "REF-600",
+      "fabricante": "Frigidaire",
+      "dataAquisicao": "2020-11-25",
+      "tempoVidaEstimado": 10,
+      "localizacao": "Armazém",
+      "detalhes": "Refrigeração de componentes",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "9",
+      "codigo": "M009",
+      "nome": "Compressores",
+      "modelo": "COMP-100",
+      "fabricante": "AirTech",
+      "dataAquisicao": "2019-12-15",
+      "tempoVidaEstimado": 12,
+      "localizacao": "Linha 3",
+      "detalhes": "Compressão de ar",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "10",
+      "codigo": "M010",
+      "nome": "Cortadora de Plasma",
+      "modelo": "CP-500",
+      "fabricante": "PlasmaCut",
+      "dataAquisicao": "2022-01-05",
+      "tempoVidaEstimado": 4,
+      "localizacao": "Linha 4",
+      "detalhes": "Corte de metal com plasma",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "11",
+      "codigo": "M011",
+      "nome": "Máquina de Costura",
+      "modelo": "MC-2000",
+      "fabricante": "Singer",
+      "dataAquisicao": "2021-03-15",
+      "tempoVidaEstimado": 7,
+      "localizacao": "Linha 1",
+      "detalhes": "Costura de tecidos",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "12",
+      "codigo": "M012",
+      "nome": "Lixadeira",
+      "modelo": "LIX-800",
+      "fabricante": "Makita",
+      "dataAquisicao": "2020-09-21",
+      "tempoVidaEstimado": 6,
+      "localizacao": "Linha 2",
+      "detalhes": "Acabamento de superfícies",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "13",
+      "codigo": "M013",
+      "nome": "Furadeira",
+      "modelo": "FUR-300",
+      "fabricante": "DeWalt",
+      "dataAquisicao": "2021-07-18",
+      "tempoVidaEstimado": 8,
+      "localizacao": "Linha 3",
+      "detalhes": "Furação de materiais",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "14",
+      "codigo": "M014",
+      "nome": "Máquina de Lavagem",
+      "modelo": "ML-1500",
+      "fabricante": "Samsung",
+      "dataAquisicao": "2019-04-10",
+      "tempoVidaEstimado": 9,
+      "localizacao": "Linha 4",
+      "detalhes": "Lavagem de componentes",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "15",
+      "codigo": "M015",
+      "nome": "Impressora 3D",
+      "modelo": "3D-500",
+      "fabricante": "Prusa",
+      "dataAquisicao": "2020-12-05",
+      "tempoVidaEstimado": 5,
+      "localizacao": "Linha 5",
+      "detalhes": "Impressão de modelos 3D",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "16",
+      "codigo": "M016",
+      "nome": "Cortadora de Papel",
+      "modelo": "CP-100",
+      "fabricante": "PaperCut",
+      "dataAquisicao": "2021-05-20",
+      "tempoVidaEstimado": 6,
+      "localizacao": "Linha 1",
+      "detalhes": "Corte de papel",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "17",
+      "codigo": "M017",
+      "nome": "Máquina de Gravação",
+      "modelo": "MG-500",
+      "fabricante": "Gravure",
+      "dataAquisicao": "2022-03-11",
+      "tempoVidaEstimado": 7,
+      "localizacao": "Linha 2",
+      "detalhes": "Gravação a laser",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "18",
+      "codigo": "M018",
+      "nome": "Máquina de Polimento",
+      "modelo": "MP-200",
+      "fabricante": "ShineTech",
+      "dataAquisicao": "2021-08-30",
+      "tempoVidaEstimado": 8,
+      "localizacao": "Linha 3",
+      "detalhes": "Polimento de superfícies",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "19",
+      "codigo": "M019",
+      "nome": "Aparadora de Bordas",
+      "modelo": "AB-400",
+      "fabricante": "EdgeCut",
+      "dataAquisicao": "2022-06-01",
+      "tempoVidaEstimado": 5,
+      "localizacao": "Linha 4",
+      "detalhes": "Acabamento de bordas",
+      "manual": "URL do manual"
+    },
+    {
+      "id": "20",
+      "codigo": "M020",
+      "nome": "Bancada de Trabalho",
+      "modelo": "BW-300",
+      "fabricante": "WorkBench",
+      "dataAquisicao": "2023-01-15",
+      "tempoVidaEstimado": 3,
+      "localizacao": "Linha 5",
+      "detalhes": "Superfície para trabalho",
+      "manual": "URL do manual"
     }
   ],
   "manutencoes": [
@@ -35,6 +251,196 @@
       "tempoDeParada": 4,
       "tecnico": "João Silva",
       "observacoes": "Substituição preventiva da correia."
+    },
+    {
+      "id": "2",
+      "maquinaId": 2,
+      "data": "2024-09-15",
+      "tipo": "Corretiva",
+      "pecasTrocadas": "Motor",
+      "tempoDeParada": 2,
+      "tecnico": "Maria Oliveira",
+      "observacoes": "Troca do motor devido a falha."
+    },
+    {
+      "id": "3",
+      "maquinaId": 3,
+      "data": "2024-08-12",
+      "tipo": "Preventiva",
+      "pecasTrocadas": "Óleo",
+      "tempoDeParada": 1,
+      "tecnico": "Carlos Lima",
+      "observacoes": "Troca de óleo."
+    },
+    {
+      "id": "4",
+      "maquinaId": 4,
+      "data": "2024-07-20",
+      "tipo": "Corretiva",
+      "pecasTrocadas": "Cabeça de corte",
+      "tempoDeParada": 3,
+      "tecnico": "João Silva",
+      "observacoes": "Reparo na cabeça de corte."
+    },
+    {
+      "id": "5",
+      "maquinaId": 5,
+      "data": "2024-06-18",
+      "tipo": "Preventiva",
+      "pecasTrocadas": "Correias",
+      "tempoDeParada": 2,
+      "tecnico": "Maria Oliveira",
+      "observacoes": "Substituição das correias."
+    },
+    {
+      "id": "6",
+      "maquinaId": 6,
+      "data": "2024-05-10",
+      "tipo": "Corretiva",
+      "pecasTrocadas": "Roldana",
+      "tempoDeParada": 4,
+      "tecnico": "Carlos Lima",
+      "observacoes": "Reparo na roldana."
+    },
+    {
+      "id": "7",
+      "maquinaId": 7,
+      "data": "2024-04-22",
+      "tipo": "Preventiva",
+      "pecasTrocadas": "Filtros",
+      "tempoDeParada": 1,
+      "tecnico": "João Silva",
+      "observacoes": "Troca dos filtros."
+    },
+    {
+      "id": "8",
+      "maquinaId": 8,
+      "data": "2024-03-15",
+      "tipo": "Corretiva",
+      "pecasTrocadas": "Válvula",
+      "tempoDeParada": 2,
+      "tecnico": "Maria Oliveira",
+      "observacoes": "Troca da válvula."
+    },
+    {
+      "id": "9",
+      "maquinaId": 9,
+      "data": "2024-02-10",
+      "tipo": "Preventiva",
+      "pecasTrocadas": "Rolamentos",
+      "tempoDeParada": 1,
+      "tecnico": "Carlos Lima",
+      "observacoes": "Substituição de rolamentos."
+    },
+    {
+      "id": "10",
+      "maquinaId": 10,
+      "data": "2024-01-05",
+      "tipo": "Corretiva",
+      "pecasTrocadas": "Tampa",
+      "tempoDeParada": 3,
+      "tecnico": "João Silva",
+      "observacoes": "Reparo na tampa."
+    },
+    {
+      "id": "11",
+      "maquinaId": 11,
+      "data": "2023-12-15",
+      "tipo": "Preventiva",
+      "pecasTrocadas": "Cabos",
+      "tempoDeParada": 2,
+      "tecnico": "Maria Oliveira",
+      "observacoes": "Substituição dos cabos."
+    },
+    {
+      "id": "12",
+      "maquinaId": 12,
+      "data": "2023-11-10",
+      "tipo": "Corretiva",
+      "pecasTrocadas": "Conector",
+      "tempoDeParada": 3,
+      "tecnico": "Carlos Lima",
+      "observacoes": "Reparo no conector."
+    },
+    {
+      "id": "13",
+      "maquinaId": 13,
+      "data": "2023-10-05",
+      "tipo": "Preventiva",
+      "pecasTrocadas": "Baterias",
+      "tempoDeParada": 1,
+      "tecnico": "João Silva",
+      "observacoes": "Troca de baterias."
+    },
+    {
+      "id": "14",
+      "maquinaId": 14,
+      "data": "2023-09-01",
+      "tipo": "Corretiva",
+      "pecasTrocadas": "Eixo",
+      "tempoDeParada": 2,
+      "tecnico": "Maria Oliveira",
+      "observacoes": "Reparo no eixo."
+    },
+    {
+      "id": "15",
+      "maquinaId": 15,
+      "data": "2023-08-15",
+      "tipo": "Preventiva",
+      "pecasTrocadas": "Mangueiras",
+      "tempoDeParada": 1,
+      "tecnico": "Carlos Lima",
+      "observacoes": "Substituição das mangueiras."
+    },
+    {
+      "id": "16",
+      "maquinaId": 16,
+      "data": "2023-07-10",
+      "tipo": "Corretiva",
+      "pecasTrocadas": "Fusível",
+      "tempoDeParada": 2,
+      "tecnico": "João Silva",
+      "observacoes": "Troca do fusível."
+    },
+    {
+      "id": "17",
+      "maquinaId": 17,
+      "data": "2023-06-05",
+      "tipo": "Preventiva",
+      "pecasTrocadas": "Placas",
+      "tempoDeParada": 1,
+      "tecnico": "Maria Oliveira",
+      "observacoes": "Substituição de placas."
+    },
+    {
+      "id": "18",
+      "maquinaId": 18,
+      "data": "2023-05-15",
+      "tipo": "Corretiva",
+      "pecasTrocadas": "Bomba",
+      "tempoDeParada": 3,
+      "tecnico": "Carlos Lima",
+      "observacoes": "Reparo na bomba."
+    },
+    {
+      "id": "19",
+      "maquinaId": 19,
+      "data": "2023-04-20",
+      "tipo": "Preventiva",
+      "pecasTrocadas": "Eletrodo",
+      "tempoDeParada": 2,
+      "tecnico": "João Silva",
+      "observacoes": "Troca do eletrodo."
+    },
+    {
+      "id": "20",
+      "maquinaId": 20,
+      "data": "2023-03-15",
+      "tipo": "Corretiva",
+      "pecasTrocadas": "Transmissão",
+      "tempoDeParada": 4,
+      "tecnico": "Maria Oliveira",
+      "observacoes": "Reparo na transmissão."
     }
   ],
   "falhas": [
@@ -45,6 +451,158 @@
       "problema": "Falha no motor",
       "prioridade": "Alta",
       "operador": "Carlos Lima"
+    },
+    {
+      "id": "2",
+      "maquinaId": 2,
+      "data": "2024-09-20",
+      "problema": "Vazamento de óleo",
+      "prioridade": "Média",
+      "operador": "João Silva"
+    },
+    {
+      "id": "3",
+      "maquinaId": 3,
+      "data": "2024-08-15",
+      "problema": "Ruído excessivo",
+      "prioridade": "Baixa",
+      "operador": "Maria Oliveira"
+    },
+    {
+      "id": "4",
+      "maquinaId": 4,
+      "data": "2024-07-30",
+      "problema": "Parada inesperada",
+      "prioridade": "Alta",
+      "operador": "Carlos Lima"
+    },
+    {
+      "id": "5",
+      "maquinaId": 5,
+      "data": "2024-07-01",
+      "problema": "Desgaste nas peças",
+      "prioridade": "Média",
+      "operador": "João Silva"
+    },
+    {
+      "id": "6",
+      "maquinaId": 6,
+      "data": "2024-06-15",
+      "problema": "Problema de calibração",
+      "prioridade": "Baixa",
+      "operador": "Maria Oliveira"
+    },
+    {
+      "id": "7",
+      "maquinaId": 7,
+      "data": "2024-05-25",
+      "problema": "Fugas de ar",
+      "prioridade": "Alta",
+      "operador": "Carlos Lima"
+    },
+    {
+      "id": "8",
+      "maquinaId": 8,
+      "data": "2024-04-10",
+      "problema": "Falha na válvula",
+      "prioridade": "Média",
+      "operador": "João Silva"
+    },
+    {
+      "id": "9",
+      "maquinaId": 9,
+      "data": "2024-03-05",
+      "problema": "Problema elétrico",
+      "prioridade": "Baixa",
+      "operador": "Maria Oliveira"
+    },
+    {
+      "id": "10",
+      "maquinaId": 10,
+      "data": "2024-02-25",
+      "problema": "Desgaste na lâmina",
+      "prioridade": "Alta",
+      "operador": "Carlos Lima"
+    },
+    {
+      "id": "11",
+      "maquinaId": 11,
+      "data": "2024-01-30",
+      "problema": "Ruído na máquina",
+      "prioridade": "Média",
+      "operador": "João Silva"
+    },
+    {
+      "id": "12",
+      "maquinaId": 12,
+      "data": "2023-12-15",
+      "problema": "Falha na ligação",
+      "prioridade": "Baixa",
+      "operador": "Maria Oliveira"
+    },
+    {
+      "id": "13",
+      "maquinaId": 13,
+      "data": "2023-11-05",
+      "problema": "Problema na mesa",
+      "prioridade": "Alta",
+      "operador": "Carlos Lima"
+    },
+    {
+      "id": "14",
+      "maquinaId": 14,
+      "data": "2023-10-20",
+      "problema": "Desgaste nas engrenagens",
+      "prioridade": "Média",
+      "operador": "João Silva"
+    },
+    {
+      "id": "15",
+      "maquinaId": 15,
+      "data": "2023-09-25",
+      "problema": "Vazamento de gás",
+      "prioridade": "Baixa",
+      "operador": "Maria Oliveira"
+    },
+    {
+      "id": "16",
+      "maquinaId": 16,
+      "data": "2023-08-30",
+      "problema": "Falha na fonte de alimentação",
+      "prioridade": "Alta",
+      "operador": "Carlos Lima"
+    },
+    {
+      "id": "17",
+      "maquinaId": 17,
+      "data": "2023-07-15",
+      "problema": "Problema de soldagem",
+      "prioridade": "Média",
+      "operador": "João Silva"
+    },
+    {
+      "id": "18",
+      "maquinaId": 18,
+      "data": "2023-06-10",
+      "problema": "Fuga de água",
+      "prioridade": "Baixa",
+      "operador": "Maria Oliveira"
+    },
+    {
+      "id": "19",
+      "maquinaId": 19,
+      "data": "2023-05-05",
+      "problema": "Falha no motor de acionamento",
+      "prioridade": "Alta",
+      "operador": "Carlos Lima"
+    },
+    {
+      "id": "20",
+      "maquinaId": 20,
+      "data": "2023-04-01",
+      "problema": "Desgaste nos rolamentos",
+      "prioridade": "Média",
+      "operador": "João Silva"
     }
   ],
   "tecnicos": [
@@ -52,6 +610,120 @@
       "id": "1",
       "nome": "João Silva",
       "especialidade": "Mecânica",
+      "disponibilidade": "Livre"
+    },
+    {
+      "id": "2",
+      "nome": "Maria Oliveira",
+      "especialidade": "Elétrica",
+      "disponibilidade": "Ocupado"
+    },
+    {
+      "id": "3",
+      "nome": "Carlos Lima",
+      "especialidade": "Hidráulica",
+      "disponibilidade": "Livre"
+    },
+    {
+      "id": "4",
+      "nome": "Ana Costa",
+      "especialidade": "Eletrônica",
+      "disponibilidade": "Livre"
+    },
+    {
+      "id": "5",
+      "nome": "Fernando Souza",
+      "especialidade": "Mecânica",
+      "disponibilidade": "Ocupado"
+    },
+    {
+      "id": "6",
+      "nome": "Cláudia Mendes",
+      "especialidade": "Elétrica",
+      "disponibilidade": "Livre"
+    },
+    {
+      "id": "7",
+      "nome": "Roberto Almeida",
+      "especialidade": "Hidráulica",
+      "disponibilidade": "Ocupado"
+    },
+    {
+      "id": "8",
+      "nome": "Juliana Pereira",
+      "especialidade": "Eletrônica",
+      "disponibilidade": "Livre"
+    },
+    {
+      "id": "9",
+      "nome": "Paulo Martins",
+      "especialidade": "Mecânica",
+      "disponibilidade": "Livre"
+    },
+    {
+      "id": "10",
+      "nome": "Sofia Santos",
+      "especialidade": "Elétrica",
+      "disponibilidade": "Ocupado"
+    },
+    {
+      "id": "11",
+      "nome": "Ricardo Ferreira",
+      "especialidade": "Hidráulica",
+      "disponibilidade": "Livre"
+    },
+    {
+      "id": "12",
+      "nome": "Tatiane Ramos",
+      "especialidade": "Eletrônica",
+      "disponibilidade": "Livre"
+    },
+    {
+      "id": "13",
+      "nome": "Luiz Costa",
+      "especialidade": "Mecânica",
+      "disponibilidade": "Ocupado"
+    },
+    {
+      "id": "14",
+      "nome": "Mariana Lopes",
+      "especialidade": "Elétrica",
+      "disponibilidade": "Livre"
+    },
+    {
+      "id": "15",
+      "nome": "Bruno Alves",
+      "especialidade": "Hidráulica",
+      "disponibilidade": "Livre"
+    },
+    {
+      "id": "16",
+      "nome": "Roberta Nascimento",
+      "especialidade": "Eletrônica",
+      "disponibilidade": "Ocupado"
+    },
+    {
+      "id": "17",
+      "nome": "Tatiane Lima",
+      "especialidade": "Mecânica",
+      "disponibilidade": "Livre"
+    },
+    {
+      "id": "18",
+      "nome": "Daniel Pires",
+      "especialidade": "Elétrica",
+      "disponibilidade": "Ocupado"
+    },
+    {
+      "id": "19",
+      "nome": "Gabriel Teixeira",
+      "especialidade": "Hidráulica",
+      "disponibilidade": "Livre"
+    },
+    {
+      "id": "20",
+      "nome": "Jessica Martins",
+      "especialidade": "Eletrônica",
       "disponibilidade": "Livre"
     }
   ]
