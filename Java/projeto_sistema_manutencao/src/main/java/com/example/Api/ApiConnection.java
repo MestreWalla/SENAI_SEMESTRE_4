@@ -2,6 +2,7 @@ package com.example.Api;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -64,33 +65,57 @@ public class ApiConnection {
         }
     }
 
-    // PUT
-    public static void putData(String endPoint, String inputData, String id) {
-        try {
-            URL url = new URL(API_URL + endPoint + "/" + id);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("PUT");
-            connection.setRequestProperty("Content-Type", "application/json; utf-8");
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setDoOutput(true); // enviar os dados para a API
+   public static void putData(String endPoint, String inputData, String id) {
+    HttpURLConnection connection = null;
+    try {
+        URL url = new URL(API_URL + endPoint + "/" + id);
+        connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("PUT");
+        connection.setRequestProperty("Content-Type", "application/json; utf-8");
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setDoOutput(true); // Enviar os dados para a API
+        
+        // Definir timeout
+        connection.setConnectTimeout(5000); // 5 segundos
+        connection.setReadTimeout(5000); // 5 segundos
 
-            try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"))) {
-                bw.write(inputData);
-                bw.flush();
-            }
-            // Verificar o status da resposta
-            int status = connection.getResponseCode();
-            if (status != HttpURLConnection.HTTP_OK) { // HTTP 200 OK
-                throw new Exception("Erro ao atualizar usuário: " + status);
-            }
+        // Enviar dados
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"))) {
+            bw.write(inputData);
+            bw.flush();
+        }
 
-            System.out.println("Atualização Realizada com Sucesso");
+        // Verificar o status da resposta
+        int status = connection.getResponseCode();
+        if (status != HttpURLConnection.HTTP_OK) {
+            // Ler a resposta do erro
+            String errorResponse = readResponse(connection);
+            throw new Exception("Erro ao atualizar usuário: " + status + " - " + errorResponse);
+        }
+
+        System.out.println("Atualização Realizada com Sucesso");
+
+    } catch (Exception e) {
+        e.printStackTrace(); // Considere usar um logger
+    } finally {
+        if (connection != null) {
             connection.disconnect();
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
+}
+
+// Método auxiliar para ler a resposta do servidor
+private static String readResponse(HttpURLConnection connection) throws IOException {
+    StringBuilder response = new StringBuilder();
+    try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+        String inputLine;
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+    }
+    return response.toString();
+}
+
 
     // DELETE
     public static void deleteData(String endPoint, int id) {

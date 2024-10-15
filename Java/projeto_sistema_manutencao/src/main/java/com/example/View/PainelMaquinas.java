@@ -21,7 +21,7 @@ public class PainelMaquinas extends JPanel {
     private final MaquinaController maquinaController;
     private final JTable maquinasTable;
     private final DefaultTableModel tableModel;
-    private final JButton btnSalvarAlteracoes;
+    private final JButton btnEditarMaquina;
     private final JButton btnCadastrarMaquina;
     private final JButton btnExcluirMaquina; // Botão para excluir máquina
     private final JButton btnAtualizarLista; // Botão para atualizar a lista
@@ -44,12 +44,12 @@ public class PainelMaquinas extends JPanel {
         // Cria os botões
         JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnCadastrarMaquina = new JButton("Cadastrar Máquina");
-        btnSalvarAlteracoes = new JButton("Salvar Alterações");
+        btnEditarMaquina = new JButton("Editar Máquina");
         btnExcluirMaquina = new JButton("Excluir Máquina");
         btnAtualizarLista = new JButton("Atualizar Lista"); // Adicionando o botão de atualizar lista
-        
+
         painelInferior.add(btnCadastrarMaquina);
-        painelInferior.add(btnSalvarAlteracoes);
+        painelInferior.add(btnEditarMaquina);
         painelInferior.add(btnExcluirMaquina);
         painelInferior.add(btnAtualizarLista); // Adicionando o botão ao painel
         this.add(painelInferior, BorderLayout.SOUTH);
@@ -59,6 +59,20 @@ public class PainelMaquinas extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 abrirFormularioCadastro();
+            }
+        });
+
+        // Adiciona o listener para o botão de editar
+        btnEditarMaquina.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int linhaSelecionada = maquinasTable.getSelectedRow();
+                if (linhaSelecionada == -1) {
+                    JOptionPane.showMessageDialog(PainelMaquinas.this, "Selecione uma máquina para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                abrirEditarMaquinaDialog(linhaSelecionada);
             }
         });
 
@@ -84,26 +98,32 @@ public class PainelMaquinas extends JPanel {
         dialog.setVisible(true); // Exibe o dialog
     }
 
+    private void abrirEditarMaquinaDialog(int posicao) {
+        Maquina maquinaSelecionada = maquinaController.ReadMaquina().get(posicao);
+        EditarMaquinaDialog dialog = new EditarMaquinaDialog(maquinaController, tableModel, maquinaSelecionada, posicao);
+        dialog.setVisible(true);
+    }
+
     private void excluirMaquinaSelecionada() {
         int linhaSelecionada = maquinasTable.getSelectedRow();
         if (linhaSelecionada == -1) {
             JOptionPane.showMessageDialog(this, "Selecione uma máquina para excluir.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-    
+
         // Mensagem de confirmação
         int resposta = JOptionPane.showConfirmDialog(this,
                 "Você tem certeza que deseja excluir esta máquina?",
                 "Confirmação de Exclusão",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.WARNING_MESSAGE);
-    
+
         if (resposta == JOptionPane.YES_OPTION) {
             int id = (int) tableModel.getValueAt(linhaSelecionada, 0); // Obtém o ID da máquina selecionada
-            
+
             try {
                 // Chama o método do controlador para excluir a máquina
-                maquinaController.DeleteMaquina(id); 
+                maquinaController.DeleteMaquina(id);
                 // Remove a linha da tabela
                 tableModel.removeRow(linhaSelecionada);
                 JOptionPane.showMessageDialog(this, "Máquina excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
@@ -115,15 +135,14 @@ public class PainelMaquinas extends JPanel {
             JOptionPane.showMessageDialog(this, "Exclusão cancelada.", "Cancelamento", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-    
 
     private void atualizarLista() {
         // Limpa a tabela existente
         tableModel.setRowCount(0);
-        
+
         // Obtém a lista atualizada de máquinas
         List<Maquina> maquinas = maquinaController.ReadMaquina();
-        
+
         // Adiciona as máquinas à tabela
         for (Maquina maquina : maquinas) {
             tableModel.addRow(new Object[]{

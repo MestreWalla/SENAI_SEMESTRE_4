@@ -37,28 +37,28 @@ public class SistemaManutencaoGUI extends JFrame {
         tabbedPane = new JTabbedPane();
 
         // Tab01: Manutenção
-        ImageIcon iconManutencao = new ImageIcon("C:\\Users\\DevNoite\\Documents\\GitHub\\SENAI_SEMESTRE_4\\Java\\projeto_sistema_manutencao\\src\\main\\resources\\Icons\\manutencaoIcon.png");
+        ImageIcon iconManutencao = new ImageIcon(getClass().getResource("/Icons/manutencaoIcon.png"));
         Image image = iconManutencao.getImage();
         Image scaledImage = image.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
         iconManutencao = new ImageIcon(scaledImage);
         tabbedPane.addTab("Manutenção", iconManutencao, painelManutencao);
 
         // Tab02: Máquinas
-        ImageIcon iconMaquinas = new ImageIcon("C:\\Users\\DevNoite\\Documents\\GitHub\\SENAI_SEMESTRE_4\\Java\\projeto_sistema_manutencao\\src\\main\\resources\\Icons\\maquinaIcon.png");
+        ImageIcon iconMaquinas = new ImageIcon(getClass().getResource("/Icons/maquinaIcon.png"));
         Image imageMaquinas = iconMaquinas.getImage();
         Image scaledImageMaquinas = imageMaquinas.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
         iconMaquinas = new ImageIcon(scaledImageMaquinas);
         tabbedPane.addTab("Máquinas", iconMaquinas, painelMaquinas);
 
         // Tab03: Falhas
-        ImageIcon iconFalhas = new ImageIcon("C:\\Users\\DevNoite\\Documents\\GitHub\\SENAI_SEMESTRE_4\\Java\\projeto_sistema_manutencao\\src\\main\\resources\\Icons\\falhaIcon.png");
+        ImageIcon iconFalhas = new ImageIcon(getClass().getResource("/Icons/falhaIcon.png"));
         Image imageFalhas = iconFalhas.getImage();
         Image scaledImageFalhas = imageFalhas.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
         iconFalhas = new ImageIcon(scaledImageFalhas);
         tabbedPane.addTab("Falhas", iconFalhas, painelFalhas);
 
         // Tab04: Técnicos
-        ImageIcon iconTecnicos = new ImageIcon("C:\\Users\\DevNoite\\Documents\\GitHub\\SENAI_SEMESTRE_4\\Java\\projeto_sistema_manutencao\\src\\main\\resources\\Icons\\tecnicoIcon.png");
+        ImageIcon iconTecnicos = new ImageIcon(getClass().getResource("/Icons/tecnicoIcon.png"));
         Image imageTecnicos = iconTecnicos.getImage();
         Image scaledImageTecnicos = imageTecnicos.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
         iconTecnicos = new ImageIcon(scaledImageTecnicos);

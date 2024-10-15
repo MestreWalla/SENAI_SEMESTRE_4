@@ -25,10 +25,20 @@ public class MaquinaController {
         return maquinas;
     }
 
+    // public void UpdateMaquina(int posicao, Maquina maquina) {
+    //     // Atualiza a máquina na lista
+    //     maquinas.set(posicao, maquina);
+    //     ReadMaquina();
+    // }
     public void UpdateMaquina(int posicao, Maquina maquina) {
+        // Atualiza a máquina na API
+        MaquinaAPI.putMaquina(maquina);
+    
+        // Atualiza a máquina na lista local
         maquinas.set(posicao, maquina);
     }
 
+    
     public void DeleteMaquina(int id) {
         System.out.println("Tentando excluir a máquina com ID: " + id);
 

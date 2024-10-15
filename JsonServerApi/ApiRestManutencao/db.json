@@ -229,16 +229,16 @@
       "manual": "URL do manual"
     },
     {
-      "id": "20",
-      "codigo": "M020",
-      "nome": "Bancada de Trabalho",
-      "modelo": "BW-300",
-      "fabricante": "WorkBench",
-      "dataAquisicao": "2023-01-15",
       "tempoVidaEstimado": 3,
+      "codigo": "M020",
       "localizacao": "Linha 5",
-      "detalhes": "Superfície para trabalho",
-      "manual": "URL do manual"
+      "nome": "Bancada de Trabalho",
+      "id": "20",
+      "fabricante": "WorkBench",
+      "manual": "URL do manual",
+      "modelo": "BW-300",
+      "dataAquisicao": "2023-01-15",
+      "detalhes": "Superfície para trabalho"
     }
   ],
   "manutencoes": [
