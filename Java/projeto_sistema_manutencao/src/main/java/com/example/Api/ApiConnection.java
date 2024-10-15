@@ -65,57 +65,56 @@ public class ApiConnection {
         }
     }
 
-   public static void putData(String endPoint, String inputData, String id) {
-    HttpURLConnection connection = null;
-    try {
-        URL url = new URL(API_URL + endPoint + "/" + id);
-        connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("PUT");
-        connection.setRequestProperty("Content-Type", "application/json; utf-8");
-        connection.setRequestProperty("Accept", "application/json");
-        connection.setDoOutput(true); // Enviar os dados para a API
-        
-        // Definir timeout
-        connection.setConnectTimeout(5000); // 5 segundos
-        connection.setReadTimeout(5000); // 5 segundos
+    public static void putData(String endPoint, String inputData, String id) {
+        HttpURLConnection connection = null;
+        try {
+            URL url = new URL(API_URL + endPoint + "/" + id);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("PUT");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true); // Enviar os dados para a API
 
-        // Enviar dados
-        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"))) {
-            bw.write(inputData);
-            bw.flush();
-        }
+            // Definir timeout
+            connection.setConnectTimeout(5000); // 5 segundos
+            connection.setReadTimeout(5000); // 5 segundos
 
-        // Verificar o status da resposta
-        int status = connection.getResponseCode();
-        if (status != HttpURLConnection.HTTP_OK) {
-            // Ler a resposta do erro
-            String errorResponse = readResponse(connection);
-            throw new Exception("Erro ao atualizar usuário: " + status + " - " + errorResponse);
-        }
+            // Enviar dados
+            try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"))) {
+                bw.write(inputData);
+                bw.flush();
+            }
 
-        System.out.println("Atualização Realizada com Sucesso");
+            // Verificar o status da resposta
+            int status = connection.getResponseCode();
+            if (status != HttpURLConnection.HTTP_OK) {
+                // Ler a resposta do erro
+                String errorResponse = readResponse(connection);
+                throw new Exception("Erro ao atualizar usuário: " + status + " - " + errorResponse);
+            }
 
-    } catch (Exception e) {
-        e.printStackTrace(); // Considere usar um logger
-    } finally {
-        if (connection != null) {
-            connection.disconnect();
+            System.out.println("Atualização Realizada com Sucesso");
+
+        } catch (Exception e) {
+            e.printStackTrace(); // Considere usar um logger
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
         }
     }
-}
 
 // Método auxiliar para ler a resposta do servidor
-private static String readResponse(HttpURLConnection connection) throws IOException {
-    StringBuilder response = new StringBuilder();
-    try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-        String inputLine;
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+    private static String readResponse(HttpURLConnection connection) throws IOException {
+        StringBuilder response = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
         }
+        return response.toString();
     }
-    return response.toString();
-}
-
 
     // DELETE
     public static void deleteData(String endPoint, int id) {

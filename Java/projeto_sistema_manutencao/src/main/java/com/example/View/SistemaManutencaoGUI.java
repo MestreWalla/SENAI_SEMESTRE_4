@@ -27,6 +27,9 @@ public class SistemaManutencaoGUI extends JFrame {
                 ((Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (this.getWidth() / 2)),
                 ((Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (this.getHeight() / 2)));
 
+        // Aplica o tema Nimbus Look and Feel:
+        // AplicaNimbusLookAndFeel.pegaNimbus();
+
         // Inicializa os painéis:
         painelMaquinas = new PainelMaquinas();
         painelManutencao = new PainelManutencao();

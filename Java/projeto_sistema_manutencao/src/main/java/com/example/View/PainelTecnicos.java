@@ -26,7 +26,7 @@ public class PainelTecnicos extends JPanel {
         super(new BorderLayout());
         tecnicoController = new TecnicoController();
         tableModel = new DefaultTableModel(new Object[]{
-            "ID", "Nome", "Fabricante", "Modelo", "Detalhes", "Localização", "Tempo de Vida Estimado"
+            "ID", "Nome", "Ocupação", "Status"
         }, 0);
         tecnicosTable = new JTable(tableModel);
 

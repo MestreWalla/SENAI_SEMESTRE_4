@@ -16,8 +16,6 @@ public class Main {
     }
 }
 
-// ApiConnection
-// GET, POST, PUT, DELETE
 // MaquinaAPI
 // GET, POST, PUT
 // ManutencaoAPI
