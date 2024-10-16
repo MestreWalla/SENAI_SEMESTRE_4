@@ -8,27 +8,33 @@ import com.example.Models.Tecnico;
 
 public class TecnicoController {
 
-    private List<Tecnico> maquinas;
+    private List<Tecnico> tecnicos;
 
     public TecnicoController() {
-        maquinas = new ArrayList<>();
+        tecnicos = new ArrayList<>();
     }
 
-    // metodos CRUD
-    public void CreateTecnico(Tecnico maquina) {
-        maquinas.add(maquina);
+    // Cria um novo técnico
+    public void CreateTecnico(Tecnico tecnico) {
+        TecnicoAPI.postTecnico(tecnico);
+        tecnicos.add(tecnico);
     }
 
+    // Retorna todos os técnicos
     public List<Tecnico> ReadTecnico() {
-        maquinas = TecnicoAPI.getTecnicos();
-        return maquinas;
+        tecnicos = TecnicoAPI.getTecnicos();
+        return tecnicos;
     }
 
-    public void UpdateTecnico(int posicao, Tecnico maquina) {
-        maquinas.set(posicao, maquina);
+    // Atualiza as informações de um técnico
+    public void UpdateTecnico(int posicao, Tecnico tecnico) {
+        TecnicoAPI.putTecnico(tecnico);
+        tecnicos.set(posicao, tecnico);
     }
 
-    public void DeleteTecnico(int posicao) {
-        maquinas.remove(posicao);
-        }
+    // Exclui um técnico pelo ID
+    public void DeleteTecnico(int id) {
+        TecnicoAPI.deleteTecnico(id);
+        tecnicos.removeIf(tecnico -> tecnico.getId() == id);
+    }
 }

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Manutencao {
-    private String id;
+    private int id;
     private String maquinaId;
     private String data;
     private String tipo;

@@ -15,8 +15,8 @@ public class ManutencaoController {
 
     // Metodos CRUD
     public void CreateManutencao(Manutencao manutencao) {
-        ManutencaoAPI.postManutencao(manutencao);
-        this.manutencoes.add(manutencao);
+        ManutencaoAPI.postManutencoes(manutencao);
+        manutencoes.add(manutencao);
     }
 
     public List<Manutencao> ReadManutencao() {
@@ -25,10 +25,12 @@ public class ManutencaoController {
     }
 
     public void UpdateManutencao(int posicao, Manutencao manutencao) {
+        ManutencaoAPI.putManutencao(manutencao);
         manutencoes.set(posicao, manutencao);
     }
 
     public void DeleteManutencao(int posicao) {
-        manutencoes.remove(posicao);
+        ManutencaoAPI.deleteManutencao(posicao);
+        manutencoes.removeIf(manutencao -> manutencao.getId() == posicao);
     }
 }

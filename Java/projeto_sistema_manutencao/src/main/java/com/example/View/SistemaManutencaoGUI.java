@@ -32,7 +32,7 @@ public class SistemaManutencaoGUI extends JFrame {
 
         // Inicializa os painéis:
         painelMaquinas = new PainelMaquinas();
-        painelManutencao = new PainelManutencao();
+        painelManutencao = new PainelManutencoes();
         painelFalhas = new PainelFalhas();
         painelTecnicos = new PainelTecnicos();
 

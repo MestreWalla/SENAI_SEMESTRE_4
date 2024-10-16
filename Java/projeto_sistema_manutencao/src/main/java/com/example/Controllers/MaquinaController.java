@@ -25,11 +25,6 @@ public class MaquinaController {
         return maquinas;
     }
 
-    // public void UpdateMaquina(int posicao, Maquina maquina) {
-    //     // Atualiza a máquina na lista
-    //     maquinas.set(posicao, maquina);
-    //     ReadMaquina();
-    // }
     public void UpdateMaquina(int posicao, Maquina maquina) {
         // Atualiza a máquina na API
         MaquinaAPI.putMaquina(maquina);
