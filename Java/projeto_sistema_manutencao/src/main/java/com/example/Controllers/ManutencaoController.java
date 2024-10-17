@@ -29,8 +29,22 @@ public class ManutencaoController {
         manutencoes.set(posicao, manutencao);
     }
 
-    public void DeleteManutencao(int posicao) {
-        ManutencaoAPI.deleteManutencao(posicao);
-        manutencoes.removeIf(manutencao -> manutencao.getId() == posicao);
+    public void DeleteManutencao(int id) {
+        System.out.println("Tentando excluir a manutencao com ID: " + id);
+
+        try {
+            // Chama o método da API para deletar a máquina
+            ManutencaoAPI.deleteManutencao(id);
+
+            // Remove a máquina da lista local (maquinas)
+            manutencoes.removeIf(manutencao -> manutencao.getId() == id);
+
+            // Opcional: Atualizar a lista após a exclusão
+            ReadManutencao();
+
+            System.out.println("Manutenção excluída com sucesso!");
+        } catch (Exception e) {
+            System.out.println("Erro ao excluir a manutencao: " + e.getMessage());
+        }
     }
 }

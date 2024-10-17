@@ -445,14 +445,6 @@
   ],
   "falhas": [
     {
-      "id": "1",
-      "maquinaId": 1,
-      "data": "2024-09-28",
-      "problema": "Falha no motor",
-      "prioridade": "Alta",
-      "operador": "Carlos Lima"
-    },
-    {
       "id": "2",
       "maquinaId": 2,
       "data": "2024-09-20",

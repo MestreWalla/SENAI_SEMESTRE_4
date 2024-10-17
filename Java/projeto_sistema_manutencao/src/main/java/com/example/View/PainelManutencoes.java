@@ -5,15 +5,16 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import com.example.Controllers.ManutencaoController;
 import com.example.Models.Manutencao;
-
 
 public class PainelManutencoes extends JPanel {
 
@@ -29,7 +30,7 @@ public class PainelManutencoes extends JPanel {
         super(new BorderLayout());
         manutencaoController = new ManutencaoController();
         tableModel = new DefaultTableModel(new Object[]{
-            "ID", "Nome", "Especialidade", "Disponibilidade"
+            "ID", "Nome", "Data", "Tipo", "Pecas", "Tempo de Parada", "Técnico", "Observações"
         }, 0);
         manutencoesTable = new JTable(tableModel);
         atualizarLista();
@@ -38,9 +39,9 @@ public class PainelManutencoes extends JPanel {
         this.add(scrollPane, BorderLayout.CENTER);
 
         JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        btnCadastrarManutencao = new JButton("Cadastrar Técnico");
-        btnEditarManutencao = new JButton("Editar Técnico");
-        btnExcluirManutencao = new JButton("Excluir Técnico");
+        btnCadastrarManutencao = new JButton("Cadastrar manutenção");
+        btnEditarManutencao = new JButton("Editar manutenção");
+        btnExcluirManutencao = new JButton("Excluir manutenção");
         btnAtualizarLista = new JButton("Atualizar Lista");
 
         painelInferior.add(btnCadastrarManutencao);
@@ -61,7 +62,7 @@ public class PainelManutencoes extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int linhaSelecionada = manutencoesTable.getSelectedRow();
                 if (linhaSelecionada == -1) {
-                    JOptionPane.showMessageDialog(PainelManutencoes.this, "Selecione um técnico para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(PainelManutencoes.this, "Selecione uma manutenção para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 abrirEditarManutencaoDialog(linhaSelecionada);
@@ -95,22 +96,60 @@ public class PainelManutencoes extends JPanel {
     }
 
     private void excluirManutencaoSelecionado() {
-        int linhaSelecionada = manutencoesTable.getSelectedRow();
-        if (linhaSelecionada == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione uma mautencao para excluir.", "Erro", JOptionPane.ERROR_MESSAGE);
+    int linhaSelecionada = manutencoesTable.getSelectedRow();
+    if (linhaSelecionada == -1) {
+        JOptionPane.showMessageDialog(this, "Selecione uma manutenção para excluir.", "Erro", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Mensagem de confirmação
+    int resposta = JOptionPane.showConfirmDialog(this,
+            "Você tem certeza que deseja excluir esta manutenção?",
+            "Confirmação de Exclusão",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE);
+
+    if (resposta == JOptionPane.YES_OPTION) {
+        Object valor = tableModel.getValueAt(linhaSelecionada, 0); // Obtém o valor da célula
+        int id;
+
+        // Verifica se o valor é uma String e faz a conversão para int
+        if (valor instanceof String) {
+            try {
+                id = Integer.parseInt((String) valor);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "ID inválido: não é um número.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } else if (valor instanceof Integer) {
+            id = (Integer) valor; // Se o valor já for Integer
+        } else {
+            JOptionPane.showMessageDialog(this, "Tipo de ID inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        int id = (int) tableModel.getValueAt(linhaSelecionada, 0);
-        manutencaoController.DeleteManutencao(id);
-        tableModel.removeRow(linhaSelecionada);
+        try {
+            // Chama o método do controlador para excluir a manutenção
+            manutencaoController.DeleteManutencao(id);
+            // Remove a linha da tabela
+            tableModel.removeRow(linhaSelecionada);
+            JOptionPane.showMessageDialog(this, "Manutenção excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao excluir manutenção: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        // Se o usuário cancelar, não faz nada
+        JOptionPane.showMessageDialog(this, "Exclusão cancelada.", "Cancelamento", JOptionPane.INFORMATION_MESSAGE);
     }
+}
+
 
     private void atualizarLista() {
         tableModel.setRowCount(0);
         List<Manutencao> manutencoes = manutencaoController.ReadManutencao();
         for (Manutencao manutencao : manutencoes) {
             tableModel.addRow(new Object[]{
+                manutencao.getId(),
                 manutencao.getMaquinaId(),
                 manutencao.getData(),
                 manutencao.getTipo(),

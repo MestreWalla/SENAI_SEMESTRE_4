@@ -30,6 +30,7 @@ public class CadastroTecnicoDialog extends JDialog {
         setTitle("Cadastrar Técnico");
         setModal(true);
         setSize(300, 200);
+        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
         JPanel panel = new JPanel(new GridLayout(3, 2));

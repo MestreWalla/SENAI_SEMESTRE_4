@@ -37,6 +37,7 @@ public class EditarTecnicoDialog extends JDialog {
         setTitle("Editar Técnico");
         setModal(true);
         setSize(400, 300);
+        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
         // Cria um painel com padding

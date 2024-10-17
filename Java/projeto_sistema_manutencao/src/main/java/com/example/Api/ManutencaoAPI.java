@@ -42,19 +42,38 @@ public class ManutencaoAPI {
         return manutencoes;
     }
     
+    public static int getMaxId() {
+        String json = ApiConnection.getData("manutencoes");
+        int maxId = 0;
+
+        if (json != null && !json.trim().isEmpty()) {
+            JSONArray manutencaoArray = new JSONArray(json);
+            for (int i = 0; i < manutencaoArray.length(); i++) {
+                JSONObject jsonManutencao = manutencaoArray.getJSONObject(i);
+                int id = jsonManutencao.getInt("id");
+                if (id > maxId) {
+                    maxId = id;
+                }
+                System.out.println("Maior ID: " + maxId);
+            }
+        }
+        return maxId;
+    }
 
     public static void postManutencoes(Manutencao manutencao) {
         JSONObject manutencaoObject = new JSONObject();
-        manutencaoObject.put("id", String.valueOf(manutencao.getId()));
+        int novoId = getMaxId() + 1;
+
+        manutencaoObject.put("id", String.valueOf(novoId));
         manutencaoObject.put("maquinaId", manutencao.getMaquinaId());
         manutencaoObject.put("data", manutencao.getData());
         manutencaoObject.put("tipo", manutencao.getTipo());
         manutencaoObject.put("pecasTrocadas", manutencao.getPecasTrocadas());
         manutencaoObject.put("tempoDeParada", manutencao.getTempoDeParada());
-        manutencaoObject.put("manutencao", manutencao.getTecnico());
+        manutencaoObject.put("tecnico", manutencao.getTecnico());
         manutencaoObject.put("observacoes", manutencao.getObservacoes());
 
-        ApiConnection.postData("Manutencao", manutencaoObject.toString());
+        ApiConnection.postData("manutencoes", manutencaoObject.toString());
     }
 
     public static void putManutencao(Manutencao manutencao) {
@@ -65,13 +84,13 @@ public class ManutencaoAPI {
         manutencaoObject.put("tipo", manutencao.getTipo());
         manutencaoObject.put("pecasTrocadas", manutencao.getPecasTrocadas());
         manutencaoObject.put("tempoDeParada", manutencao.getTempoDeParada());
-        manutencaoObject.put("manutencao", manutencao.getTecnico());
+        manutencaoObject.put("tecnico", manutencao.getTecnico());
         manutencaoObject.put("observacoes", manutencao.getObservacoes());
 
-        ApiConnection.putData("Manutencao", manutencaoObject.toString(), String.valueOf(manutencao.getId()));
+        ApiConnection.putData("manutencoes", manutencaoObject.toString(), String.valueOf(manutencao.getId()));
     }
 
     public static void deleteManutencao(int id) {
-        ApiConnection.deleteData("Manutencao", id);
+        ApiConnection.deleteData("manutencoes", id);
     }
 }

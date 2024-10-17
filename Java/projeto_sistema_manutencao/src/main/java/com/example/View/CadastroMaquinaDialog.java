@@ -37,9 +37,10 @@ public class CadastroMaquinaDialog extends JDialog {
         this.maquinaController = maquinaController;
         this.tableModel = tableModel;
 
-        setTitle("Cadastrar Máquina");
-        setModal(true);
-        setSize(400, 400);
+        setTitle("Cadastrar Máquina"); // Título da janela
+        setModal(true); // Fica aberta até que o usuário clique em OK ou Cancelar
+        setSize(400, 400); // Tamanho da janela
+        setLocationRelativeTo(null); // Centralizar na tela
         setLayout(new BorderLayout()); // Usar BorderLayout para adicionar padding
 
         // Cria um painel com padding

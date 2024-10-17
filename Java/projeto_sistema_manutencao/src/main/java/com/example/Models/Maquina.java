@@ -22,19 +22,24 @@ public class Maquina {
     private String detalhes;
     private String manual;
 
+    // @Override
+    // public String toString() {
+    //     return "Maquina{"
+    //             + "id='" + id + '\''
+    //             + ", codigo='" + codigo + '\''
+    //             + ", nome='" + nome + '\''
+    //             + ", modelo='" + modelo + '\''
+    //             + ", fabricante='" + fabricante + '\''
+    //             + ", dataAquisicao='" + dataAquisicao + '\''
+    //             + ", tempoVidaEstimado=" + tempoVidaEstimado
+    //             + ", localizacao='" + localizacao + '\''
+    //             + ", detalhes='" + detalhes + '\''
+    //             + ", manual='" + manual + '\''
+    //             + '}';
+    // }
+
     @Override
     public String toString() {
-        return "Maquina{"
-                + "id='" + id + '\''
-                + ", codigo='" + codigo + '\''
-                + ", nome='" + nome + '\''
-                + ", modelo='" + modelo + '\''
-                + ", fabricante='" + fabricante + '\''
-                + ", dataAquisicao='" + dataAquisicao + '\''
-                + ", tempoVidaEstimado=" + tempoVidaEstimado
-                + ", localizacao='" + localizacao + '\''
-                + ", detalhes='" + detalhes + '\''
-                + ", manual='" + manual + '\''
-                + '}';
+        return nome; // Retorna apenas o nome da máquina
     }
 }

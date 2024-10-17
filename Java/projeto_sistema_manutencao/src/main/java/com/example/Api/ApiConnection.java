@@ -90,7 +90,7 @@ public class ApiConnection {
             if (status != HttpURLConnection.HTTP_OK) {
                 // Ler a resposta do erro
                 String errorResponse = readResponse(connection);
-                throw new Exception("Erro ao atualizar usuário: " + status + " - " + errorResponse);
+                throw new Exception("API: Erro ao atualizar: " + status + " - " + errorResponse);
             }
 
             System.out.println("Atualização Realizada com Sucesso");
@@ -127,12 +127,11 @@ public class ApiConnection {
 
             int status = connection.getResponseCode();
             if (status != HttpURLConnection.HTTP_NO_CONTENT) { // HTTP 204 No Content
-                throw new Exception("Erro ao deletar usuário: " + status);
+                throw new Exception("API: Erro ao deletar: " + status);
             }
 
-            System.out.println("Máquina excluída com sucesso!");
+            System.out.println("API: Excluída com sucesso!");
             connection.disconnect();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

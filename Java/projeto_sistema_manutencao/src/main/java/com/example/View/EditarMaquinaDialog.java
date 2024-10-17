@@ -44,6 +44,7 @@ public class EditarMaquinaDialog extends JDialog {
         setTitle("Editar Máquina");
         setModal(true);
         setSize(400, 400);
+        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
         // Cria um painel com padding

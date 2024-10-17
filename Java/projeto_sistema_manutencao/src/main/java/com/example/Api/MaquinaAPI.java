@@ -38,10 +38,30 @@ public class MaquinaAPI {
         return maquinas;
     }
 
+    public static int getMaxId() {
+        String json = ApiConnection.getData("maquinas");
+        int maxId = 0;
+
+        if (json != null && !json.trim().isEmpty()) {
+            JSONArray maquinaArray = new JSONArray(json);
+            for (int i = 0; i < maquinaArray.length(); i++) {
+                JSONObject jsonMaquina = maquinaArray.getJSONObject(i);
+                int id = jsonMaquina.getInt("id");
+                if (id > maxId) {
+                    maxId = id;
+                }
+                System.out.println("Maior ID: " + maxId);
+            }
+        }
+        return maxId;
+    }
+
     public static void postMaquinas(Maquina maquina) {
         // Criar um Objeto Json
         JSONObject maquinaObject = new JSONObject();
-        maquinaObject.put("id", String.valueOf(maquina.getId()));
+        int novoId = getMaxId() + 1;
+
+        maquinaObject.put("id", String.valueOf(novoId));
         maquinaObject.put("codigo", maquina.getCodigo());
         maquinaObject.put("nome", maquina.getNome());
         maquinaObject.put("modelo", maquina.getModelo());
@@ -79,9 +99,7 @@ public class MaquinaAPI {
     }    
 
     public static void deleteMaquina(int id) {
-        // ApiConnection.deleteData("maquinas", id.valueOf(id));
         ApiConnection.deleteData("maquinas", id);
-
     }
 
 }

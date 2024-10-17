@@ -38,21 +38,22 @@ public class EditarManutencaoDialog extends JDialog {
         this.manutencao = manutencao;
         this.posicao = posicao;
 
-        setTitle("Editar Técnico");
+        setTitle("Editar Manutenção");
         setModal(true);
-        setSize(400, 300);
+        setSize(400, 400);
+        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
         // Cria um painel com padding
-        JPanel panel = new JPanel(new GridLayout(3, 2));
+        JPanel panel = new JPanel(new GridLayout(7, 2));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Inicializa os campos de entrada com os dados do técnico
+        // Inicializa os campos de entrada com os dados da manutenção
         txtMaquinaId = new JTextField(manutencao.getMaquinaId());
         txtData = new JTextField(manutencao.getData());
         txtTipo = new JTextField(manutencao.getTipo());
         txtPecasTrocadas = new JTextField(manutencao.getPecasTrocadas());
-        txtTempoDeParada = new JTextField(manutencao.getTempoDeParada());
+        txtTempoDeParada = new JTextField(String.valueOf(manutencao.getTempoDeParada()));
         txtTecnico = new JTextField(manutencao.getTecnico());
         txtObservacoes = new JTextField(manutencao.getObservacoes());
 
@@ -70,21 +71,20 @@ public class EditarManutencaoDialog extends JDialog {
 
     private void setupComponents(JPanel panel) {
         // Adiciona labels e campos ao painel
-         // Adiciona os campos de entrada ao painel
-         panel.add(new JLabel("Maquina Id:"));
-         panel.add(txtMaquinaId);
-         panel.add(new JLabel("Data:"));
-         panel.add(txtData);
-         panel.add(new JLabel("Tipo:"));
-         panel.add(txtTipo);
-         panel.add(new JLabel("Pecas Trocadas:"));
-         panel.add(txtPecasTrocadas);
-         panel.add(new JLabel("Tempo de Parada:"));
-         panel.add(txtTempoDeParada);
-         panel.add(new JLabel("Técnico:"));
-         panel.add(txtTecnico);
-         panel.add(new JLabel("Observações:"));
-         panel.add(txtObservacoes);
+        panel.add(new JLabel("Maquina Id:"));
+        panel.add(txtMaquinaId);
+        panel.add(new JLabel("Data:"));
+        panel.add(txtData);
+        panel.add(new JLabel("Tipo:"));
+        panel.add(txtTipo);
+        panel.add(new JLabel("Peças Trocadas:"));
+        panel.add(txtPecasTrocadas);
+        panel.add(new JLabel("Tempo de Parada:"));
+        panel.add(txtTempoDeParada);
+        panel.add(new JLabel("Técnico:"));
+        panel.add(txtTecnico);
+        panel.add(new JLabel("Observações:"));
+        panel.add(txtObservacoes);
     }
 
     private void salvarAlteracoes(ActionEvent e) {
@@ -92,11 +92,20 @@ public class EditarManutencaoDialog extends JDialog {
         String data = txtData.getText();
         String tipo = txtTipo.getText();
         String pecasTrocadas = txtPecasTrocadas.getText();
-        int tempoDeParada = txtTempoDeParada.getText().isEmpty() ? 0 : Integer.parseInt(txtTempoDeParada.getText());
+        int tempoDeParada;
+
+        // Validação do tempo de parada
+        try {
+            tempoDeParada = Integer.parseInt(txtTempoDeParada.getText());
+        } catch (NumberFormatException ex) {
+            showErrorDialog("Tempo de parada deve ser um número.");
+            return;
+        }
+
         String tecnico = txtTecnico.getText();
         String observacoes = txtObservacoes.getText();
 
-        // Atualizar o técnico existente
+        // Atualizar a manutenção existente
         manutencao.setMaquinaId(maquinaId);
         manutencao.setData(data);
         manutencao.setTipo(tipo);
@@ -105,7 +114,7 @@ public class EditarManutencaoDialog extends JDialog {
         manutencao.setTecnico(tecnico);
         manutencao.setObservacoes(observacoes);
 
-        // Chamar o controller para atualizar o técnico
+        // Chamar o controller para atualizar a manutenção
         manutencaoController.UpdateManutencao(posicao, manutencao);
 
         // Atualizar a tabela

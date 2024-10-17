@@ -13,4 +13,10 @@ public class Tecnico {
     private String nome;
     private String especialidade;
     private String disponibilidade;
+
+    @Override
+    public String toString() {
+        return nome; // Retorna apenas o nome do técnico
+    }
+
 }
