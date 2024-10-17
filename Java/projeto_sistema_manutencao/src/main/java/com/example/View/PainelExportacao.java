@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -15,6 +16,12 @@ import javax.swing.table.DefaultTableModel;
 
 import com.example.Controllers.MaquinaController;
 import com.example.Models.Maquina;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.Cell;
 
 public class PainelExportacao extends JPanel {
 
@@ -23,8 +30,9 @@ public class PainelExportacao extends JPanel {
     private final DefaultTableModel tableModel;
     private final JButton btnEditarMaquina;
     private final JButton btnCadastrarMaquina;
-    private final JButton btnExcluirMaquina; // Botão para excluir máquina
-    private final JButton btnAtualizarLista; // Botão para atualizar a lista
+    private final JButton btnExcluirMaquina;
+    private final JButton btnAtualizarLista;
+    private final JButton btnExportarPDF; // Botão para exportar para PDF
 
     // Construtor
     public PainelExportacao() {
@@ -46,12 +54,14 @@ public class PainelExportacao extends JPanel {
         btnCadastrarMaquina = new JButton("Cadastrar Máquina");
         btnEditarMaquina = new JButton("Editar Máquina");
         btnExcluirMaquina = new JButton("Excluir Máquina");
-        btnAtualizarLista = new JButton("Atualizar Lista"); // Adicionando o botão de atualizar lista
+        btnAtualizarLista = new JButton("Atualizar Lista");
+        btnExportarPDF = new JButton("Exportar para PDF"); // Botão de exportação
 
         painelInferior.add(btnCadastrarMaquina);
         painelInferior.add(btnEditarMaquina);
         painelInferior.add(btnExcluirMaquina);
-        painelInferior.add(btnAtualizarLista); // Adicionando o botão ao painel
+        painelInferior.add(btnAtualizarLista);
+        painelInferior.add(btnExportarPDF); // Adicionando o botão ao painel
         this.add(painelInferior, BorderLayout.SOUTH);
 
         // Adiciona o listener para o botão de cadastrar
@@ -89,6 +99,14 @@ public class PainelExportacao extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 atualizarLista();
+            }
+        });
+
+        // Adiciona o listener para o botão de exportar para PDF
+        btnExportarPDF.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exportarParaPDF();
             }
         });
     }
@@ -156,6 +174,47 @@ public class PainelExportacao extends JPanel {
                 maquina.getLocalizacao(),
                 maquina.getDetalhes()
             });
+        }
+    }
+
+    private void exportarParaPDF() {
+        try {
+            // Criar o documento PDF
+            PdfWriter writer = new PdfWriter(new FileOutputStream("maquinas.pdf"));
+            PdfDocument pdfDoc = new PdfDocument(writer);
+            Document document = new Document(pdfDoc);
+
+            // Adiciona título
+            document.add(new Paragraph("Lista de Máquinas").setFontSize(20).setBold());
+
+            // Cria a tabela
+            Table table = new Table(new float[]{1, 2, 2, 2, 2, 2, 2, 2, 2}); // 9 colunas
+            table.setWidth(500);
+
+            // Adiciona cabeçalhos
+            table.addHeaderCell(new Cell().add(new Paragraph("ID")));
+            table.addHeaderCell(new Cell().add(new Paragraph("Código")));
+            table.addHeaderCell(new Cell().add(new Paragraph("Nome")));
+            table.addHeaderCell(new Cell().add(new Paragraph("Fabricante")));
+            table.addHeaderCell(new Cell().add(new Paragraph("Modelo")));
+            table.addHeaderCell(new Cell().add(new Paragraph("Data de Aquisição")));
+            table.addHeaderCell(new Cell().add(new Paragraph("Tempo de Vida Estimado")));
+            table.addHeaderCell(new Cell().add(new Paragraph("Localização")));
+            table.addHeaderCell(new Cell().add(new Paragraph("Detalhes")));
+
+            // Adiciona dados da tabela
+            for (int i = 0; i < tableModel.getRowCount(); i++) {
+                for (int j = 0; j < tableModel.getColumnCount(); j++) {
+                    String value = String.valueOf(tableModel.getValueAt(i, j));
+                    table.addCell(new Cell().add(new Paragraph(value))); // Certifique-se de que esta linha esteja correta
+                }
+            }
+
+            document.add(table);
+            document.close();
+            JOptionPane.showMessageDialog(this, "PDF gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar PDF: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
