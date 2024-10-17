@@ -93,6 +93,7 @@ public class EditarTecnicoDialog extends JDialog {
         dispose();
     }
 
+    @SuppressWarnings("unused")
     private void showErrorDialog(String message) {
         JOptionPane.showMessageDialog(this, message, "Erro", JOptionPane.ERROR_MESSAGE);
     }

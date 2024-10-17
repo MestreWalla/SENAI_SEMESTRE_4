@@ -18,6 +18,7 @@ public class SistemaManutencaoGUI extends JFrame {
     private JPanel painelMaquinas;
     private JPanel painelFalhas;
     private JPanel painelTecnicos;
+    private PainelExportacao painelExportacao;
 
     public SistemaManutencaoGUI() {
         super("Sistema de Manutenção");
@@ -37,6 +38,7 @@ public class SistemaManutencaoGUI extends JFrame {
         painelManutencao = new PainelManutencoes();
         painelFalhas = new PainelFalhas();
         painelTecnicos = new PainelTecnicos();
+        painelExportacao = new PainelExportacao();
 
         // Cria o JTabbedPane:
         tabbedPane = new JTabbedPane();
@@ -68,6 +70,13 @@ public class SistemaManutencaoGUI extends JFrame {
         Image scaledImageTecnicos = imageTecnicos.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
         iconTecnicos = new ImageIcon(scaledImageTecnicos);
         tabbedPane.addTab("Técnicos", iconTecnicos, painelTecnicos);
+
+        // Tab05: Técnicos
+        ImageIcon iconExportar = new ImageIcon(getClass().getResource("/Icons/exportarIcon.png"));
+        Image imageExportar = iconExportar.getImage();
+        Image scaledImageExportar = imageExportar.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
+        iconExportar = new ImageIcon(scaledImageExportar);
+        tabbedPane.addTab("Exportar", iconExportar, painelExportacao);
 
         // Adiciona o JTabbedPane ao JFrame:
         this.add(tabbedPane, BorderLayout.CENTER);

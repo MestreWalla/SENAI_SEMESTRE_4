@@ -133,7 +133,7 @@ public class CadastroManutencaoDialog extends JDialog {
         }
 
         // Cria nova manutenção
-        Manutencao novoManutencao = new Manutencao(0, maquinaSelecionada.getId(), data.toString(), tipo, pecasTrocadas, tempoDeParada, tecnicoSelecionado.getNome(), observacoes);
+        Manutencao novoManutencao = new Manutencao(0, maquinaSelecionada.getNome(), data.toString(), tipo, pecasTrocadas, tempoDeParada, tecnicoSelecionado.getNome(), observacoes);
         try {
             manutencaoController.CreateManutencao(novoManutencao);
 
