@@ -2,8 +2,9 @@ package com.example.View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
 
@@ -19,9 +20,9 @@ import com.example.Models.Maquina;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.element.Cell;
 
 public class PainelExportacao extends JPanel {
 
@@ -65,49 +66,34 @@ public class PainelExportacao extends JPanel {
         this.add(painelInferior, BorderLayout.SOUTH);
 
         // Adiciona o listener para o botão de cadastrar
-        btnCadastrarMaquina.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                abrirFormularioCadastro();
-            }
+        btnCadastrarMaquina.addActionListener((ActionEvent e) -> {
+            abrirFormularioCadastro();
         });
 
         // Adiciona o listener para o botão de editar
-        btnEditarMaquina.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int linhaSelecionada = maquinasTable.getSelectedRow();
-                if (linhaSelecionada == -1) {
-                    JOptionPane.showMessageDialog(PainelExportacao.this, "Selecione uma máquina para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                abrirEditarMaquinaDialog(linhaSelecionada);
+        btnEditarMaquina.addActionListener((ActionEvent e) -> {
+            int linhaSelecionada = maquinasTable.getSelectedRow();
+            if (linhaSelecionada == -1) {
+                JOptionPane.showMessageDialog(PainelExportacao.this, "Selecione uma máquina para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+            
+            abrirEditarMaquinaDialog(linhaSelecionada);
         });
 
         // Adiciona o listener para o botão de excluir
-        btnExcluirMaquina.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                excluirMaquinaSelecionada();
-            }
+        btnExcluirMaquina.addActionListener((ActionEvent e) -> {
+            excluirMaquinaSelecionada();
         });
 
         // Adiciona o listener para o botão de atualizar lista
-        btnAtualizarLista.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                atualizarLista();
-            }
+        btnAtualizarLista.addActionListener((ActionEvent e) -> {
+            atualizarLista();
         });
 
         // Adiciona o listener para o botão de exportar para PDF
-        btnExportarPDF.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                exportarParaPDF();
-            }
+        btnExportarPDF.addActionListener((ActionEvent e) -> {
+            exportarParaPDF();
         });
     }
 
@@ -145,7 +131,7 @@ public class PainelExportacao extends JPanel {
                 // Remove a linha da tabela
                 tableModel.removeRow(linhaSelecionada);
                 JOptionPane.showMessageDialog(this, "Máquina excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception ex) {
+            } catch (HeadlessException ex) {
                 JOptionPane.showMessageDialog(this, "Erro ao excluir máquina: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         } else {
@@ -182,38 +168,38 @@ public class PainelExportacao extends JPanel {
             // Criar o documento PDF
             PdfWriter writer = new PdfWriter(new FileOutputStream("maquinas.pdf"));
             PdfDocument pdfDoc = new PdfDocument(writer);
-            Document document = new Document(pdfDoc);
-
             // Adiciona título
-            document.add(new Paragraph("Lista de Máquinas").setFontSize(20).setBold());
-
-            // Cria a tabela
-            Table table = new Table(new float[]{1, 2, 2, 2, 2, 2, 2, 2, 2}); // 9 colunas
-            table.setWidth(500);
-
-            // Adiciona cabeçalhos
-            table.addHeaderCell(new Cell().add(new Paragraph("ID")));
-            table.addHeaderCell(new Cell().add(new Paragraph("Código")));
-            table.addHeaderCell(new Cell().add(new Paragraph("Nome")));
-            table.addHeaderCell(new Cell().add(new Paragraph("Fabricante")));
-            table.addHeaderCell(new Cell().add(new Paragraph("Modelo")));
-            table.addHeaderCell(new Cell().add(new Paragraph("Data de Aquisição")));
-            table.addHeaderCell(new Cell().add(new Paragraph("Tempo de Vida Estimado")));
-            table.addHeaderCell(new Cell().add(new Paragraph("Localização")));
-            table.addHeaderCell(new Cell().add(new Paragraph("Detalhes")));
-
-            // Adiciona dados da tabela
-            for (int i = 0; i < tableModel.getRowCount(); i++) {
-                for (int j = 0; j < tableModel.getColumnCount(); j++) {
-                    String value = String.valueOf(tableModel.getValueAt(i, j));
-                    table.addCell(new Cell().add(new Paragraph(value))); // Certifique-se de que esta linha esteja correta
+            try (Document document = new Document(pdfDoc)) {
+                // Adiciona título
+                document.add(new Paragraph("Lista de Máquinas").setFontSize(20).setBold());
+                
+                // Cria a tabela
+                Table table = new Table(new float[]{1, 2, 2, 2, 2, 2, 2, 2, 2}); // 9 colunas
+                table.setWidth(500);
+                
+                // Adiciona cabeçalhos
+                table.addHeaderCell(new Cell().add(new Paragraph("ID")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Código")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Nome")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Fabricante")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Modelo")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Data de Aquisição")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Tempo de Vida Estimado")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Localização")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Detalhes")));
+                
+                // Adiciona dados da tabela
+                for (int i = 0; i < tableModel.getRowCount(); i++) {
+                    for (int j = 0; j < tableModel.getColumnCount(); j++) {
+                        String value = String.valueOf(tableModel.getValueAt(i, j));
+                        table.addCell(new Cell().add(new Paragraph(value))); // Certifique-se de que esta linha esteja correta
+                    }
                 }
+                
+                document.add(table);
             }
-
-            document.add(table);
-            document.close();
             JOptionPane.showMessageDialog(this, "PDF gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
+        } catch (HeadlessException | FileNotFoundException e) {
             JOptionPane.showMessageDialog(this, "Erro ao gerar PDF: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
