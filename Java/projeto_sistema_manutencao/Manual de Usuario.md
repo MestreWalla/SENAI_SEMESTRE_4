@@ -11,7 +11,7 @@ Ao iniciar o sistema, você se deparará com a tela principal. Ela é composta p
 
 ## Gerenciamento de Máquinas
 
-A aba "Máquinas" ![INSERIR IMAGEM DA ABA "MÁQUINAS" AQUI] permite gerenciar todas as máquinas cadastradas no sistema.
+A aba "Máquinas" ![INSERIR IMAGEM DA ABA "MÁQUINAS" AQUI](https://github.com/MestreWalla/SENAI_SEMESTRE_4/blob/main/Java/projeto_sistema_manutencao/ImagensManual/Maquinas.png) permite gerenciar todas as máquinas cadastradas no sistema.
 
 ### Funcionalidades:
 
