@@ -28,7 +28,8 @@ public class ManutencaoAPI {
     
                 Manutencao manutencao = new Manutencao(
                         jsonObject.getInt("id"),
-                        maquinaId,
+                        jsonObject.getInt("maquinaId"),
+                        // maquinaId,
                         jsonObject.getString("data"),
                         jsonObject.getString("tipo"),
                         jsonObject.getString("pecasTrocadas"),

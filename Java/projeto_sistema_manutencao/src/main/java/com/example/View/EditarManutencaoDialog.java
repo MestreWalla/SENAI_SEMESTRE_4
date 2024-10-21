@@ -88,7 +88,7 @@ public class EditarManutencaoDialog extends JDialog {
     }
 
     private void salvarAlteracoes(ActionEvent e) {
-        String maquinaId = txtMaquinaId.getText();
+        int maquinaId = Integer.parseInt(txtMaquinaId.getText());
         String data = txtData.getText();
         String tipo = txtTipo.getText();
         String pecasTrocadas = txtPecasTrocadas.getText();

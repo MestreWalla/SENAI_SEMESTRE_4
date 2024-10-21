@@ -34,7 +34,6 @@ public class CadastroManutencaoDialog extends JDialog {
     private final JComboBox<Maquina> comboMaquina;
     private final JComboBox<Tecnico> comboTecnico;
 
-    private final JTextField txtMaquinaId;
     private final JTextField txtData;
     private final JTextField txtTipo;
     private final JTextField txtPecasTrocadas;
@@ -47,7 +46,7 @@ public class CadastroManutencaoDialog extends JDialog {
 
         setTitle("Cadastrar Manutenção");
         setModal(true);
-        setSize(400, 500);
+        setSize(400, 400);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
@@ -75,10 +74,7 @@ public class CadastroManutencaoDialog extends JDialog {
         // Label e Campo de Texto para Máquina ID
         gbc.gridx = 0;
         gbc.gridy = 2;
-        panel.add(new JLabel("Máquina ID:"), gbc);
         gbc.gridx = 1;
-        txtMaquinaId = new JTextField(10);
-        panel.add(txtMaquinaId, gbc);
 
         // Label e Campo de Texto para Data
         gbc.gridx = 0;
@@ -129,24 +125,24 @@ public class CadastroManutencaoDialog extends JDialog {
 
     private Maquina[] getMaquinas() {
         List<Maquina> maquinas = MaquinaAPI.getMaquinas();
-        return maquinas.toArray(new Maquina[0]);
+        return maquinas.toArray(Maquina[]::new);
     }
 
     private Tecnico[] getTecnicos() {
         List<Tecnico> tecnicos = TecnicoAPI.getTecnicos();
-        return tecnicos.toArray(new Tecnico[0]);
+        return tecnicos.toArray(Tecnico[]::new);
     }
 
     private void cadastrarManutencao(ActionEvent e) {
         Maquina maquinaSelecionada = (Maquina) comboMaquina.getSelectedItem();
         Tecnico tecnicoSelecionado = (Tecnico) comboTecnico.getSelectedItem();
-
+    
         String dataStr = txtData.getText();
         String tipo = txtTipo.getText();
         String pecasTrocadas = txtPecasTrocadas.getText();
         int tempoDeParada;
         String observacoes = txtObservacoes.getText();
-
+    
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate data;
         try {
@@ -155,21 +151,31 @@ public class CadastroManutencaoDialog extends JDialog {
             JOptionPane.showMessageDialog(this, "Data inválida. Utilize o formato dd/MM/yyyy.");
             return;
         }
-
+    
         try {
             tempoDeParada = Integer.parseInt(txtTempoDeParada.getText());
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Tempo de Parada deve ser um número.");
             return;
         }
-
-        Manutencao novoManutencao = new Manutencao(0, maquinaSelecionada.getNome(), data.toString(), tipo, pecasTrocadas, tempoDeParada, tecnicoSelecionado.getNome(), observacoes);
+    
+        // Altere para armazenar o ID da máquina como int
+        Manutencao novoManutencao = new Manutencao(
+            0, 
+            maquinaSelecionada.getId(), // Agora o ID da máquina será armazenado
+            data.toString(), 
+            tipo, 
+            pecasTrocadas, 
+            tempoDeParada, 
+            tecnicoSelecionado.getNome(), 
+            observacoes
+        );
+        
         try {
             manutencaoController.CreateManutencao(novoManutencao);
-
+    
             tableModel.addRow(new Object[]{
                 novoManutencao.getId(),
-                novoManutencao.getMaquinaId(),
                 novoManutencao.getData(),
                 novoManutencao.getTipo(),
                 novoManutencao.getPecasTrocadas(),
@@ -177,10 +183,11 @@ public class CadastroManutencaoDialog extends JDialog {
                 novoManutencao.getTecnico(),
                 novoManutencao.getObservacoes()
             });
-
+    
             dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao cadastrar manutenção: " + ex.getMessage());
         }
     }
+    
 }

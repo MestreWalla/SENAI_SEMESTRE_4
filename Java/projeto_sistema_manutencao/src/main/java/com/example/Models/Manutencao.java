@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class Manutencao {
     private int id;
-    private String maquinaId;
+    private int maquinaId; // Alterado para int
     private String data;
     private String tipo;
     private String pecasTrocadas;
@@ -21,7 +21,7 @@ public class Manutencao {
     public String toString() {
         return "Manutencao{"
                 + "id='" + id + '\''
-                + ", maquinaId='" + maquinaId + '\''
+                + ", maquinaId='" + maquinaId + '\''  // Isso agora será um int
                 + ", data='" + data + '\''
                 + ", tipo='" + tipo + '\''
                 + ", pecasTrocadas='" + pecasTrocadas + '\''
