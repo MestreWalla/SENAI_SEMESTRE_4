@@ -18,21 +18,21 @@ A aba "Máquinas" permite gerenciar todas as máquinas cadastradas no sistema.
 
 - **Cadastrar Máquina**: Clique no botão "Cadastrar Máquina" para adicionar uma nova máquina ao sistema. Preencha os campos do formulário com as informações da máquina, como código, nome, fabricante, modelo, data de aquisição, tempo de vida estimado, localização e detalhes.
 
-![Cadastrar Maquina] (https://github.com/MestreWalla/SENAI_SEMESTRE_4/blob/main/Java/projeto_sistema_manutencao/ImagensManual/CadastroMaquina.png)
+![Cadastrar Maquina](https://github.com/MestreWalla/SENAI_SEMESTRE_4/blob/main/Java/projeto_sistema_manutencao/ImagensManual/CadastroMaquina.png)
   
 - **Editar Máquina**: Para editar as informações de uma máquina, selecione a máquina desejada na tabela e clique no botão "Editar Máquina". As informações da máquina serão carregadas no formulário de edição.
 
-  ![Editar Maquina] (https://github.com/MestreWalla/SENAI_SEMESTRE_4/blob/main/Java/projeto_sistema_manutencao/ImagensManual/EditarMaquina.png)
+  ![Editar Maquina](https://github.com/MestreWalla/SENAI_SEMESTRE_4/blob/main/Java/projeto_sistema_manutencao/ImagensManual/EditarMaquina.png)
   
 - **Excluir Máquina**: Para excluir uma máquina, selecione a máquina desejada na tabela e clique no botão "Excluir Máquina". Confirme a exclusão na caixa de diálogo que aparecerá.
 
-![Excluir Maquina] (https://github.com/MestreWalla/SENAI_SEMESTRE_4/blob/main/Java/projeto_sistema_manutencao/ImagensManual/ExcluirMaquina.png)
+![Excluir Maquina](https://github.com/MestreWalla/SENAI_SEMESTRE_4/blob/main/Java/projeto_sistema_manutencao/ImagensManual/ExcluirMaquina.png)
   
 - **Atualizar Lista**: Para atualizar a lista de máquinas, clique no botão "Atualizar Lista".
   
 - **Exportar para PDF**: Para gerar um relatório em PDF com a lista de máquinas, clique no botão "Exportar para PDF".
 
-![Exportar para PDF] (https://github.com/MestreWalla/SENAI_SEMESTRE_4/blob/main/Java/projeto_sistema_manutencao/ImagensManual/ExportarPDF.png)
+![Exportar para PDF](https://github.com/MestreWalla/SENAI_SEMESTRE_4/blob/main/Java/projeto_sistema_manutencao/ImagensManual/ExportarPDF.png)
 
 ## Gerenciamento de Manutenções
 
