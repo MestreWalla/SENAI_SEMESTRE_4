@@ -5,7 +5,7 @@ Este manual foi elaborado para auxiliar usuários comuns na utilização do Sist
 ## Tela Principal
 
 **Figura 1: Tela Principal do Sistema de Manutenção.**  
-![INSERIR IMAGEM DA TELA PRINCIPAL AQUI]
+![Comentario](https://github.com/MestreWalla/SENAI_SEMESTRE_4/blob/main/Java/projeto_sistema_manutencao/ImagensManual/Manutencoes.png)
 
 Ao iniciar o sistema, você se deparará com a tela principal. Ela é composta por abas que organizam as diferentes funcionalidades do sistema, como "Manutenção", "Máquinas", "Falhas" e "Técnicos".
 
