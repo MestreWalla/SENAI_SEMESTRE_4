@@ -48,7 +48,7 @@ public class SistemaManutencaoGUI extends JFrame {
         Image image = iconManutencao.getImage();
         Image scaledImage = image.getScaledInstance(50, -1, Image.SCALE_SMOOTH);
         iconManutencao = new ImageIcon(scaledImage);
-        tabbedPane.addTab("Manutenção", iconManutencao, painelManutencao);
+        tabbedPane.addTab("Manutenções", iconManutencao, painelManutencao);
 
         // Tab02: Máquinas
         ImageIcon iconMaquinas = new ImageIcon(getClass().getResource("/Icons/maquinaIcon.png"));

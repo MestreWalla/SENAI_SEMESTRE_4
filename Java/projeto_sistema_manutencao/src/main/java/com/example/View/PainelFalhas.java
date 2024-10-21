@@ -2,8 +2,11 @@ package com.example.View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -15,6 +18,12 @@ import javax.swing.table.DefaultTableModel;
 
 import com.example.Controllers.FalhaController;
 import com.example.Models.Falha;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
 
 public class PainelFalhas extends JPanel {
 
@@ -25,7 +34,9 @@ public class PainelFalhas extends JPanel {
     private final JButton btnEditarFalha;
     private final JButton btnExcluirFalha;
     private final JButton btnAtualizarLista;
+    private final JButton btnExportarPDF; // Botão para exportar para PDF
 
+    @SuppressWarnings("Convert2Lambda")
     public PainelFalhas() {
         super(new BorderLayout());
         falhaController = new FalhaController();
@@ -43,11 +54,13 @@ public class PainelFalhas extends JPanel {
         btnEditarFalha = new JButton("Editar Falha");
         btnExcluirFalha = new JButton("Excluir Falha");
         btnAtualizarLista = new JButton("Atualizar Lista");
+        btnExportarPDF = new JButton("Exportar para PDF"); // Botão de exportação
 
         painelInferior.add(btnCadastrarFalha);
         painelInferior.add(btnEditarFalha);
         painelInferior.add(btnExcluirFalha);
         painelInferior.add(btnAtualizarLista);
+        painelInferior.add(btnExportarPDF); // Adicionando o botão ao painel
         this.add(painelInferior, BorderLayout.SOUTH);
 
         btnCadastrarFalha.addActionListener(new ActionListener() {
@@ -82,6 +95,11 @@ public class PainelFalhas extends JPanel {
                 atualizarLista();
             }
         });
+
+        // Adiciona o listener para o botão de exportar para PDF
+        btnExportarPDF.addActionListener((ActionEvent e) -> {
+            exportarParaPDF();
+        });
     }
 
     private void abrirFormularioCadastro() {
@@ -95,6 +113,7 @@ public class PainelFalhas extends JPanel {
         dialog.setVisible(true);
     }
 
+    @SuppressWarnings("UseSpecificCatch")
     private void excluirFalhaSelecionada() {
         int linhaSelecionada = falhasTable.getSelectedRow();
         if (linhaSelecionada == -1) {
@@ -155,6 +174,44 @@ public class PainelFalhas extends JPanel {
                 falha.getPrioridade(),
                 falha.getOperador()
             });
+        }
+    }
+
+    private void exportarParaPDF() {
+        try {
+            // Criar o documento PDF
+            PdfWriter writer = new PdfWriter(new FileOutputStream("falhas.pdf"));
+            PdfDocument pdfDoc = new PdfDocument(writer);
+            // Adiciona título
+            try (Document document = new Document(pdfDoc)) {
+                // Adiciona título
+                document.add(new Paragraph("Lista de Falhas").setFontSize(20).setBold());
+
+                // Cria a tabela
+                Table table = new Table(new float[]{1, 2, 2, 2, 2, 2}); // Criar tabela com 6 colunas
+                table.setWidth(500);
+
+                // Adiciona cabeçalhos
+                table.addHeaderCell(new Cell().add(new Paragraph("ID")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Id da Máquina")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Data")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Problema")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Prioridade")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Operador")));
+
+                // Adiciona dados da tabela
+                for (int i = 0; i < tableModel.getRowCount(); i++) {
+                    for (int j = 0; j < tableModel.getColumnCount(); j++) {
+                        String value = String.valueOf(tableModel.getValueAt(i, j));
+                        table.addCell(new Cell().add(new Paragraph(value)));
+                    }
+                }
+
+                document.add(table);
+            }
+            JOptionPane.showMessageDialog(this, "PDF gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } catch (HeadlessException | FileNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar PDF: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -15,40 +17,54 @@ import javax.swing.table.DefaultTableModel;
 
 import com.example.Controllers.ManutencaoController;
 import com.example.Models.Manutencao;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+
+import java.awt.HeadlessException;
 
 public class PainelManutencoes extends JPanel {
 
-    private final ManutencaoController manutencaoController;
-    private final JTable manutencoesTable;
-    private final DefaultTableModel tableModel;
-    private final JButton btnCadastrarManutencao;
-    private final JButton btnEditarManutencao;
-    private final JButton btnExcluirManutencao;
-    private final JButton btnAtualizarLista;
+    private final ManutencaoController manutencaoController; // Controlador de manutenções
+    private final JTable manutencoesTable; // Tabela de manutenções
+    private final DefaultTableModel tableModel; // Modelo da tabela de manutenções
+    private final JButton btnCadastrarManutencao; // Botão de cadastrar manutenção
+    private final JButton btnEditarManutencao; // Botão de editar manutenção
+    private final JButton btnExcluirManutencao; // Botão de excluir manutenção
+    private final JButton btnAtualizarLista; // Botão de atualizar lista
+    private final JButton btnExportarPDF; // Botão de exportar para PDF
 
+    @SuppressWarnings("Convert2Lambda")
     public PainelManutencoes() {
-        super(new BorderLayout());
-        manutencaoController = new ManutencaoController();
+        super(new BorderLayout()); // Painel de manutenções
+        manutencaoController = new ManutencaoController(); // Instanciando o controlador de manutenções
         tableModel = new DefaultTableModel(new Object[]{
             "ID", "Nome", "Data", "Tipo", "Pecas", "Tempo de Parada", "Técnico", "Observações"
-        }, 0);
-        manutencoesTable = new JTable(tableModel);
-        atualizarLista();
+        }, 0); // Criando o modelo da tabela
+        manutencoesTable = new JTable(tableModel); // Criando a tabela
+        atualizarLista(); // Atualiza a lista de manutenções no painel
 
-        JScrollPane scrollPane = new JScrollPane(manutencoesTable);
-        this.add(scrollPane, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(manutencoesTable); // Adicionando a barra de rolagem
+        this.add(scrollPane, BorderLayout.CENTER); // Adicionando a tabela ao painel
 
-        JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        btnCadastrarManutencao = new JButton("Cadastrar manutenção");
-        btnEditarManutencao = new JButton("Editar manutenção");
-        btnExcluirManutencao = new JButton("Excluir manutenção");
-        btnAtualizarLista = new JButton("Atualizar Lista");
+        JPanel painelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER)); // Painel inferior
+        btnCadastrarManutencao = new JButton("Cadastrar manutenção"); // Adicionando o botão ao painel
+        btnEditarManutencao = new JButton("Editar manutenção"); // Adicionando o botão ao painel
+        btnExcluirManutencao = new JButton("Excluir manutenção"); // Adicionando o botão ao painel
+        btnAtualizarLista = new JButton("Atualizar Lista"); // Adicionando o botão ao painel
+        btnExportarPDF = new JButton("Exportar para PDF"); // Adicionando o botão ao painel
 
-        painelInferior.add(btnCadastrarManutencao);
-        painelInferior.add(btnEditarManutencao);
-        painelInferior.add(btnExcluirManutencao);
-        painelInferior.add(btnAtualizarLista);
-        this.add(painelInferior, BorderLayout.SOUTH);
+        painelInferior.add(btnCadastrarManutencao); // Adicionando o botão ao painel
+        painelInferior.add(btnEditarManutencao); // Adicionando o botão ao painel
+        painelInferior.add(btnExcluirManutencao); // Adicionando o botão ao painel
+        painelInferior.add(btnAtualizarLista); // Adicionando o botão ao painel
+        painelInferior.add(btnExportarPDF); // Adicionando o botão ao painel
+        this.add(painelInferior, BorderLayout.SOUTH); // Adicionando o painel inferior ao painel
+
+        // Adicionando os listeners aos botões
 
         btnCadastrarManutencao.addActionListener(new ActionListener() {
             @Override
@@ -82,8 +98,14 @@ public class PainelManutencoes extends JPanel {
                 atualizarLista();
             }
         });
+
+        // Adiciona o listener para o botão de exportar para PDF
+        btnExportarPDF.addActionListener((ActionEvent e) -> {
+            exportarParaPDF();
+        });
     }
 
+    // Métodos privados
     private void abrirFormularioCadastro() {
         CadastroManutencaoDialog dialog = new CadastroManutencaoDialog(manutencaoController, tableModel);
         dialog.setVisible(true);
@@ -95,6 +117,7 @@ public class PainelManutencoes extends JPanel {
         dialog.setVisible(true);
     }
 
+    @SuppressWarnings("UseSpecificCatch")
     private void excluirManutencaoSelecionado() {
     int linhaSelecionada = manutencoesTable.getSelectedRow();
     if (linhaSelecionada == -1) {
@@ -143,7 +166,7 @@ public class PainelManutencoes extends JPanel {
     }
 }
 
-
+    // Método para atualizar a lista de manutenções
     private void atualizarLista() {
         tableModel.setRowCount(0);
         List<Manutencao> manutencoes = manutencaoController.ReadManutencao();
@@ -158,6 +181,46 @@ public class PainelManutencoes extends JPanel {
                 manutencao.getTecnico(),
                 manutencao.getObservacoes()
             });
+        }
+    }
+
+    private void exportarParaPDF() {
+        try {
+            // Criar o documento PDF
+            PdfWriter writer = new PdfWriter(new FileOutputStream("manutencoes.pdf")); // Arquivo de saída do PDF
+            PdfDocument pdfDoc = new PdfDocument(writer); // Criando o documento PDF
+            // Adiciona título
+            try (Document document = new Document(pdfDoc)) {
+                // Adiciona título
+                document.add(new Paragraph("Lista de Manutenções").setFontSize(20).setBold());
+                
+                // Cria a tabela
+                Table table = new Table(new float[]{1, 2, 2, 2, 2, 2, 2, 2}); // 9 colunas
+                table.setWidth(500);
+                
+                // Adiciona cabeçalhos
+                table.addHeaderCell(new Cell().add(new Paragraph("ID")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Id da Máquina")));
+                table.addHeaderCell(new Cell().add(new Paragraph("data")));
+                table.addHeaderCell(new Cell().add(new Paragraph("tipo")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Peças Trocadas")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Tempo de Parada")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Técnico")));
+                table.addHeaderCell(new Cell().add(new Paragraph("Observações")));
+
+                // Adiciona dados da tabela
+                for (int i = 0; i < tableModel.getRowCount(); i++) {
+                    for (int j = 0; j < tableModel.getColumnCount(); j++) {
+                        String value = String.valueOf(tableModel.getValueAt(i, j));
+                        table.addCell(new Cell().add(new Paragraph(value)));
+                    }
+                }
+                
+                document.add(table);
+            }
+            JOptionPane.showMessageDialog(this, "PDF gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } catch (HeadlessException | FileNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar PDF: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
