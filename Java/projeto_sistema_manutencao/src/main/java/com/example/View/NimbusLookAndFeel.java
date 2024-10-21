@@ -13,6 +13,7 @@ public class NimbusLookAndFeel {
         }
 
         // Método para aplicar um Look and Feel específico pelo nome
+        @SuppressWarnings("CallToPrintStackTrace")
         public static void aplicaLookAndFeel(String lookAndFeelName) {
             try {
                 for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -23,16 +24,7 @@ public class NimbusLookAndFeel {
                     }
                 }
                 System.out.println("Tema " + lookAndFeelName + " não encontrado.");
-            } catch (UnsupportedLookAndFeelException e) {
-                System.out.println("Erro: " + e.getMessage());
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                System.out.println("Erro: " + e.getMessage());
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                System.out.println("Erro: " + e.getMessage());
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 System.out.println("Erro: " + e.getMessage());
                 e.printStackTrace();
             }
@@ -48,9 +40,8 @@ public class NimbusLookAndFeel {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 System.out.println("Tema padrão do sistema aplicado com sucesso!");
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
                 System.out.println("Erro ao aplicar o tema padrão do sistema: " + e.getMessage());
-                e.printStackTrace();
             }
         }
 
@@ -62,6 +53,35 @@ public class NimbusLookAndFeel {
         // Método para aplicar o tema Motif (padrão antigo do UNIX)
         public static void aplicaMotif() {
             aplicaLookAndFeel("CDE/Motif");
+        }
+
+        // Métodos para outros temas disponíveis
+        public static void aplicaWindows() {
+            aplicaLookAndFeel("Windows");
+        }
+
+        public static void aplicaWindowsClassic() {
+            aplicaLookAndFeel("Windows Classic");
+        }
+
+        public static void aplicaGTK() {
+            aplicaLookAndFeel("GTK+");
+        }
+
+        public static void aplicaAqua() {
+            aplicaLookAndFeel("Aqua");
+        }
+
+        public static void aplicaXero() {
+            aplicaLookAndFeel("Xero");
+        }
+
+        public static void aplicaTexture() {
+            aplicaLookAndFeel("Texture");
+        }
+
+        public static void aplicaPlastic() {
+            aplicaLookAndFeel("Plastic");
         }
     }
 }

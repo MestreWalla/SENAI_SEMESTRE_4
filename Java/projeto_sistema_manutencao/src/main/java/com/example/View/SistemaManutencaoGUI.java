@@ -4,7 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -12,17 +13,19 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import com.example.View.NimbusLookAndFeel.AplicaLookAndFeel;
 
 public class SistemaManutencaoGUI extends JFrame {
 
-    private JTabbedPane tabbedPane;
-    private JPanel painelManutencao;
-    private JPanel painelMaquinas;
-    private JPanel painelFalhas;
-    private JPanel painelTecnicos;
-    private JComboBox<String> comboBoxTema; // Caixa de seleção para temas
+    private final JTabbedPane tabbedPane;
+    private final JPanel painelManutencao;
+    private final JPanel painelMaquinas;
+    private final JPanel painelFalhas;
+    private final JPanel painelTecnicos;
+    private final JComboBox<String> comboBoxTema; // Caixa de seleção para temas
 
     public SistemaManutencaoGUI() {
         super("Sistema de Manutenção");
@@ -37,17 +40,14 @@ public class SistemaManutencaoGUI extends JFrame {
                 ((Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (this.getHeight() / 2)));
 
         // Inicializa a caixa de seleção de temas
-        String[] temas = { "Nimbus", "Metal", "Motif", "Padrão do Sistema" };
-        comboBoxTema = new JComboBox<>(temas);
+        String[] temasDisponiveis = getTemasDisponiveis();
+        comboBoxTema = new JComboBox<>(temasDisponiveis);
         comboBoxTema.setSelectedItem("Nimbus"); // Tema padrão selecionado
 
         // Adiciona um ActionListener para trocar o tema quando o usuário selecionar um novo
-        comboBoxTema.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String temaSelecionado = (String) comboBoxTema.getSelectedItem();
-                trocaTema(temaSelecionado);
-            }
+        comboBoxTema.addActionListener((ActionEvent e) -> {
+            String temaSelecionado = (String) comboBoxTema.getSelectedItem();
+            trocaTema(temaSelecionado);
         });
 
         // Adiciona a combobox ao topo da janela
@@ -99,24 +99,29 @@ public class SistemaManutencaoGUI extends JFrame {
         setVisible(true);
     }
 
+    // Método para obter os temas disponíveis compatíveis com o sistema operacional
+    private String[] getTemasDisponiveis() {
+        List<String> temas = new ArrayList<>();
+        for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+            temas.add(info.getName());
+        }
+        return temas.toArray(new String[0]);
+    }
+
     // Método para trocar o tema baseado na seleção da comboBox
     private void trocaTema(String temaSelecionado) {
         switch (temaSelecionado) {
-            case "Nimbus":
-                AplicaLookAndFeel.aplicaNimbus();
-                break;
-            case "Metal":
-                AplicaLookAndFeel.aplicaMetal();
-                break;
-            case "Motif":
-                AplicaLookAndFeel.aplicaMotif();
-                break;
-            case "Padrão do Sistema":
-                AplicaLookAndFeel.aplicaSistema();
-                break;
-            default:
-                AplicaLookAndFeel.aplicaNimbus(); // Padrão para Nimbus
-                break;
+            case "Nimbus" -> AplicaLookAndFeel.aplicaNimbus();
+            case "Metal" -> AplicaLookAndFeel.aplicaMetal();
+            case "Motif" -> AplicaLookAndFeel.aplicaMotif();
+            case "Windows" -> AplicaLookAndFeel.aplicaWindows();
+            case "Windows Classic" -> AplicaLookAndFeel.aplicaWindowsClassic();
+            case "GTK+" -> AplicaLookAndFeel.aplicaGTK();
+            case "Aqua" -> AplicaLookAndFeel.aplicaAqua(); // Adicionado tema Aqua para macOS
+            case "Plastic" -> AplicaLookAndFeel.aplicaPlastic();
+            case "Texture" -> AplicaLookAndFeel.aplicaTexture();
+            case "Padrão do Sistema" -> AplicaLookAndFeel.aplicaSistema();
+            default -> AplicaLookAndFeel.aplicaNimbus(); // Padrão para Nimbus
         }
 
         // Atualiza a interface para refletir o novo tema
