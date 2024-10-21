@@ -1,7 +1,9 @@
 package com.example.View;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane; // Adicionado import
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -30,14 +32,13 @@ public class CadastroManutencaoDialog extends JDialog {
     private final DefaultTableModel tableModel;
 
     private final JComboBox<Maquina> comboMaquina;
-    private final JComboBox<Tecnico> comboTecnico; // Combo para selecionar técnicos
+    private final JComboBox<Tecnico> comboTecnico;
 
     private final JTextField txtMaquinaId;
     private final JTextField txtData;
     private final JTextField txtTipo;
     private final JTextField txtPecasTrocadas;
     private final JTextField txtTempoDeParada;
-    private final JTextField txtTecnico;
     private final JTextField txtObservacoes;
 
     public CadastroManutencaoDialog(ManutencaoController manutencaoController, DefaultTableModel tableModel) {
@@ -46,44 +47,78 @@ public class CadastroManutencaoDialog extends JDialog {
 
         setTitle("Cadastrar Manutenção");
         setModal(true);
-        setSize(400, 300);
+        setSize(400, 500);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        JPanel panel = new JPanel(new GridLayout(7, 2));
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Combobox de Máquinas
+        // Label e ComboBox de Máquinas
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(new JLabel("Máquina:"), gbc);
+        gbc.gridx = 1;
         comboMaquina = new JComboBox<>(getMaquinas());
-        panel.add(new JLabel("Máquina:"));
-        panel.add(comboMaquina);
+        panel.add(comboMaquina, gbc);
 
-        // Combobox de Técnicos
-        comboTecnico = new JComboBox<>(getTecnicos()); // Populando o combo com técnicos
-        panel.add(new JLabel("Técnico:"));
-        panel.add(comboTecnico);
+        // Label e ComboBox de Técnicos
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(new JLabel("Técnico:"), gbc);
+        gbc.gridx = 1;
+        comboTecnico = new JComboBox<>(getTecnicos());
+        panel.add(comboTecnico, gbc);
 
+        // Label e Campo de Texto para Máquina ID
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(new JLabel("Máquina ID:"), gbc);
+        gbc.gridx = 1;
         txtMaquinaId = new JTextField(10);
-        txtData = new JTextField(10);
-        txtTipo = new JTextField(10);
-        txtPecasTrocadas = new JTextField(10);
-        txtTempoDeParada = new JTextField(10);
-        txtTecnico = new JTextField(10);
-        txtObservacoes = new JTextField(10);
+        panel.add(txtMaquinaId, gbc);
 
-        panel.add(new JLabel("Máquina ID:"));
-        panel.add(txtMaquinaId);
-        panel.add(new JLabel("Data (dd/MM/yyyy):"));
-        panel.add(txtData);
-        panel.add(new JLabel("Tipo:"));
-        panel.add(txtTipo);
-        panel.add(new JLabel("Peças Trocadas:"));
-        panel.add(txtPecasTrocadas);
-        panel.add(new JLabel("Tempo de Parada (min):"));
-        panel.add(txtTempoDeParada);
-        panel.add(new JLabel("Técnico:"));
-        panel.add(txtTecnico);
-        panel.add(new JLabel("Observações:"));
-        panel.add(txtObservacoes);
+        // Label e Campo de Texto para Data
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panel.add(new JLabel("Data (dd/MM/yyyy):"), gbc);
+        gbc.gridx = 1;
+        txtData = new JTextField(10);
+        panel.add(txtData, gbc);
+
+        // Label e Campo de Texto para Tipo
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        panel.add(new JLabel("Tipo:"), gbc);
+        gbc.gridx = 1;
+        txtTipo = new JTextField(10);
+        panel.add(txtTipo, gbc);
+
+        // Label e Campo de Texto para Peças Trocadas
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        panel.add(new JLabel("Peças Trocadas:"), gbc);
+        gbc.gridx = 1;
+        txtPecasTrocadas = new JTextField(10);
+        panel.add(txtPecasTrocadas, gbc);
+
+        // Label e Campo de Texto para Tempo de Parada
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        panel.add(new JLabel("Tempo de Parada (min):"), gbc);
+        gbc.gridx = 1;
+        txtTempoDeParada = new JTextField(10);
+        panel.add(txtTempoDeParada, gbc);
+
+        // Label e Campo de Texto para Observações
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        panel.add(new JLabel("Observações:"), gbc);
+        gbc.gridx = 1;
+        txtObservacoes = new JTextField(10);
+        panel.add(txtObservacoes, gbc);
 
         add(panel, BorderLayout.CENTER);
 
@@ -103,28 +138,24 @@ public class CadastroManutencaoDialog extends JDialog {
     }
 
     private void cadastrarManutencao(ActionEvent e) {
-        Maquina maquinaSelecionada = (Maquina) comboMaquina.getSelectedItem(); // Obtendo a máquina selecionada
-        Tecnico tecnicoSelecionado = (Tecnico) comboTecnico.getSelectedItem(); // Obtendo o técnico selecionado
+        Maquina maquinaSelecionada = (Maquina) comboMaquina.getSelectedItem();
+        Tecnico tecnicoSelecionado = (Tecnico) comboTecnico.getSelectedItem();
 
-        // String maquinaId = txtMaquinaId.getText();
         String dataStr = txtData.getText();
         String tipo = txtTipo.getText();
         String pecasTrocadas = txtPecasTrocadas.getText();
         int tempoDeParada;
-        // String tecnico = txtTecnico.getText();
         String observacoes = txtObservacoes.getText();
 
-        // Valida e converte a data
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate data;
         try {
             data = LocalDate.parse(dataStr, formatter);
         } catch (DateTimeParseException ex) {
-            JOptionPane.showMessageDialog(this, "Data inválida. Utilize o formato yyyy/MM/dd.");
+            JOptionPane.showMessageDialog(this, "Data inválida. Utilize o formato dd/MM/yyyy.");
             return;
         }
 
-        // Tenta converter o tempo de parada
         try {
             tempoDeParada = Integer.parseInt(txtTempoDeParada.getText());
         } catch (NumberFormatException ex) {
@@ -132,7 +163,6 @@ public class CadastroManutencaoDialog extends JDialog {
             return;
         }
 
-        // Cria nova manutenção
         Manutencao novoManutencao = new Manutencao(0, maquinaSelecionada.getNome(), data.toString(), tipo, pecasTrocadas, tempoDeParada, tecnicoSelecionado.getNome(), observacoes);
         try {
             manutencaoController.CreateManutencao(novoManutencao);

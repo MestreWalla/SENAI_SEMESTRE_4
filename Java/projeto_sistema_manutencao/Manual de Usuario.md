@@ -4,8 +4,8 @@ Este manual foi elaborado para auxiliar usuários comuns na utilização do Sist
 
 ## Tela Principal
 
-**Figura 1: Tela Principal do Sistema de Manutenção.**  
-![Comentario](https://github.com/MestreWalla/SENAI_SEMESTRE_4/blob/main/Java/projeto_sistema_manutencao/ImagensManual/Manutencoes.png)
+**Tela Principal do Sistema de Manutenção.**  
+![Tela Principal](https://github.com/MestreWalla/SENAI_SEMESTRE_4/blob/main/Java/projeto_sistema_manutencao/ImagensManual/Manutencoes.png)
 
 Ao iniciar o sistema, você se deparará com a tela principal. Ela é composta por abas que organizam as diferentes funcionalidades do sistema, como "Manutenção", "Máquinas", "Falhas" e "Técnicos".
 
@@ -37,12 +37,12 @@ A aba "Máquinas" permite gerenciar todas as máquinas cadastradas no sistema.
 ## Gerenciamento de Manutenções
 
 Na aba "Manutenção", você pode gerenciar todas as manutenções realizadas nas máquinas.  
-**Figura 5: Aba "Manutenção" do Sistema de Manutenção.**  
+**Aba "Manutenção" do Sistema de Manutenção.**  
 ![Manutençòes] (https://github.com/MestreWalla/SENAI_SEMESTRE_4/blob/main/Java/projeto_sistema_manutencao/ImagensManual/Manutencoes.png)
 
 ### Funcionalidades:
 
-- **Cadastrar Manutenção**: Clique no botão "Cadastrar Manutenção" para registrar uma nova manutenção. Selecione a máquina, o técnico responsável, preencha a data, o tipo de manutenção, as peças trocadas, o tempo de parada e as observações ![INSERIR IMAGEM DO FORMULÁRIO DE CADASTRO DE MANUTENÇÃO AQUI].
+- **Cadastrar Manutenção**: Clique no botão "Cadastrar Manutenção" para registrar uma nova manutenção. Selecione a máquina, o técnico responsável, preencha a data, o tipo de manutenção, as peças trocadas, o tempo de parada e as observações
   
 - **Editar Manutenção**: Para editar uma manutenção, selecione a manutenção desejada na tabela e clique no botão "Editar Manutenção".
   
@@ -55,12 +55,11 @@ Na aba "Manutenção", você pode gerenciar todas as manutenções realizadas na
 ## Gerenciamento de Falhas
 
 A aba "Falhas" permite o gerenciamento de falhas reportadas nas máquinas.  
-**Figura 7: Aba "Falhas" do Sistema de Manutenção.**  
-![INSERIR IMAGEM DA ABA "FALHAS" AQUI]
+**Aba "Falhas" do Sistema de Manutenção.**  
 
 ### Funcionalidades:
 
-- **Cadastrar Falha**: Clique no botão "Cadastrar Falha" para registrar uma nova falha. Selecione a máquina, o técnico que atendeu a falha, a data da ocorrência, descreva o problema, a prioridade e o operador responsável pela máquina no momento da falha ![INSERIR IMAGEM DO FORMULÁRIO DE CADASTRO DE FALHA AQUI].
+- **Cadastrar Falha**: Clique no botão "Cadastrar Falha" para registrar uma nova falha. Selecione a máquina, o técnico que atendeu a falha, a data da ocorrência, descreva o problema, a prioridade e o operador responsável pela máquina no momento da falha.
   
 - **Editar Falha**: Para editar as informações de uma falha, selecione a falha desejada na tabela e clique no botão "Editar Falha".
   
@@ -73,12 +72,11 @@ A aba "Falhas" permite o gerenciamento de falhas reportadas nas máquinas.
 ## Gerenciamento de Técnicos
 
 A aba "Técnicos" possibilita o gerenciamento dos técnicos responsáveis pelas manutenções.  
-**Figura 9: Aba "Técnicos" do Sistema de Manutenção.**  
-![INSERIR IMAGEM DA ABA "TÉCNICOS" AQUI]
+**Aba "Técnicos" do Sistema de Manutenção.**  
 
 ### Funcionalidades:
 
-- **Cadastrar Técnico**: Clique no botão "Cadastrar Técnico" para adicionar um novo técnico ao sistema. Preencha o nome, a especialidade e a disponibilidade do técnico ![INSERIR IMAGEM DO FORMULÁRIO DE CADASTRO DE TÉCNICO AQUI].
+- **Cadastrar Técnico**: Clique no botão "Cadastrar Técnico" para adicionar um novo técnico ao sistema. Preencha o nome, a especialidade e a disponibilidade do técnico.
   
 - **Editar Técnico**: Para editar as informações de um técnico, selecione o técnico desejado na tabela e clique no botão "Editar Técnico".
   
